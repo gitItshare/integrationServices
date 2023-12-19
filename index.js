@@ -11,9 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(routes);
 
-app.post('/', (req, res) => {
-    const params = req.body.Params.Params.TemplateFieldData
-    console.log(params)
+app.get('/', (req, res) => {
+  
   res.send('Hello World!')
 })
 
