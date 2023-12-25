@@ -24,7 +24,6 @@ const dicionario = {
 }
 const dicionarioInterveniente = {
    "Nome_Professor": "NOME_PARCINT",
-   "Professor_PF_ou_PJ1": "",
    "CPF": "CGC_CPF_PARCINT",
    "Endereco__com__o_numero": "ENDERECO_PARCINT",
    "Bairro__IA": "BAIRRO_PARCINT",
