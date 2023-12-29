@@ -28,43 +28,75 @@ const consulta =async (data,token) => {
     let templateField = data.Params.TemplateFieldData
     let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
     let emitenteData = templateField.Emitente
+    let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
 
-    let emitente = 	
-    {
-        "tipoPessoa": "1",
-        "cpfCnpjCliente": "36614473867",
-        "codigoAgencia": "00000",
-        "numeroConta": "0000000",
-        "valorContrato": "100.43",
-        "tipoRepresentante": "R",
-        "codigoObjeto": "CCB",
-        "codigoAto": "AS",
-        "dataPoder": "05/12/2023",
-        "tipoPessoaCondicaoEspecial": "0",
-        "cnpjClienteCondicaoEspecial": "00000000000000",
-        "codigoAgenciaCondicaoEspecial": "00000",
-        "numeroContaCondicaoEspecial": "0000000"
-    }	
+    // let emitente = 	{
+    //     "tipoPessoa": "1",
+    //     "cpfCnpjCliente": "36614473867",
+    //     "codigoAgencia": "00000",
+    //     "numeroConta": "0000000",
+    //     "valorContrato": "100.43",
+    //     "tipoRepresentante": "R",
+    //     "codigoObjeto": "CCB",
+    //     "codigoAto": "AS",
+    //     "dataPoder": "05/12/2023",
+    //     "tipoPessoaCondicaoEspecial": "0",
+    //     "cnpjClienteCondicaoEspecial": "00000000000000",
+    //     "codigoAgenciaCondicaoEspecial": "00000",
+    //     "numeroContaCondicaoEspecial": "0000000"
+    // }	
+    let terceiro = {
+      tipoPessoa: "1",    
+      cpfCnpjCliente:terceirosData.CPF_CNPJ,
+      codigoAgencia:"0",
+      valorContrato:"100.43",
+      codigoObjeto:"GARP P/ TERC",
+      dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
+      numeroConta:"0",
+      tipoPessoaCondicaoEspecial:"0",
+      cnpjClienteCondicaoEspecial:"0",
+      codigoAgenciaCondicaoEspecial:"0",
+      numeroContaCondicaoEspecial:"0",
+      tipoRepresentante:"R",
+      codigoAto:"AS"
+    }
+    let cliente = {
+      tipoPessoa: "1",    
+      cpfCnpjCliente:emitenteData.Emitente_CNPJ,
+      codigoAgencia:"0",
+      valorContrato:"100.43",
+      codigoObjeto:"CCB",
+      dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
+      numeroConta:"0",
+      tipoPessoaCondicaoEspecial:"0",
+      cnpjClienteCondicaoEspecial:"0",
+      codigoAgenciaCondicaoEspecial:"0",
+      numeroContaCondicaoEspecial:"0",
+      tipoRepresentante:"R",
+      codigoAto:"AS"
+    }
     let avalistasList = avalistas.map(avalista => {
       return {
-        tipoPessoa: "PJ",    
-        cpfCnpjCliente:avalista.Emitente_CNPJ,
-        codigoAgencia:avalista["Emitente_Agencia"],
-        valorContrato:templateField["Valor"],
-        codigoObjeto:templateField.CodForm,
+        tipoPessoa: "1",    
+        cpfCnpjCliente:avalista.Avalistas_CPF_CNPJ,
+        codigoAgencia:"0",
+        valorContrato:"100.43",
+        codigoObjeto:"GARP P/ TERC",
         dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
         numeroConta:"0",
         tipoPessoaCondicaoEspecial:"0",
         cnpjClienteCondicaoEspecial:"0",
         codigoAgenciaCondicaoEspecial:"0",
         numeroContaCondicaoEspecial:"0",
-        tipoRepresentante:"C",
-        codigoAto:"Validar com Carol"
+        tipoRepresentante:"R",
+        codigoAto:"AS"
       }
     })
 
     let body = {empresas:[
-      emitente
+      cliente,
+      terceiro,
+      ...avalistasList
       ]}
     const clientSafra = axios.create({
       headers: {
