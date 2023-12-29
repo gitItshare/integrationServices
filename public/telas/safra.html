@@ -1,0 +1,232 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<body>
+    <fieldset hidden>
+        <legend>Assinaturas
+    </fieldset>
+    <br />
+    <div class="container">
+        <div class="container"  role="tabpanel" aria-labelledby="dadosContrato-tab-rebate">
+            <fieldset id="clientes" class="border p-2">
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Cliente &nbsp;</strong></span>
+                </legend>
+                <div id="clienteContainer">
+                    <div  class='myContainer row'>
+                        <div class="form-group col-12 col-sm-4">
+                            <label for="nome-representante">
+                                <p class="label">Representantes</p>
+                            </label>
+                            <input  id="nome-representante" placeholder="Buscar"
+                                class="form-control rounded-0 novosInputs" required="">
+                        </div>
+                            <div class="form-group col-12 col-sm-4">
+                                <label for="cnpj-representante">
+                                    <p class="label">CNPJ</p>
+                                </label>
+                                <input disabled=true id="cnpj-representante" placeholder="Buscar"
+                                    class="form-control rounded-0 novosInputs" required="">
+                            </div>
+
+                            <div class="form-group col-12 col-sm-4">
+                                <label for="tipo-assinatura">
+                                    <p class="label">Tipo de assinatura</p>
+                                </label>
+                                <select id="tipo-assinatura" class="form-select" aria-label="Default select example">
+                                    <option selected>Selecione</option>
+                                    <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                                    <option value="ICP">ICP</option>
+                                </select>
+                        </div>
+                    </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <button id="addRepCli" class="btn btn-primary"> Adicionar Representante</button>
+                        </div>
+                        <div hidden id="removeDiv" class="form-group">
+                            <button id="removeRepCli" class="btn btn-primary"> Remover Representante</button>
+                        </div>
+                        </div>
+           
+                </div>
+            </fieldset>
+            <br>
+            <fieldset id="terceiros" class="border p-2">
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Terceiro Garantidor &nbsp;</strong></span>
+                </legend>
+                <div id="terceirosContainer">
+                    <div  class='myContainer row'>
+                        <div class="form-group col-12 col-sm-4">
+                            <label for="nome-representante-terceiros">
+                                <p class="label">Representantes</p>
+                            </label>
+                            <input  id="nome-representante" placeholder="Buscar"
+                                class="form-control rounded-0 novosInputs" required="">
+                        </div>
+                            <div class="form-group col-12 col-sm-4">
+                                <label for="cnpj-representante-terceiros">
+                                    <p class="label">CNPJ</p>
+                                </label>
+                                <input disabled=true id="cnpj-representante-terceiros" placeholder="Buscar"
+                                    class="form-control rounded-0 novosInputs" required="">
+                            </div>
+
+                            <div class="form-group col-12 col-sm-4">
+                                <label for="tipo-assinatura-terceiros">
+                                    <p class="label">Tipo de assinatura</p>
+                                </label>
+                                <select id="tipo-assinatura-terceiros" class="form-select" aria-label="Default select example">
+                                    <option selected>Selecione</option>
+                                    <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                                    <option value="ICP">ICP</option>
+                                </select>
+                        </div>
+                    </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <button id="addRepCli-terceiros" class="btn btn-primary"> Adicionar Representante</button>
+                        </div>
+                        <div hidden id="removeDiv" class="form-group">
+                            <button id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</button>
+                        </div>
+                        </div>
+           
+                </div>
+
+            </fieldset>
+            <br>
+            <fieldset id="avalistas" class="border p-2">
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalistas &nbsp;</strong></span>
+                </legend>
+       
+            </fieldset>
+        </div>
+    </div>
+</body>
+<div id="clienteContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+    <div class="form-group col-12 col-sm-4">
+        <label for="nome-representante">
+            <p class="label">Representantes</p>
+        </label>
+        <input  id="nome-representante" placeholder="Buscar"
+            class="form-control rounded-0 novosInputs" required="">
+    </div>
+        <div class="form-group col-12 col-sm-4">
+            <label for="cnpj-representante">
+                <p class="label">CNPJ</p>
+            </label>
+            <input disabled=true id="cnpj-representante" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
+        </div>
+
+        <div class="form-group col-12 col-sm-4">
+            <label for="tipo-assinatura">
+                <p class="label">Tipo de assinatura</p>
+            </label>
+            <select id="tipo-assinatura" class="form-select" aria-label="Default select example">
+                <option selected>Selecione</option>
+                <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                <option value="ICP">ICP</option>
+            </select>
+    </div>
+</div>
+<div id="tericeiroContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+    <div class="form-group col-12 col-sm-4">
+        <label for="nome-representante-terceiros">
+            <p class="label">Representantes</p>
+        </label>
+        <input  id="nome-representante-terceiros" placeholder="Buscar"
+            class="form-control rounded-0 novosInputs" required="">
+    </div>
+        <div class="form-group col-12 col-sm-4">
+            <label for="cnpj-representante-terceiros">
+                <p class="label">CNPJ</p>
+            </label>
+            <input disabled=true id="cnpj-representante-terceiros" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
+        </div>
+
+        <div class="form-group col-12 col-sm-4">
+            <label for="tipo-assinatura-terceiros">
+                <p class="label">Tipo de assinatura</p>
+            </label>
+            <select id="tipo-assinatura-terceiros" class="form-select" aria-label="Default select example">
+                <option selected>Selecione</option>
+                <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                <option value="ICP">ICP</option>
+            </select>
+    </div>
+</div>
+<div id="avalistaContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+    <div class="form-group col-12 col-sm-4">
+        <label for="nome-representante-avalista">
+            <p class="label">Representantes</p>
+        </label>
+        <input  id="nome-representante-avalista" placeholder="Buscar"
+            class="form-control rounded-0 novosInputs" required="">
+    </div>
+        <div class="form-group col-12 col-sm-4">
+            <label for="cnpj-representante-avalista">
+                <p class="label">CNPJ</p>
+            </label>
+            <input disabled=true id="cnpj-representante-avalista" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
+        </div>
+
+        <div class="form-group col-12 col-sm-4">
+            <label for="tipo-assinatura-avalista">
+                <p class="label">Tipo de assinatura</p>
+            </label>
+            <select id="tipo-assinatura-avalista" class="form-select" aria-label="Default select example">
+                <option selected>Selecione</option>
+                <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                <option value="ICP">ICP</option>
+            </select>
+    </div>
+</div>
+<fieldset id="avalistas0" hidden class="border p-2">
+    <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalista &nbsp;</strong></span>
+    </legend>
+    <div id="aavalistasContainer">
+        <div  class='myContainer row'>
+            <div class="form-group col-12 col-sm-4">
+                <label for="nome-representante-terceiros">
+                    <p class="label">Representantes</p>
+                </label>
+                <input  id="nome-representante" placeholder="Buscar"
+                    class="form-control rounded-0 novosInputs" required="">
+            </div>
+                <div class="form-group col-12 col-sm-4">
+                    <label for="cnpj-representante-terceiros">
+                        <p class="label">CNPJ</p>
+                    </label>
+                    <input disabled=true id="cnpj-representante-terceiros" placeholder="Buscar"
+                        class="form-control rounded-0 novosInputs" required="">
+                </div>
+
+                <div class="form-group col-12 col-sm-4">
+                    <label for="tipo-assinatura-terceiros">
+                        <p class="label">Tipo de assinatura</p>
+                    </label>
+                    <select id="tipo-assinatura-terceiros" class="form-select" aria-label="Default select example">
+                        <option selected>Selecione</option>
+                        <option value="DS ELETRONIC"> DS ELETRONIC</option>
+                        <option value="ICP">ICP</option>
+                    </select>
+            </div>
+        </div>
+            <br>
+            <div class="row">
+                <div class="form-group">
+                    <button id="addRepCli-avalista" class="btn btn-primary"> Adicionar Representante</button>
+            </div>
+            <div hidden id="removeDiv" class="form-group">
+                <button id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</button>
+            </div>
+            </div>
+
+    </div>
+
+</fieldset>
+<script src="../js/safra.js"></script>
