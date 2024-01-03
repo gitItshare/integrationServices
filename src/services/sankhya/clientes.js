@@ -1,5 +1,4 @@
 import axios from "axios";
-const sankhyaToken = process.env.sankhyaToken
 
 const sankhyaClient = (token) => axios.create({
    headers: {

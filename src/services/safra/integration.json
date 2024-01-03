@@ -20,7 +20,7 @@
 			},
 			"Emitente": {
 				"Emitente_Razao_Social": "yuji itadori",
-				"Emitente_CNPJ": "24.101.647/0001-78",
+				"Emitente_CNPJ": "02974733000152",
 				"Emitente_Endereco": "avenida shibuya",
 				"Emitente_Cidade": "shibuya",
 				"Emitente_Bairro": "central",
@@ -41,7 +41,7 @@
 					"Tabela_Avalistas": [
 						{
 							"Avalistas_Nome_Razao_Social": "teste 1",
-							"Avalistas_CPF_CNPJ": "05.706.179/0001-10",
+							"Avalistas_CPF_CNPJ": "02974733000153",
 							"Avalistas_Endereco": "Rua Júlio Girardi",
 							"Avalistas_Cidade": "Campinas",
 							"Avalistas_Bairro": "vila",
@@ -55,7 +55,7 @@
 						},
 						{
 							"Avalistas_Nome_Razao_Social": "teste 2",
-							"Avalistas_CPF_CNPJ": "86.627.697/0001-40",
+							"Avalistas_CPF_CNPJ": "02974733000154",
 							"Avalistas_Endereco": "teste end",
 							"Avalistas_Cidade": "sao paulo",
 							"Avalistas_Bairro": "pq industrial",
@@ -78,7 +78,7 @@
 				"Tabela_Terceiro_Garantidor_Container": {
 					"Tabela_Terceiro_Garantidor": {
 						"Terceiro_Garantidor_Nome_Razao_Social": "teste terceiro",
-						"CPF_CNPJ": "56.591.094/0001-75",
+						"CPF_CNPJ": "02974733000155",
 						"Terceiro_Garantidor_Endereco": "Rua Júlio Girardi",
 						"Terceiro_Garantidor_Cidade": "Campinas",
 						"Terceiro_Garantidor_Bairro": "itapetao",
