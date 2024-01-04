@@ -31,7 +31,7 @@ const consulta =async (data,token) => {
     let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas.element
     let emitenteData = templateField.Emitente
     let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
-    let dataPoder = dayjs(templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"]).format("YYYY-MM-DD")
+    let dataPoder = dayjs(new Date(templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"])).format("YYYY-MM-DD")
     let emitente = 	{
       "DocumentoCliente": emitenteData.Emitente_CNPJ,
       "Agencia": "",
