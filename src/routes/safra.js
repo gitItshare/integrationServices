@@ -422,7 +422,8 @@ const auth = async (req,res,next) => {
 
 // Define the home page route
 router.post('/representantes',auth, async function(req, res) {
-   const representantes = await safraServices.integration.consulta(req.body.Params, token)
+    const Params = req.body.Params
+   const representantes = await safraServices.integration.consulta(Params, token)
    console.log("TEKE", token)
    res.json(representantes);
 });
