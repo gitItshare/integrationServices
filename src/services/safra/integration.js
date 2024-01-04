@@ -21,7 +21,7 @@ const auth = async () => {
         console.log(resp)
         return resp.data.access_token
     } catch (error) {
-        //  console.log(error)
+          console.log(error)
     }
 }
 const consulta =async (data,token) => {
@@ -36,12 +36,14 @@ const consulta =async (data,token) => {
       "DocumentoCliente": emitenteData.Emitente_CNPJ,
       "Agencia": "",
       "Conta": "",
-      "valorContrato": templateField.Valor,
+      // "valorContrato": templateField.Valor,
+      "valorContrato": 100.43,
       "tipoRepresentante": "REPRESENTANTE",
       "codigoObjeto": cpf.isValid(emitenteData.Emitente_CNPJ)? "CCB" : "CCB",
       "codigoAto": "ASSINA",
       "dataPoder": dataPoder
     }	
+    console.log(emitente)
     let terceiro = {
       "DocumentoCliente": terceirosData.CPF_CNPJ,
       "Agencia": "",
@@ -67,9 +69,9 @@ const consulta =async (data,token) => {
     })
 
     let body = {empresas:[
-        emitente,
-        terceiro,
-       ...avalistasList
+        emitente
+      //   terceiro,
+      //  ...avalistasList
       ]}
     const clientSafra = axios.create({
       headers: {
@@ -82,7 +84,7 @@ const consulta =async (data,token) => {
     // console.log(resp)
     return resp.data
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
 }
 

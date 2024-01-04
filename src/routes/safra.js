@@ -415,7 +415,8 @@ let resp ={
   ]
 }
 const auth = async (req,res,next) => {
-    token = await safraServices.integration.auth()
+    req.token = await safraServices.integration.auth()
+    console.log("TOKEN", req.token)
     next()
 }
 //Middle ware that is specific to this router
@@ -423,8 +424,8 @@ const auth = async (req,res,next) => {
 // Define the home page route
 router.post('/representantes',auth, async function(req, res) {
     const Params = req.body.Params
-   const representantes = await safraServices.integration.consulta(Params, token)
-   console.log("TEKE", token)
+   const representantes = await safraServices.integration.consulta(Params, req.token)
+   console.log("TEKE", req.token)
    res.json(representantes);
 });
 

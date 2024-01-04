@@ -5,7 +5,11 @@ const buttonRemoveCliTerceiros = document.getElementById("removeCli-terceiros")
 const clientList = document.getElementById("nome-representante-list")
 const terceirosList = document.getElementById("nome-representante-terceiros-list")
 const terceirosEmailList = document.getElementById("email-representante-terceiros-list")
+const terceirosCpfList = document.getElementById("cpf-representante-terceiros-list")
+
 const clientEmailList = document.getElementById("email-representante-list")
+const clientCpfList = document.getElementById("cpf-representante-list")
+
 const buttonAvalista = document.getElementById("addRepCli-avalista")
 const buttonRemoveAvalista = document.getElementById("removeCli-avalista")
 const x2js = new X2JS();
@@ -98,8 +102,8 @@ $.ajax({
             let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
             let avalistas = data.filter(el => avalistasCNPJ.includes(el.documentoCliente))
             console.log("AQUIII", avalistas)
-            preencherLists(representanteCli, clientList, clientEmailList)
-            preencherLists(terceiros, terceirosList, terceirosEmailList)
+            preencherLists(representanteCli, clientList, clientEmailList, clientCpfList)
+            preencherLists(terceiros, terceirosList, terceirosEmailList, terceirosCpfList)
             preencherAvalistas(avalistas)
         })
     })
@@ -115,10 +119,11 @@ function addClient(event, id, cloneParam) {
             clone = cloneParam.children[1].children[0].cloneNode(true)
             clone.children[0].children[1].value = ""
             clone.children[1].children[1].value = ""
+            clone.children[2].children[1].value = ""
         }
         console.log("aQUIIII", clone)
         clone.removeAttribute("hidden")
-        const buttomremove = clone.children[2].children[0].children[2].children[0]
+        const buttomremove = clone.children[3].children[0].children[2].children[0]
         buttomremove.addEventListener("click", (event) => {
             remove(event)
         })
@@ -165,19 +170,26 @@ document.getElementById("nome-representante-terceiros").addEventListener("blur",
 function preencherAutomatico() {
     console.log(this.parentElement.parentElement.parentElement.parentElement)
     let value = this.value
-    let email = this.parentElement.parentElement.children[1].children[1]
+    let cpf = this.parentElement.parentElement.children[1].children[1]
+    let email = this.parentElement.parentElement.children[2].children[1]
+
     const options = Array.from(clientList.options).find(el => el.value == value)
-    if (!value)
+    if (!value){
         email.value = ""
-    else
+        cpf.value = ""
+    }
+    else{
         email.value = options.getAttribute("email")
+        cpf.value = options.getAttribute("cpf")
+    }
 }
 
-function preencherLists(array, listName, listEmail) {
+function preencherLists(array, listName, listEmail, listCpf) {
     console.log("ARRAyy", array)
     array.forEach((el, index) => {
-        listName.innerHTML += `<option qtdAss="${el.quantidadeAssinaturasConjunto}"  email="${el.emailContatoAssinatura}" name="${index}" value="${el.nome}">${el.nome}</option>`
+        listName.innerHTML += `<option qtdAss="${el.quantidadeAssinaturasConjunto}" cpf="${el.documento}" email="${el.emailContatoAssinatura}" name="${index}" value="${el.nome}">${el.nome}</option>`
         listEmail.innerHTML += `<option value="${el.emailContatoAssinatura}">${el.emailContatoAssinatura}</option>`
+        listCpf.innerHTML += `<option value="${el.documento}">${el.documento}</option>`
     })
 }
 
@@ -188,19 +200,23 @@ function preencherAvalistas(avalistas) {
         let addButton = clone.children[1].children[2].children[0].children[0]
         clone.id = el.nome
         clone.children[0].innerText = el.nome
-        const buttomremove = clone.children[1].children[0].children[2].children[0].children[2].children[0]
+        const buttomremove = clone.children[1].children[0].children[3].children[0].children[2].children[0]
         buttomremove.addEventListener("click", (event) => {
             remove(event)
         })
         const inputName = clone.children[1].children[0].children[0].children[1]
-        const inputEmail = clone.children[1].children[0].children[1].children[1]
-        const inputEmailList = clone.children[1].children[0].children[1].children[2]
         const inputNameList = clone.children[1].children[0].children[0].children[2]
+        const inputEmail = clone.children[1].children[0].children[2].children[1]
+        const inputEmailList = clone.children[1].children[0].children[2].children[2]
+        const inputCpfList = clone.children[1].children[0].children[1].children[2]
+        const inputCpf = clone.children[1].children[0].children[1].children[1]
 
         inputName.setAttribute("list", el.nome + "list")
         inputNameList.id = el.nome + "list"
         inputEmail.setAttribute("list", el.nome + "listEmail")
         inputEmailList.id = el.nome + "listEmail"
+        inputCpf.setAttribute("list", el.nome + "listCpf")
+        inputCpfList.id = el.nome + "listCpf"
         avalistaDIV.appendChild(clone)
 
         addButton.addEventListener("click", function (event) {
@@ -216,7 +232,7 @@ function preencherAvalistas(avalistas) {
         inputName.addEventListener("blur", preencherAutomatico)
         let representantesAvalista = el.representantes
 
-        preencherLists(representantesAvalista, inputNameList, inputEmailList)
+        preencherLists(representantesAvalista, inputNameList, inputEmailList, inputCpfList)
 
     })
 }
