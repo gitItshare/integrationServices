@@ -416,7 +416,7 @@ let resp ={
 }
 const auth = async (req,res,next) => {
     token = await safraServices.integration.auth()
-    console.log("TOKEN", req.token)
+    console.log("TOKEN", token)
     next()
 }
 //Middle ware that is specific to this router
@@ -426,7 +426,7 @@ router.post('/representantes',auth, async function(req, res) {
     const Params = req.body.Params
     console.log("boody", req.body)
    const representantes = await safraServices.integration.consulta(Params, token)
-   console.log("TEKE", req.token)
+   console.log("TEKE", token)
    res.json(representantes);
 });
 
