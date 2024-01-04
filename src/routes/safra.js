@@ -415,7 +415,7 @@ let resp ={
   ]
 }
 const auth = async (req,res,next) => {
-    req.token = await safraServices.integration.auth()
+    token = await safraServices.integration.auth()
     console.log("TOKEN", req.token)
     next()
 }
@@ -425,7 +425,7 @@ const auth = async (req,res,next) => {
 router.post('/representantes',auth, async function(req, res) {
     const Params = req.body.Params
     console.log("boody", req.body)
-   const representantes = await safraServices.integration.consulta(Params, req.token)
+   const representantes = await safraServices.integration.consulta(Params, token)
    console.log("TEKE", req.token)
    res.json(representantes);
 });
