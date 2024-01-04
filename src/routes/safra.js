@@ -422,9 +422,9 @@ const auth = async (req,res,next) => {
 
 // Define the home page route
 router.post('/representantes',auth, async function(req, res) {
-  // const resp = await safraServices.integration.consulta(req.body, token)
+   const representantes = await safraServices.integration.consulta(req.body, token)
    console.log("TEKE", token)
-   res.json(resp);
+   res.json(representantes);
 });
 
 export default router

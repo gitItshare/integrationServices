@@ -1,5 +1,7 @@
 import axios from "axios";
 import querystring from "querystring"
+import { cpf } from 'cpf-cnpj-validator'; 
+import dayjs from 'dayjs'
 const auth = async () => {
     try {
         const url = "https://sts-api-hml.safra.com.br/api/oauth/token"
@@ -25,74 +27,49 @@ const auth = async () => {
 const consulta =async (data,token) => {
   try {
     const url = "https://api-hml.safra.com.br/suporte-negocio/gerenciamentos-documentos-arquivos/servicos-documentos/workflow/v1/representantes/consultar"
-    // let templateField = data.Params.TemplateFieldData
-    // let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
-    // let emitenteData = templateField.Emitente
-    // let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
-
+    let templateField = data.Params.TemplateFieldData
+    let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
+    let emitenteData = templateField.Emitente
+    let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+    let dataPoder = dayjs(templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"]).format("YYYY-MM-DD")
     let emitente = 	{
-      "DocumentoCliente": "02974733000152",
+      "DocumentoCliente": emitenteData.Emitente_CNPJ,
       "Agencia": "",
       "Conta": "",
-      "valorContrato": 100.43,
+      "valorContrato": templateField.Valor,
       "tipoRepresentante": "REPRESENTANTE",
-      "codigoObjeto": "CCB",
+      "codigoObjeto": cpf.isValid(emitenteData.Emitente_CNPJ)? "CCB" : "CCB",
       "codigoAto": "ASSINA",
-      "dataPoder": "2019-12-13"
+      "dataPoder": dataPoder
     }	
-    // let terceiro = {
-    //   tipoPessoa: "1",    
-    //   cpfCnpjCliente:terceirosData.CPF_CNPJ,
-    //   codigoAgencia:"0",
-    //   valorContrato:"100.43",
-    //   codigoObjeto:"GARP P/ TERC",
-    //   dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
-    //   numeroConta:"0",
-    //   tipoPessoaCondicaoEspecial:"0",
-    //   cnpjClienteCondicaoEspecial:"0",
-    //   codigoAgenciaCondicaoEspecial:"0",
-    //   numeroContaCondicaoEspecial:"0",
-    //   tipoRepresentante:"R",
-    //   codigoAto:"AS"
-    // }
-    // let cliente = {
-    //   tipoPessoa: "1",    
-    //   cpfCnpjCliente:emitenteData.Emitente_CNPJ,
-    //   codigoAgencia:"0",
-    //   valorContrato:"100.43",
-    //   codigoObjeto:"CCB",
-    //   dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
-    //   numeroConta:"0",
-    //   tipoPessoaCondicaoEspecial:"0",
-    //   cnpjClienteCondicaoEspecial:"0",
-    //   codigoAgenciaCondicaoEspecial:"0",
-    //   numeroContaCondicaoEspecial:"0",
-    //   tipoRepresentante:"R",
-    //   codigoAto:"AS"
-    // }
-    // let avalistasList = avalistas.map(avalista => {
-    //   return {
-    //     tipoPessoa: "1",    
-    //     cpfCnpjCliente:avalista.Avalistas_CPF_CNPJ,
-    //     codigoAgencia:"0",
-    //     valorContrato:"100.43",
-    //     codigoObjeto:"GARP P/ TERC",
-    //     dataPoder:templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"],
-    //     numeroConta:"0",
-    //     tipoPessoaCondicaoEspecial:"0",
-    //     cnpjClienteCondicaoEspecial:"0",
-    //     codigoAgenciaCondicaoEspecial:"0",
-    //     numeroContaCondicaoEspecial:"0",
-    //     tipoRepresentante:"R",
-    //     codigoAto:"AS"
-    //   }
-    // })
+    let terceiro = {
+      "DocumentoCliente": terceirosData.CPF_CNPJ,
+      "Agencia": "",
+      "Conta": "",
+      "valorContrato": templateField.Valor,
+      "tipoRepresentante": "REPRESENTANTE",
+      "codigoObjeto": cpf.isValid(terceirosData.CPF_CNPJ)? "CCB" : "GAP P/TERC",
+      "codigoAto": "ASSINA",
+      "dataPoder": dataPoder
+    }
+  
+    let avalistasList = avalistas.map(avalista => {
+      return {
+        "DocumentoCliente": avalista.Avalistas_CPF_CNPJ,
+        "Agencia": "",
+        "Conta": "",
+        "valorContrato": templateField.Valor,
+        "tipoRepresentante": "REPRESENTANTE",
+        "codigoObjeto": cpf.isValid(avalista.Avalistas_CPF_CNPJ)? "CCB" : "GAP P/TERC",
+        "codigoAto": "ASSINA",
+        "dataPoder": dataPoder,
+      }
+    })
 
     let body = {empresas:[
-      // cliente,
-      // terceiro,
-      // ...avalistasList
-      emitente
+        emitente,
+        terceiro,
+       ...avalistasList
       ]}
     const clientSafra = axios.create({
       headers: {
