@@ -9,7 +9,7 @@ let resp ={
           "representantes": [
               {
                   "quantidadeAssinaturasConjunto": 4,
-                  "indicadorCondicaoEspecial": false,
+                  "indicadorCondicaoEspecial": true,
                   "valorLimiteAlcada": 300000,
                   "identificacaoTipoDocumento": "CP1",
                   "documento": "10203062892",
@@ -35,7 +35,7 @@ let resp ={
               },
               {
                   "quantidadeAssinaturasConjunto": 4,
-                  "indicadorCondicaoEspecial": false,
+                  "indicadorCondicaoEspecial": true,
                   "valorLimiteAlcada": 300000,
                   "identificacaoTipoDocumento": "CP1",
                   "documento": "10203062892",
@@ -74,7 +74,7 @@ let resp ={
               },
               {
                   "quantidadeAssinaturasConjunto": 4,
-                  "indicadorCondicaoEspecial": false,
+                  "indicadorCondicaoEspecial": true,
                   "valorLimiteAlcada": 300000,
                   "identificacaoTipoDocumento": "CP1",
                   "documento": "21842466895",
@@ -87,7 +87,7 @@ let resp ={
               },
               {
                   "quantidadeAssinaturasConjunto": 4,
-                  "indicadorCondicaoEspecial": false,
+                  "indicadorCondicaoEspecial": true,
                   "valorLimiteAlcada": 5000000,
                   "identificacaoTipoDocumento": "CPF",
                   "documento": "06284481802",
@@ -243,7 +243,7 @@ let resp ={
               },
               {
                   "quantidadeAssinaturasConjunto": 4,
-                  "indicadorCondicaoEspecial": false,
+                  "indicadorCondicaoEspecial": true,
                   "valorLimiteAlcada": 0,
                   "identificacaoTipoDocumento": "CPF",
                   "documento": "06284481802",
@@ -423,11 +423,14 @@ const auth = async (req,res,next) => {
 
 // Define the home page route
 router.post('/representantes',auth, async function(req, res) {
+    // console.log("boody", req.body)
+
     const Params = req.body.Params
-    console.log("boody", req.body)
-   const representantes = await safraServices.integration.consulta(Params, token)
+   const representantes = await safraServices.integration.consulta({Params}, token)
    console.log("TEKE", token)
-   res.json(representantes);
+   res.json(resp);
 });
 
 export default router
+
+

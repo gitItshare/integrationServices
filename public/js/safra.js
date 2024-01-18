@@ -172,11 +172,19 @@ function preencherAutomatico() {
     let value = this.value
     let cpf = this.parentElement.parentElement.children[1].children[1]
     let email = this.parentElement.parentElement.children[2].children[1]
-
+    let label = this.parentElement.parentElement.children[0].children[0]
+    console.log("LABEELL", label)
     const options = Array.from(clientList.options).find(el => el.value == value)
+    let condEespecial = options.getAttribute("condEespecial")
+    if(condEespecial == "true")
+        label.innerHTML = '<p style="color:tomato">Representantes Condicao Especial</p>'
+    else
+        label.innerHTML = '<p>Representantes</p>'
+    
     if (!value){
         email.value = ""
         cpf.value = ""
+        label.innerHTML = '<p>Representantes</p>'
     }
     else{
         email.value = options.getAttribute("email")
@@ -187,12 +195,11 @@ function preencherAutomatico() {
 function preencherLists(array, listName, listEmail, listCpf) {
     console.log("ARRAyy", array)
     array.forEach((el, index) => {
-        listName.innerHTML += `<option qtdAss="${el.quantidadeAssinaturasConjunto}" cpf="${el.documento}" email="${el.emailContatoAssinatura}" name="${index}" value="${el.nome}">${el.nome}</option>`
+        listName.innerHTML += `<option condEespecial="${el.indicadorCondicaoEspecial}" qtdAss="${el.quantidadeAssinaturasConjunto}" cpf="${el.documento}" email="${el.emailContatoAssinatura}" name="${index}" value="${el.nome}">${el.nome}</option>`
         listEmail.innerHTML += `<option value="${el.emailContatoAssinatura}">${el.emailContatoAssinatura}</option>`
         listCpf.innerHTML += `<option value="${el.documento}">${el.documento}</option>`
     })
 }
-
 function preencherAvalistas(avalistas) {
     avalistas.forEach((el, index) => {
         const clone = document.getElementById("avalistas0").cloneNode(true)

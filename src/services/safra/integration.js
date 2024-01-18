@@ -28,7 +28,7 @@ const consulta =async (data,token) => {
   try {
     const url = "https://api-hml.safra.com.br/suporte-negocio/gerenciamentos-documentos-arquivos/servicos-documentos/workflow/v1/representantes/consultar"
     let templateField = data.Params.TemplateFieldData
-    let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas.element
+    let avalistas = 	templateField.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
     let emitenteData = templateField.Emitente
     let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
     let dataPoder = dayjs(new Date(templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"])).format("YYYY-MM-DD")
