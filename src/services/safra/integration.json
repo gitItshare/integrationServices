@@ -1,394 +1,1087 @@
-{
-	"Params": {
-		"Params": {
-			"TemplateFieldData": {
-				"Avalistas": {
-					"Tabela_Avalistas_Container": {
-						"Tabela_Avalistas": {
-							"element": [
-								{
-									"Avalistas_Bairro": "vila",
-									"Avalistas_CEP": "13060-729",
-									"Avalistas_CPF_CNPJ": "02974733000153",
-									"Avalistas_Cidade": "Campinas",
-									"Avalistas_Endereco": "Rua Júlio Girardi",
-									"Avalistas_Estado": {
-										"__text": "SP",
-										"_key": "SP"
-									},
-									"Avalistas_Nome_Razao_Social": "teste 1",
-									"_displayName": null,
-									"_displayValue": null
-								},
-								{
-									"Avalistas_Bairro": "pq industrial",
-									"Avalistas_CEP": "13060-728",
-									"Avalistas_CPF_CNPJ": "02974733000154",
-									"Avalistas_Cidade": "sao paulo",
-									"Avalistas_Endereco": "teste end",
-									"Avalistas_Estado": {
-										"__text": "SP",
-										"_key": "SP"
-									},
-									"Avalistas_Nome_Razao_Social": "teste 2",
-									"_displayName": null,
-									"_displayValue": null
-								}
-							]
-						},
-						"_displayName": "Tabela Avalistas",
-						"_displayValue": "Tabela Avalistas"
-					},
-					"_displayName": "Avalistas",
-					"_displayValue": "Avalistas"
-				},
-				"Caracteristicas_da_Operacao": {
-					"Encargo_Fiat": "10",
-					"Encargo_Fiat_unformatted": "10",
-					"Encargos": {
-						"__text": "Pré-fixados",
-						"_key": "Pré-fixados"
-					},
-					"Incidencia": {
-						"__text": "Saldo devedor em aberto",
-						"_key": "Saldo devedor em aberto"
-					},
-					"Local_de_liberacao_de_recursos__Codigo_do_banco": "11111",
-					"Local_de_liberacao_de_recursos__Codigo_do_banco_unformatted": "11111",
-					"Os_debitos_totais_ou_parciais_das_parcelas_e_ou__do_saldo_devedor_do_debito_ora_assumido_na_conta_iniciada_no_item__12__abaixo": "True",
-					"Periodicidade_da_capitalizacao_dos_encargos": "2",
-					"Praca_de_pagamento": "3",
-					"Realizacao_dos_debitos_decorrentes_de_obrigacao_vencida_inclusive_por_meio_de_pagamentos_parciais": "True",
-					"Tabela_Parcelas_Container": {
-						"Tabela_Parcelas": {
-							"Valor_da_parcela": "1.231,00",
-							"Valor_da_parcela_unformatted": "1231.00",
-							"Vencimento": "22/12/2023",
-							"Vencimento_unformatted": "2023-12-22T00:00:00.0000000",
-							"_displayName": null,
-							"_displayValue": null
-						},
-						"_displayName": "Valor do principal quando se tratar de encargos flutuantes ou o valor do principal mais juros quando se tratar de operacao pre fixada",
-						"_displayValue": "Valor do principal quando se tratar de encargos flutuantes ou o valor do principal mais juros quando se tratar de operacao pre fixada"
-					},
-					"Taxa_CDI__pagamento_por_debito_em_conta_Safra": "1%",
-					"Taxa_CDI__pagamento_por_debito_em_conta_Safra_unformatted": "1",
-					"Taxa_CDI__pagamento_por_outros_meios": "2",
-					"Taxa_CDI__pagamento_por_outros_meios_unformatted": "2",
-					"Taxa_de_Juros__pagamento_por_debito_em_conta_Safra": "2",
-					"Taxa_de_Juros__pagamento_por_debito_em_conta_Safra_unformatted": "2",
-					"Taxa_de_juros__pagamentos_por_outros_meios": "1",
-					"Taxa_de_juros__pagamentos_por_outros_meios_unformatted": "1",
-					"Taxa_de_juros_efetiva_ao_ano__pagamento_por_debito_em_conta_Safra": "40",
-					"Taxa_de_juros_efetiva_ao_ano__pagamento_por_debito_em_conta_Safra_unformatted": "40",
-					"Taxa_de_juros_efetiva_ao_ano__pagamento_por_outros_meios": "20",
-					"Taxa_de_juros_efetiva_ao_ano__pagamento_por_outros_meios_unformatted": "20",
-					"Taxa_de_juros_efetiva_ao_mes__pagamento_por_debito_em_conta_Safra": "4",
-					"Taxa_de_juros_efetiva_ao_mes__pagamento_por_debito_em_conta_Safra_unformatted": "4",
-					"Taxa_de_juros_efetiva_ao_mes__pagamento_por_outros_meios": "15",
-					"Taxa_de_juros_efetiva_ao_mes__pagamento_por_outros_meios_unformatted": "15",
-					"Utilizacao_de_limite_de_credito_existente_na_referida_conta_pra_realizacao_dos_debitos_total_ou_parcialmente": "True",
-					"Valor_do_Emprestimo": "11.111,00",
-					"Valor_do_Emprestimo_unformatted": "11111.00",
-					"Vencimento_final": "07/12/2023",
-					"Vencimento_final_unformatted": "2023-12-07T00:00:00.0000000",
-					"_displayName": "Características da Operação",
-					"_displayValue": "Características da Operação"
-				},
-				"Caracteristicas_da_operacao_garantida": {
-					"Caracteristicas_Da_Operacao_Garantida_Numero": "12",
-					"Caracteristicas_Da_Operacao_Garantida_Numero_unformatted": "12",
-					"_displayName": "Características da operação garantida",
-					"_displayValue": "Características da operação garantida",
-					"operacao_garantida": {
-						"__text": "Cédula de Crédito",
-						"_key": "Cédula de Crédito"
-					}
-				},
-				"Cedente_Fiduciante_Section": {
-					"Cedente_Fiduciante": {
-						"__text": "Devedor",
-						"_key": "Devedor"
-					},
-					"_displayName": "Cedente Fiduciante",
-					"_displayValue": "Cedente Fiduciante"
-				},
-				"CodForm": "1",
-				"Conta_Vinculada": {
-					"Conta_Vinculada_Agencia": "12232",
-					"Conta_Vinculada_Agencia_unformatted": "12232",
-					"Conta_Vinculada_Numero": "45",
-					"Conta_Vinculada_Numero_unformatted": "45",
-					"_displayName": "Conta Vinculada",
-					"_displayValue": "Conta Vinculada"
-				},
-				"Dados_do_Contratante_Devedor_Estipulante": {
-					"Dados_do_Contratante_Devedor_Estupulante_Ramo_de_Atividade": "Ramo de Atividade",
-					"Dados_do_Contratante_Devedor_Estupulante_Telefone_para_Contato": "19999600702",
-					"Dados_do_Contratante_Devedor_Estupulante_Telefone_para_Contato_unformatted": "19999600702",
-					"_displayName": "Dados do Contratante/Devedor/Estipulante",
-					"_displayValue": "Dados do Contratante/Devedor/Estipulante"
-				},
-				"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios": {
-					"Avista_no_valor_de_RS_XXX_Valor": "100.000,00",
-					"Avista_no_valor_de_RS_XXX_Valor_unformatted": "100000.00",
-					"Comissao_Corretagem_Tipo_Avista_no_valor_de_RS_XXX": "True",
-					"Condicoes_Gerais_Radio": {
-						"__text": "Dispenso",
-						"_key": "Dispenso"
-					},
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Avista_no_valor_de_RS_XXX_por_intermedio_do_CREDOR_sendo_seu_valor_financiado_pelo_CREDOR_e_agregado_ao_valor_da_Obrigacao": null,
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_CNPJ": "69.402.252/0001-43",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Codigo_SUSEP": "12154510",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Codigo_de_Producao": "2221",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Codigo_de_Producao_unformatted": "2221",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Comissao_de_Corretagem": "22%",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Comissao_de_Corretagem_unformatted": "22",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Conta_Corrente": "11111",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Conta_Corrente_unformatted": "11111",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Declaracao_de_Saude": {
-						"__text": "Concordo",
-						"_key": "Concordo"
-					},
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Nome_do_Corretor": "1212",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Num": "111",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Num_unformatted": "111",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Parcelado_No_ato_de_RS_XXX_e_em_X_parcelas_mensais_de_RS_XXX_a_cada_30_dias": null,
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Taxas": "11%",
-					"Dados_do_Seguro_Safra_Pretamista_Empresarial_Integral_Mutuo_Socios_Taxas_unformatted": "11",
-					"_displayName": "Dados do Seguro Safra Pretamista Empresarial Integral Mútuo Sócios",
-					"_displayValue": "Dados do Seguro Safra Pretamista Empresarial Integral Mútuo Sócios"
-				},
-				"Data": "29/12/2023",
-				"Data_unformatted": "2023-12-29T00:00:00.0000000",
-				"Demais_Encargos_e_Despesas": {
-					"IOF_Aliquota_De_Percentual_Calculado_Sobre_o_Valor_do_Credito_Valor_RS": "20,00",
-					"IOF_Aliquota_De_Percentual_Calculado_Sobre_o_Valor_do_Credito_Valor_RS_unformatted": "20.00",
-					"IOF_Aliquota_De_Percentual_ao_dia": "1",
-					"IOF_Aliquota_De_Percentual_ao_dia_unformatted": "1",
-					"IOF_Aliquota_De_Percentual_calculado_sobre_o_valor_do_credito": "1",
-					"IOF_Aliquota_De_Percentual_calculado_sobre_o_valor_do_credito_unformatted": "1",
-					"IOF_Aliquota_De_Valor_RS": "10,00",
-					"IOF_Aliquota_De_Valor_RS_unformatted": "10.00",
-					"Outras_tarifas_de_emissao_de_contrato": "2",
-					"Outros": "nada",
-					"Tarifas_de_emissao_de_contratos": "1,00",
-					"Tarifas_de_emissao_de_contratos_unformatted": "1.00",
-					"Valor_de_Outras_tarifas_de_emissao_de_contrato": "3,00",
-					"Valor_de_Outras_tarifas_de_emissao_de_contrato_unformatted": "3.00",
-					"_displayName": "Demais Encargos e Despesas",
-					"_displayValue": "Demais Encargos e Despesas"
-				},
-				"Devedor": {
-					"Devedor_CNPJ": "78.920.328/0001-13",
-					"Devedor_Endereco_Sede": "Rua Júlio Girardi",
-					"Devedor_Razao_Social": "devedor morre cedo",
-					"_displayName": "Devedor",
-					"_displayValue": "Devedor"
-				},
-				"Discriminacao_dos_Valores": {
-					"Capital_Maximo_Segurado": "100.000,00",
-					"Capital_Maximo_Segurado_unformatted": "100000.00",
-					"Discriminacao_dos_Valores_Despesas_vinculadas_a_concessao_do_credito_Percentual": "111%",
-					"Discriminacao_dos_Valores_Despesas_vinculadas_a_concessao_do_credito_Percentual_unformatted": "111",
-					"Discriminacao_dos_Valores_Despesas_vinculadas_a_concessao_do_credito_RS": "1.111,00",
-					"Discriminacao_dos_Valores_Despesas_vinculadas_a_concessao_do_credito_RS_unformatted": "1111.00",
-					"Discriminacao_dos_Valores_Outros_encargos_Percentual": "111%",
-					"Discriminacao_dos_Valores_Outros_encargos_Percentual_unformatted": "111",
-					"Discriminacao_dos_Valores_Outros_encargos_RS": "1,00",
-					"Discriminacao_dos_Valores_Outros_encargos_RS_unformatted": "1.00",
-					"Discriminacao_dos_Valores_Seguro_Percentual": "1%",
-					"Discriminacao_dos_Valores_Seguro_Percentual_unformatted": "1",
-					"Discriminacao_dos_Valores_Seguro_RS": "1,00",
-					"Discriminacao_dos_Valores_Seguro_RS_unformatted": "1.00",
-					"Discriminacao_dos_Valores_Tarifa_da_emissao_de_contrato_RS": "11%",
-					"Discriminacao_dos_Valores_Tarifa_da_emissao_de_contrato_RS_unformatted": "11",
-					"Discriminacao_dos_Valores_Tarifa_de_emissao_de_contrato_Percentual": "11%",
-					"Discriminacao_dos_Valores_Tarifa_de_emissao_de_contrato_Percentual_unformatted": "11",
-					"Discriminacao_dos_Valores_Tributos_IOF_Fiat_Percentual": "11%",
-					"Discriminacao_dos_Valores_Tributos_IOF_Fiat_Percentual_unformatted": "11",
-					"Discriminacao_dos_Valores_Tributos_IOF_Fiat_RS": "11,00",
-					"Discriminacao_dos_Valores_Tributos_IOF_Fiat_RS_unformatted": "11.00",
-					"Discriminacao_dos_Valores_Tributos_IOF_Prazo_Percentual": "1%",
-					"Discriminacao_dos_Valores_Tributos_IOF_Prazo_Percentual_unformatted": "1",
-					"Discriminacao_dos_Valores_Tributos_IOF_Prazo_RS": "1,00",
-					"Discriminacao_dos_Valores_Tributos_IOF_Prazo_RS_unformatted": "1.00",
-					"Discriminacao_dos_Valores_Valor_Financiado_Percentual": "25%",
-					"Discriminacao_dos_Valores_Valor_Financiado_Percentual_unformatted": "25",
-					"Discriminacao_dos_Valores_Valor_Financiado_RS": "5.000,00",
-					"Discriminacao_dos_Valores_Valor_Financiado_RS_unformatted": "5000.00",
-					"Discriminacao_dos_Valores_Valor_Solicitado_Percentual": "50%",
-					"Discriminacao_dos_Valores_Valor_Solicitado_Percentual_unformatted": "50",
-					"Discriminacao_dos_Valores_Valor_Solicitado_RS": "10.000,00",
-					"Discriminacao_dos_Valores_Valor_Solicitado_RS_unformatted": "10000.00",
-					"Discriminacao_dos_Valores_Valor_da_1_parcela": "10.000,00",
-					"Discriminacao_dos_Valores_Valor_da_1_parcela_unformatted": "10000.00",
-					"Discriminacao_dos_Valores_Valor_liberado_ao_cliente_vendedor_Percentual": "11%",
-					"Discriminacao_dos_Valores_Valor_liberado_ao_cliente_vendedor_Percentual_unformatted": "11",
-					"Discriminacao_dos_Valores_Valor_liberado_ao_cliente_vendedor_RS": "111,00",
-					"Discriminacao_dos_Valores_Valor_liberado_ao_cliente_vendedor_RS_unformatted": "111.00",
-					"Discriminacao_dos_Valores_Valor_total_das_parcelas_Percentual": "10%",
-					"Discriminacao_dos_Valores_Valor_total_das_parcelas_Percentual_unformatted": "10",
-					"Discriminacao_dos_Valores_Valor_total_das_parcelas_RS": "10.000,00",
-					"Discriminacao_dos_Valores_Valor_total_das_parcelas_RS_unformatted": "10000.00",
-					"Discriminacao_dos_Valores_Valor_total_devido_emprestimo_ou_financiamento_ou_arrendamento_mercantil_financeiro_no_ato_da_contratacao_Percentual": "1111%",
-					"Discriminacao_dos_Valores_Valor_total_devido_emprestimo_ou_financiamento_ou_arrendamento_mercantil_financeiro_no_ato_da_contratacao_Percentual_unformatted": "1111",
-					"Discriminacao_dos_Valores_Valor_total_devido_emprestimo_ou_financiamento_ou_arrendamento_mercantil_financeiro_no_ato_da_contratacao_RS": "111,00",
-					"Discriminacao_dos_Valores_Valor_total_devido_emprestimo_ou_financiamento_ou_arrendamento_mercantil_financeiro_no_ato_da_contratacao_RS_unformatted": "111.00",
-					"IOF_38": "0,38",
-					"IOF_38_unformatted": "0.38",
-					"Premio_Liquido_Value": "10.000,00",
-					"Premio_Liquido_Value_unformatted": "10000.00",
-					"Premio_Total": "110.000,00",
-					"Premio_Total_unformatted": "110000.00",
-					"_displayName": "Discriminação dos Valores",
-					"_displayValue": "Discriminação dos Valores"
-				},
-				"Emissao_e_outros_dados_dessa_cedula": {
-					"Data_da_emissao": "30/12/2023",
-					"Data_da_emissao_unformatted": "2023-12-30T00:00:00.0000000",
-					"Local_da_emissao": "local da emissao",
-					"Numero_de_vias__por_extenso": "dois",
-					"_displayName": "Emissão e outros dados dessa cédula",
-					"_displayValue": "Emissão e outros dados dessa cédula"
-				},
-				"Emitente": {
-					"Emitente_Agencia": "22222",
-					"Emitente_Agencia_unformatted": "22222",
-					"Emitente_Bairro": "central",
-					"Emitente_CEP": "13060-729",
-					"Emitente_CNPJ": "02974733000152",
-					"Emitente_Cidade": "shibuya",
-					"Emitente_Conta_Corrente": "11111",
-					"Emitente_Conta_Corrente_unformatted": "11111",
-					"Emitente_Endereco": "avenida shibuya",
-					"Emitente_Estado": {
-						"__text": "SP",
-						"_key": "SP"
-					},
-					"Emitente_Razao_Social": "yuji itadori",
-					"_displayName": "Emitente",
-					"_displayValue": "Emitente"
-				},
-				"Forma_de_Pagamento": {
-					"Dos_encargos": "*Dos encargos",
-					"Forma_De_Pagamentos_Num_de_Prestacoes": "50",
-					"Forma_De_Pagamentos_Num_de_Prestacoes_unformatted": "50",
-					"Periodicidade": "mensal",
-					"_displayName": "Forma de Pagamento",
-					"_displayValue": "Forma de Pagamento"
-				},
-				"Garantias": {
-					"Data_limite_de_reembolso": "22/12/2023",
-					"Data_limite_de_reembolso_unformatted": "2023-12-22T00:00:00.0000000",
-					"Garantias_Dropdown": {
-						"__text": "Hipoteca",
-						"_key": "Hipoteca"
-					},
-					"Juros_de_mora_Percentual_ao_Dia": "1",
-					"Juros_de_mora_Percentual_ao_Dia_unformatted": "1",
-					"Juros_de_mora_Taxa_CDI_Acrescida_De": "10",
-					"_displayName": "Garantias",
-					"_displayValue": "Garantias"
-				},
-				"Linhas_Tabela1": "2",
-				"Linhas_Tabela1_unformatted": "2",
-				"Linhas_Tabela2": "1",
-				"Linhas_Tabela2_unformatted": "1",
-				"Local": "banco do braza",
-				"Num_Contrato": "2",
-				"Num_Contrato_unformatted": "2",
-				"Objeto_de_Cessao_Fiduciaria_em_Garantia": {
-					"AMEX": null,
-					"ELO": null,
-					"HIPERCARD": null,
-					"MASTERCARD": "True",
-					"VISA": "True",
-					"_displayName": "Objeto de Cessão Fiduciária em Garantia",
-					"_displayValue": "Objeto de Cessão Fiduciária em Garantia"
-				},
-				"Operacao_Com_Lastro": {
-					"__text": "NÃO",
-					"_key": "NÃO"
-				},
-				"Pag_Assinaturas_Section": {
-					"Pagina_de_Assinaturas_Cedente_Conjuge__n": "Cedente Cônjuge",
-					"Pagina_de_Assinaturas_Cedente__n": "Cedente",
-					"_displayName": "Página de Assinaturas",
-					"_displayValue": "Página de Assinaturas"
-				},
-				"Planilha_CET_CET__a_a": "20%",
-				"Planilha_CET_CET__a_a_unformatted": "20",
-				"Planilha_CET_Data_Simulacao": "19/04/2024",
-				"Planilha_CET_Data_Simulacao_unformatted": "2024-04-19T00:00:00.0000000",
-				"Planilha_CET_Num_do_Contrato": "23",
-				"Planilha_CET_Num_do_Contrato_unformatted": "23",
-				"Planilha_CET_Numero_Simulacao": "1",
-				"Planilha_CET_Numero_Simulacao_unformatted": "1",
-				"Planilha_CET_Prazo__em_dias": "10",
-				"Planilha_CET_Prazo__em_dias_unformatted": "10",
-				"Planilha_CET_Produto": "Produto",
-				"Possui_Dom_Manual": {
-					"__text": "SIM",
-					"_key": "SIM"
-				},
-				"Protocolo_em_todas_as_paginas": {
-					"PROTOCOLO__Rodape": "teste rodape",
-					"_displayName": "Protocolo em todas as páginas",
-					"_displayValue": "Protocolo em todas as páginas"
-				},
-				"Seguro_Safra_Prestamista_Empresarial_Num_do_Contrato": "111",
-				"Seguro_Safra_Prestamista_Empresarial_Num_do_Contrato_unformatted": "111",
-				"Tarifas_Vigentes": {
-					"Encargos_e_despesas_financiados__IOF_e_Tarifa_de_Abertura_de_Credito_e_Seguro_Prestamista__este_quando_contratado": {
-						"__text": "NÃO",
-						"_key": "NÃO"
-					},
-					"_displayName": "Tarifas Vigentes",
-					"_displayValue": "Tarifas Vigentes"
-				},
-				"Terceiro_Garantidor": {
-					"Tabela_Terceiro_Garantidor_Container": {
-						"Tabela_Terceiro_Garantidor": {
-							"CPF_CNPJ": "02974733000155",
-							"Terceiro_Garantidor_Bairro": "itapetao",
-							"Terceiro_Garantidor_CEP": "13060-722",
-							"Terceiro_Garantidor_Cidade": "Campinas",
-							"Terceiro_Garantidor_Endereco": "Rua Júlio Girardi",
-							"Terceiro_Garantidor_Estado": {
-								"__text": "SP",
-								"_key": "SP"
-							},
-							"Terceiro_Garantidor_Nome_Razao_Social": "teste terceiro",
-							"_displayName": null,
-							"_displayValue": null
-						},
-						"_displayName": "Tabela Terceiro Garantidor",
-						"_displayValue": "Tabela Terceiro Garantidor"
-					},
-					"_displayName": "Terceiro Garantidor",
-					"_displayValue": "Terceiro Garantidor"
-				},
-				"Valor": "51.436,00",
-				"Valor_Minimo_de_Recebiveis_Constituidos": {
-					"Valor_Minimo_De_Recebiveis_Constituidos_Valor_percentual": "10%",
-					"Valor_Minimo_De_Recebiveis_Constituidos_Valor_percentual_por_extenso": "dez",
-					"Valor_Minimo_De_Recebiveis_Constituidos_Valor_percentual_unformatted": "10",
-					"_displayName": "Valor Mínimo de Recebíveis Constituídos",
-					"_displayValue": "Valor Mínimo de Recebíveis Constituídos"
-				},
-				"Valor_da_Garantia": {
-					"Valor_Da_Garantia_Valor_Percentual": "50%",
-					"Valor_Da_Garantia_Valor_Percentual_unformatted": "50",
-					"Valor_Da_Garantia_Valor_percentual_por_extenso": "cinquenta",
-					"_displayName": "Valor da Garantia",
-					"_displayValue": "Valor da Garantia"
-				},
-				"Valor_unformatted": "51436.00",
-				"_displayName": null,
-				"_displayValue": null,
-				"_mergedDocumentUid": "a57948ce-06a0-ee11-b842-48df378a7098"
-			}
-		}
+[
+	{
+		"HtmlId": "idSxform",
+		"HtmlValue": "3fca8a4c-474b-ee11-b85c-48df378aa068",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "especEventos",
+		"HtmlValue": "Outros",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "comentarioGeral",
+		"HtmlValue": "asedgefewfr",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "tipoTela",
+		"HtmlValue": "gestor",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "userGroups",
+		"HtmlValue": "Gestores,GrupoInterno,ISD,userExpress",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "sufixoNomeRazaoFundo",
+		"HtmlValue": " Investimento no Exterior",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NomeRazaoFundo",
+		"HtmlValue": "FRANKLIN TEMPLETON INVESTIMENTOS BRASIL LTDA Investimento no Exterior",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CNPJFundo",
+		"HtmlValue": "04.205.311/0001-48",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "EstruturaClasse",
+		"HtmlValue": "ClasseUnicaSemSubclasse",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPrazoDuracaoFundo",
+		"HtmlValue": "Indeterminado",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPeriodoDuracaoFundo",
+		"HtmlValue": "Dia",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodBaseDuracoFundo",
+		"HtmlValue": "DataAporteInicial",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodExercicioSocial",
+		"HtmlValue": "Dezembro",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PossuiQuorum",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodClassificacaoCVM",
+		"HtmlValue": "Multimercado",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodclasseCotasApli95",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodTipoFundoSelecionado",
+		"HtmlValue": "Aberto",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodDuracaoClasse",
+		"HtmlValue": "Indeterminado",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPrazoDuracao",
+		"HtmlValue": "Meses",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodTipoEnquadramentoTributarioSelecionado",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodCategoriaInvestidorCVM",
+		"HtmlValue": "Geral",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NivelRestriPubliAlvo",
+		"HtmlValue": "SemRestricao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodResponsabilidadeCotistas",
+		"HtmlValue": "Limitada",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "denominacaoDaClasse",
+		"HtmlValue": "CLASSE DE INVESTIMENTO MULTIMERCADO INVESTIMENTO NO EXTERIOR",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CNPJDaClasse",
+		"HtmlValue": "30.294.098/0001-06",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ConselhosConsul",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "descricaoDoConselho",
+		"HtmlValue": ",,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NaoPossuiQuorum",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "patrimonioInicial",
+		"HtmlValue": "100.000.000,00",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PagEncargo",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "diasContados",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodSelecionarDespesas",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "descricaoDosEncargos",
+		"HtmlValue": "afasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PrevAmbima",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "OpPlanos",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "RPPS",
+		"HtmlValue": "Indireto",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodEntFechadas",
+		"HtmlValue": "InstitucionalNaoExclusivo",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "Seguros",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPropPlano",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "VinculadosSeg",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "informarSeguradora",
+		"HtmlValue": "1",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "RecebeRec",
+		"HtmlValue": "recebeFies",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "inAdicionaisPerfil",
+		"HtmlValue": "afsfsfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PoliInvesFundo",
+		"HtmlValue": "AtivaNaoRef",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ResumoPoliticas",
+		"HtmlValue": "2 - Resumo da Política de investimento do Fundo              lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ObjetivosFundo",
+		"HtmlValue": "3 - Objetivos do Fundo                     lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum              lorem ypsulum       ",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "IndiceRef",
+		"HtmlValue": "1",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "Valor",
+		"HtmlValue": "sfsf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "Cupom",
+		"HtmlValue": "asfsaf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CredPrivado",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "OpExterior",
+		"HtmlValue": "verdadeiro",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "FormaInvest",
+		"HtmlValue": "Direto",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CriptoAtivos",
+		"HtmlValue": "falso,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "Informar",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "FundosEstruturados",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "InformarFI",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "OpWarrants",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "FundoObsInvSusten",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "OpValSupPatriLiquido",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ComenAdicionais",
+		"HtmlValue": "              ",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CobraTaxaAdministracao",
+		"HtmlValue": "Sim",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PeriodicidadeCobranca",
+		"HtmlValue": "Mensal",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "IndiceAtualizacao",
+		"HtmlValue": "IGPM",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPerfilTaxaAdministracaoSelecionadoCheck",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodTipoCobrancaTaxaAdministracaoSelecionado",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaAdministracaoMaxima",
+		"HtmlValue": "0,17",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "valorTaxaAdmVal",
+		"HtmlValue": "0,12",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaAdministracaoMinima",
+		"HtmlValue": "200,00",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "percentualFixaNaoSeAplica",
+		"HtmlValue": "temp",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "infoAdicionaisDetalheFixa",
+		"HtmlValue": "asfasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "margemOuEstoqueTaxaEscalonada",
+		"HtmlValue": "Margem",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "numFaixas",
+		"HtmlValue": ",2,2",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasEscalonada",
+		"HtmlValue": "0,0,0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasTeto",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "periodoTaxaGestao",
+		"HtmlValue": "ano",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TemTaxaPerformance",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodtipoDoCupom",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPeriodicidadeCobrancaTaxaPerformanceSelecionada",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "MesDeAfiricao",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "MesDeAfiricaoFim",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "MetodologiaDeCalculo",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PeriodicidadeDoFatorX",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "InfoAd",
+		"HtmlValue": "              ",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaDeSaida",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TipoDaTaxaSaida",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ValorTaxaSaida",
+		"HtmlValue": "fasfsaf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "valTaxaSaidaSeraRevertido",
+		"HtmlValue": "aoFundo",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "InformeJustificativaComercial",
+		"HtmlValue": "sfasafasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PrazoConversaoCotasCobrancaTaxaSaida",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ComentariosSobreAlteracaos",
+		"HtmlValue": ",,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "fundoSeraMonoativo",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimiteAdicionalFormadorMercado",
+		"HtmlValue": ",,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodOperacoesComDayTrade",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "fundoPossuiLimiteMin67",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "administracaoCNPJ",
+		"HtmlValue": "02.201.501/0001-61",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "administracaoRazaoSocial",
+		"HtmlValue": "BNY Mellon Serviços Financeiros DTVM S.A.",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "administracaoEndereco",
+		"HtmlValue": "Av. Presidente Wilson, 231, 11º andar, Rio de Janeiro, RJ, CEP 20030-905",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "gestorRazaoSocial",
+		"HtmlValue": "FRANKLIN TEMPLETON INVESTIMENTOS BRASIL LTDA",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "gestorCNPJ",
+		"HtmlValue": "13.641.353/0001-12",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "gestorEndereco",
+		"HtmlValue": "ATAULFO DE PAIVA Nº 255 9 ANDAR",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "nomeContato",
+		"HtmlValue": "afasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "telefoneContato",
+		"HtmlValue": "(34)(34) 3",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "emailContato",
+		"HtmlValue": "dffdfdsf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "homePage",
+		"HtmlValue": "asfasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "coGestorRazaoSocial",
+		"HtmlValue": "fasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "siteCoGestor",
+		"HtmlValue": "asfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "atoDeclaratorioCoGestor",
+		"HtmlValue": "34343",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "dataExpAtoDeclaratorioCoGestor",
+		"HtmlValue": "3333-03-31",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "nomeContatoCoGestor",
+		"HtmlValue": "sdff",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "telefoneContatoCoGestor",
+		"HtmlValue": "(43)(43) 43434-3443",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "emailContatoCoGestor",
+		"HtmlValue": "sdffadsfasfasrf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "homePageCoGestor",
+		"HtmlValue": "safasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "tesourariaCustodiaCNPJ",
+		"HtmlValue": "42.272.526/0001-70",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "tesourariaCustodiaRazaoSocial",
+		"HtmlValue": "BNY Mellon Banco S.A.",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "tesourariaCustodiaEndereco",
+		"HtmlValue": "Av. Presidente Wilson, 231, 10º andar, Rio de Janeiro, RJ, CEP 20030-905",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CustodiaCNPJ",
+		"HtmlValue": "sfafasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CustodiaRazaoSocial",
+		"HtmlValue": "safasfasf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CustodiaEndereco",
+		"HtmlValue": "afaf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "auditoriaRazaoSocial",
+		"HtmlValue": "KPMG AUDITORES INDEPENDENTES LTDA.",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "auditoriaCNPJ",
+		"HtmlValue": "57.755.217/0001-29",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "auditoriaEndereco",
+		"HtmlValue": "RUA DO PASSEIO 38 - SETOR 2, SLS. 1701/2/3/4, Rio de Janeiro, RJ, CEP 20021-290",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "IncluirDistribuidor",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "distribuicaoCNPJ",
+		"HtmlValue": "34.343.434/3434-33",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "distribuicaoRazaoSocial",
+		"HtmlValue": "dvdafef",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "distribuicaoEndereco",
+		"HtmlValue": "asfsafasfsaf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "DistribuidorLider",
+		"HtmlValue": "DL",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "escrituradorRazaoSocial",
+		"HtmlValue": "3453",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "escrituradorCNPJ",
+		"HtmlValue": "34.535",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "escrituradorEndereco",
+		"HtmlValue": "3dfdsaf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "controladorAtivosRazaoSocial",
+		"HtmlValue": "3453dsf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "controladorAtivosCNPJ",
+		"HtmlValue": "35435dsf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "controladorAtivosEndereco",
+		"HtmlValue": "5435edsf",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "consultoriaRazaoSocial",
+		"HtmlValue": "35efds",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "outrosRazaoSocial",
+		"HtmlValue": "35eddfd",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "outrosCNPJ",
+		"HtmlValue": "35esdfsd",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "outrosEndereco",
+		"HtmlValue": "345dfse",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "inAdicionais",
+		"HtmlValue": "3525dfs,,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CobraTaxaAdministracaoAdmCustodia",
+		"HtmlValue": "Sim",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PeriodicidadeCobrancaAdmCustodia",
+		"HtmlValue": "Mensal",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "IndiceAtualizacaoTaxaIGPMAdmCustodia",
+		"HtmlValue": "IGPM",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "FixaAdmCustodia",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodTipoCobrancaTaxaAdministracaoSelecionadoAdmCustodia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TemTaxaAdministracaoMaximaVAdmCustodia",
+		"HtmlValue": "TemTaxaAdmMax",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasEscalonadaAdmCustodia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasTetoAdmCustodia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "percentualFixaRS1AdmCustodia",
+		"HtmlValue": "wefd",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaAdministracaoMinimaAdmCustodia",
+		"HtmlValue": "34,35",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "percentualFixaRangeCustodia",
+		"HtmlValue": ",",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "rangeFixa2Custodia",
+		"HtmlValue": "35,3535,",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "percentualFixaMesCustodia",
+		"HtmlValue": ",",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "infoAdicionaisDetalheFixaAdmCustodia",
+		"HtmlValue": "435325",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "periodoTaxaGestaoAdmCustodia",
+		"HtmlValue": "ano",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ComentariosSobreAlteracaosAdmCustodia",
+		"HtmlValue": "325325",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CobrancaTaxaCustodia",
+		"HtmlValue": "Sim",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ValorTaxaCustodiaFixa",
+		"HtmlValue": "%",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ValorTaxaCustodiaFixaInserido",
+		"HtmlValue": "535",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaCustodiaMinima",
+		"HtmlValue": "535",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "FixaCustodia",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "percentualFixaRS1Custodia",
+		"HtmlValue": "353",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TaxaAdministracaoMinimaCustodia",
+		"HtmlValue": "53535",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasEscalonadaCustodia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasTetoCustodia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "numFaixasEscalonada",
+		"HtmlValue": "2",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "somaFaixasTetoEscalonada",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PeriodoCobrancaTaxaEscalonada",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodtipoDeCota",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodperiodicidadeDivulgacaoCota",
+		"HtmlValue": "Diário",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "horarioAplicacaoResgate",
+		"HtmlValue": "15:30",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodprazoDiasConversaoCotasApliSemCobranTaxaSaida",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodrefraDiferenciadaAplica",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodaplicacaoAtivosFinanceiros",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodindicadorPrazoPagResgate",
+		"HtmlValue": "DiasUteis",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "poderaHaverResgCompul",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "poderaHaverResgCotasFundoPagamentoAtivFinan",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodrefraDiferenciadaConvResgate",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PossuiMecanismoAmortizacao",
+		"HtmlValue": "verdadeiro",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "AmortizacaoDadaPelo",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TipoDeOferta",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "TipoDeDistribuicao",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodTipoFundoSelecionadoPublicoAlvo",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "RiscoFatores",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "OutrosAnbima",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "DivulgaInformacoesAnbima",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "DadosImprensa",
+		"HtmlValue": "Sim",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "RiscoAnalise",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "SeSimEspecificar",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "EscolherAgencia",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NotaRegra",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ModeloVar",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NivelDeRisco",
+		"HtmlValue": "0",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "preClassifc",
+		"HtmlValue": "Non Standard",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "houveNegociacaoTaxa",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "NecessidadeAlterarContrato",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "emissaoAbertaCotas",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "DDQCredPriv",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "PossuiQuorumQualificado",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "padraoStandard",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ServicoAdicionalContrado",
+		"HtmlValue": "Nao",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ContratoAssociadoNovoServico",
+		"HtmlValue": "Servico de plataforma BNYM",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "especificar",
+		"HtmlValue": "teste",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "AcoesNegociacaoMercadoOrganizado",
+		"HtmlValue": "1111",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "BonuseRecibosAcoesMercadoOrganizado",
+		"HtmlValue": "2222",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CotasFundosAcoes",
+		"HtmlValue": "3333",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "ConjuntoMinimoAtivosRendaVari",
+		"HtmlValue": "4444",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "apliFundoAcoesCompanhiaAberta",
+		"HtmlValue": "falso",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "AtivosEmissaoAdministradorGestora",
+		"HtmlValue": "111",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "AcoesEmissaoAdministrador",
+		"HtmlValue": "2333",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorFinanceiras",
+		"HtmlValue": "444",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorCompanhiasAbertas",
+		"HtmlValue": "555",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorSPESecc",
+		"HtmlValue": "66",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorFundosInvestimento",
+		"HtmlValue": "444",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorPessoaJuridica",
+		"HtmlValue": "2222",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorPessoasFisicas",
+		"HtmlValue": "11",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorUniaoFederal",
+		"HtmlValue": "333",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "LimitesConcentracaoEmissorFundosEstruturados",
+		"HtmlValue": "4",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPerfilTaxaAdministracaoSelecionadoAdmCustodiaCheck",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
+	},
+	{
+		"HtmlId": "CodPerfilTaxaAdministracaoSelecionadoCustodiaCheck",
+		"HtmlValue": "on",
+		"CustomDataReference": ""
 	}
-}
+]

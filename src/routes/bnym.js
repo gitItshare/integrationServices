@@ -14,14 +14,19 @@ router.post('/templates',async function(req, res) {
     let {recipients} = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
     let param = recipients.agents.map(el => {
       console.log(el.testemunhas)
+      
       let testemunhas = []
       testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
+      let assinaturas = []
+      assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
+      
       return {
         tipo: el.tipo,
         email: el.email,
         position: el.position,
         carimbo: el.carimbo,
-        testemunhas: testemunhas
+        testemunhas: testemunhas,
+        assinaturas:assinaturas
       }
     });
     console.log(param)

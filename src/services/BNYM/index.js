@@ -16,7 +16,7 @@ let dirname = path.resolve(path.dirname(''));
         this.accountID = docusignCredentials.accountID
         this.privateKey = docusignCredentials.privateKey
         this.scope = scope
-        this.authUrl  = 'https://account.docusign.com/oauth/token?'
+        this.authUrl  = 'https://account-d.docusign.com/oauth/token?'
         this.jwtToken = ""
         this.authToken = ""
     }
@@ -43,7 +43,7 @@ let dirname = path.resolve(path.dirname(''));
              const payload = {
                 "iss": this.integrationKey,
                 "sub": this.userID,
-                "aud":"account.docusign.com",
+                "aud":"account-d.docusign.com",
                 "iat": 1628496664,
                 "exp":1912493464,
                 "scope": this.scope
@@ -59,9 +59,7 @@ let dirname = path.resolve(path.dirname(''));
          }
      }
     async makeTemplate (params) {
-        let Username = process.env.usernameBny
-let Password = process.env.passwordBny
-let IntegratorKey = process.env.integratorKeyBny
+
         try {
             console.log(this.authToken)
 
@@ -170,8 +168,10 @@ let IntegratorKey = process.env.integratorKeyBny
                     ]         
             }
             let recipients = []
+            console.log(params)
             let agents = params.map((el, index) => {
                     let recipientId = "2132"+index
+                    let indexAg = index+1
                     let y = el.position["_text"].split(",")[0]
                     let x = el.position["_text"].split(",")[1]
                     let ycar = el.carimbo["_text"].split(",")[0]
@@ -338,9 +338,73 @@ let IntegratorKey = process.env.integratorKeyBny
                                     "inputOptions": [],
                                     "workflowLabel": ""
                                 },
-                                "routingOrder": index+1,
+                                "routingOrder": indexAg,
                                 "note": "",
                                 "roleName": testemunha.nome["_text"],
+                                "deliveryMethod": "email",
+                                "templateLocked": "false",
+                                "templateRequired": "false",
+                                "inheritEmailNotificationConfiguration": "false"
+                            }
+                        })
+                    }
+                    let assinaturas = []
+                    if(el.assinaturas[0]){
+                        assinaturas = el.assinaturas.map((assinatura, index) => {
+                            return {
+                                "defaultRecipient": "false",
+                
+                                "signInEachLocation": "false",
+                                "recipientSignatureProviders": [
+                                    {
+                                        "sealDocumentsWithTabsOnly": "false",
+                                        "signatureProviderName": "universalsignaturepen_imageonly",
+                                        "signatureProviderOptions": {}
+                                    }
+                                ],
+                                "tabs":{
+                                    "signHereTabs":[
+                                       {
+                                          "stampType":"signature",
+                                          "name":"SignHere",
+                                          "tabLabel":"Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
+                                          "scaleValue":"1",
+                                          "optional":"false",
+                                          "documentId":"1",
+                                          "recipientId":recipientId+1+index,
+                                          "pageNumber":"1",
+                                          "xPosition":x,
+                                          "yPosition":y,
+                                          "anchorString":"\\ass"+assinatura.ancora["_text"]+"\\",
+                                          "anchorXOffset":"0",
+                                          "anchorYOffset":"0",
+                                          "anchorUnits":"pixels",
+                                          "anchorCaseSensitive":"false",
+                                          "anchorMatchWholeWord":"true",
+                                          "anchorHorizontalAlignment":"left",
+                                          "anchorTabProcessorVersion":"v1_3",
+                                          "tabId":"15bdf337-9e98-43af-b560-6019d250e5bb",
+                                          "templateLocked":"false",
+                                          "templateRequired":"false",
+                                          "tabType":"signhere"
+                                       }
+                                    ],
+                                 },
+                                "agentCanEditEmail": "false",
+                                "agentCanEditName": "false",
+                                "name": assinatura.nome["_text"],
+                                "email": "",
+                                "recipientId": recipientId+1+index+1,
+                                "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
+                                "accessCode": "",
+                                "requireIdLookup": "false",
+                                "identityVerification": {
+                                    "inputOptions": [],
+                                    "workflowLabel": ""
+                                },
+                                "routingOrder": indexAg,
+                                "note": "",
+                                "roleName": assinatura.nome["_text"],
                                 "deliveryMethod": "email",
                                 "templateLocked": "false",
                                 "templateRequired": "false",
@@ -351,6 +415,7 @@ let IntegratorKey = process.env.integratorKeyBny
     
                     recipients.push(recipient)
                     recipients.push(...testemunhas)
+                    recipients.push(...assinaturas)
 
                 return   {
                             "name": "BNY Mellon - CENTRALIZADOR",
@@ -372,14 +437,14 @@ let IntegratorKey = process.env.integratorKeyBny
             })
              template.signers = recipients
              template.agents = agents
-
-            const resp = await axios.put(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/e181bd1f-348e-4df7-aca9-e006ee328e3f/recipients`, template, {
+            console.log(template.signers)
+            const resp = await axios.put(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/76b4990a-8742-4925-aa4c-ff8636d8a612/recipients`, template, {
                 headers: {
                     'Authorization': this.authToken
                 }
             }); 
             console.log(resp.data.recipientUpdateResults)
-             return resp
+             return "resp"
         } catch (error) {
              console.log(error)
         }
