@@ -1,2 +1,4 @@
 import integration from "./integration.js"
-export default {integration}
+import Docusign from "./docusign.js"
+
+export default {integration, Docusign}

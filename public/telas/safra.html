@@ -13,54 +13,20 @@
                 <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Cliente &nbsp;</strong></span>
                 </legend>
                 <div id="clienteContainer">
-                    <div  class='myContainer row'>
+                    <div class='myContainer row'>
                         <div class="form-group col-12 col-sm-3">
                             <label for="nome-representante">
-                                <p class="label">Representantes</p>
+                                <p class="label">Grupos de Representantes</p>
                             </label>
-                            <input list="nome-representante-list" id="nome-representante" placeholder="Buscar"
-                            class="form-control rounded-0 novosInputs" required="">
-                            <datalist id="nome-representante-list"></datalist>
-                        </div>
-                        <div class="form-group col-12 col-sm-3">
-                            <label for="cpf-representante">
-                                <p class="label">CPF/CNPJ</p>
-                            </label>
-                            <input list="cpf-representante-list" id="cpf-representante" placeholder="Buscar"
-                                class="form-control rounded-0 novosInputs" required="">
-                                <datalist id="cpf-representante-list"></datalist>
-                        </div>
-                            <div class="form-group col-12 col-sm-3">
-                                <label for="email-representante">
-                                    <p class="label">E-mail</p>
-                                </label>
-                                <input list="email-representante-list" id="email-representante" placeholder="Buscar"
-                                    class="form-control rounded-0 novosInputs" required="">
-                                    <datalist id="email-representante-list"></datalist>
-
-                            </div>
-
-                            <div class="form-group col-12 col-sm-3">
-                                <div class="row">
-                                    <label for="tipo-assinatura">
-                                        <p class="label">Tipo de assinatura</p>
-                                    </label>
-                                    <div class="group col-12 col-sm-10">
-                                        <select id="tipo-assinatura" class="form-select" aria-label="Default select example">
-                                            <option selected>Selecione</option>
-                                            <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                                            <option value="ICP">ICP</option>
-                                            <option value="BIOMETRIA">BIOMETRIA</option>
-                                        </select>
-                                    </div>
-                                    <div class="group col-12 col-sm-2">
-                                        <a id="removeCli" class="btn btn-danger btn-sm" style="width: 30px;">X</a>
-                                    </div>
-                                </div>
-                         
+                            <select id="clientGrupos" class="form-select" aria-label="Default select example">
+                                <option selected>Selecione um grupo</option>
+                              </select>
+                              
+                              <br>
                         </div>
                     </div>
-                        <br>
+                        <div id="gruposDiv" class='myContainer row'>
+                        </div>
                         <div class="row">
                             <div class="form-group">
                                 <a id="addRepCli" class="btn btn-primary"> Adicionar Representante</a>
@@ -76,62 +42,6 @@
             <fieldset id="terceiros" class="border p-2">
                 <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Terceiro Garantidor &nbsp;</strong></span>
                 </legend>
-                <div id="terceirosContainer">
-                    <div  class='myContainer row'>
-                        <div class="form-group col-12 col-sm-3">
-                            <label for="nome-representante-terceiros">
-                                <p class="label">Representantes</p>
-                            </label>
-                            <input list="nome-representante-terceiros-list"  id="nome-representante-terceiros" placeholder="Buscar"
-                                class="form-control rounded-0 novosInputs" required="">
-                        </div>
-                        <div class="form-group col-12 col-sm-3">
-                            <label for="cpf-representante-terceiros">
-                                <p class="label">CPF/CNPJ</p>
-                            </label>
-                            <input list="cpf-representante-terceiros-list" id="cpf-representante-terceiros" placeholder="Buscar"
-                                class="form-control rounded-0 novosInputs" required="">
-                                <datalist id="cpf-representante-terceiros-list"></datalist>
-                        </div>
-                            <div class="form-group col-12 col-sm-3">
-                                <label for="email-representante">
-                                    <p class="label">E-mail</p>
-                                </label>
-                                <input list="email-representante-terceiros-list" id="email-representante-terceiros" placeholder="Buscar"
-                                    class="form-control rounded-0 novosInputs" required="">
-                                    <datalist id="email-representante-terceiros-list"></datalist>
-                            </div>
-
-                            <div class="form-group col-12 col-sm-3">
-                                <div class="row">
-                                    <label for="tipo-assinatura-terceiros">
-                                        <p class="label">Tipo de assinatura</p>
-                                    </label>
-                                    <div class="group col-12 col-sm-10">
-                                        <select id="tipo-assinatura-terceiros" class="form-select" aria-label="Default select example">
-                                            <option selected>Selecione</option>
-                                            <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                                            <option value="ICP">ICP</option>
-                                            <option value="BIOMETRIA">BIOMETRIA</option>
-                                        </select>
-                                    </div>
-                                    <div class="group col-12 col-sm-2">
-                                        <a id="removeCli-terceiros" class="btn btn-danger btn-sm" style="width: 30px;"> X</a>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                        <br>
-                        <div class="row">
-                            <div class="form-group">
-                                <a id="addRepCli-terceiros" class="btn btn-primary"> Adicionar Representante</a>
-                        </div>
-                        <div hidden id="removeDiv" class="form-group">
-                            <a id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</a>
-                        </div>
-                        </div>
-           
-                </div>
 
             </fieldset>
             <br>
@@ -248,7 +158,14 @@
             <input disabled=true id="cnpj-representante-avalista" placeholder="Buscar"
                 class="form-control rounded-0 novosInputs" required="">
         </div>
-
+        <div class="form-group col-12 col-sm-3">
+            <label for="email-representante-terceiros">
+                <p class="label">E-mail</p>
+            </label>
+            <input list="email-representante-terceiros-list" id="email-representante-terceiros" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
+                <datalist id="email-representante-terceiros-list"></datalist>
+        </div>
         <div class="form-group col-12 col-sm-3">
             <div class="row">
                 <label for="tipo-assinatura-avalista">
@@ -267,55 +184,25 @@
                 </div>
             </div>
     </div>
+    
 </div>
 <fieldset id="avalistas0" hidden class="border p-2">
     <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalista &nbsp;</strong></span>
     </legend>
     <div id="aavalistasContainer">
-        <div  class='myContainer row'>
+        <div class='myContainer row'>
             <div class="form-group col-12 col-sm-3">
-                <label for="nome-representante-avalistas">
-                    <p class="label">Representantes</p>
+                <label for="nome-representante">
+                    <p class="label">Grupos de Representantes</p>
                 </label>
-                <input list="nome-representante-avalistas-list" id="nome-representante-avalistas" placeholder="Buscar"
-                class="form-control rounded-0 novosInputs" required="">
-                <datalist id="nome-representante-avalistas-list"></datalist>
+                <select id="avalistasGroups" class="form-select" aria-label="Default select example">
+                    <option selected>Selecione um grupo</option>
+                  </select>
+                  
+                  <br>
             </div>
-            <div class="form-group col-12 col-sm-3">
-                <label for="cpf-representante-avalistas">
-                    <p class="label">CPF/CNPJ</p>
-                </label>
-                <input list="cpf-representante-avalistas-list" id="cpf-representante-avalistas" placeholder="Buscar"
-                    class="form-control rounded-0 novosInputs" required="">
-                    <datalist id="cpf-representante-avalistas-list"></datalist>
-            </div>
-                <div class="form-group col-12 col-sm-3">
-                    <label for="email-representante">
-                        <p class="label">E-mail</p>
-                    </label>
-                    <input list="email-representante-avalistas-list" id="email-representante-avalistas" placeholder="Buscar"
-                        class="form-control rounded-0 novosInputs" required="">
-                        <datalist id="email-representante-avalistas-list"></datalist>
-                </div>
-
-                <div class="form-group col-12 col-sm-3">
-                    <div class="row">
-                        <label for="tipo-assinatura-avalistas">
-                            <p class="label">Tipo de assinatura</p>
-                        </label>
-                        <div class="group col-12 col-sm-10">
-                            <select id="tipo-assinatura-avalistas" class="form-select" aria-label="Default select example">
-                                <option selected>Selecione</option>
-                                <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                                <option value="ICP">ICP</option>
-                                <option value="BIOMETRIA">BIOMETRIA</option>
-                            </select>
-                        </div>
-                        <div class="group col-12 col-sm-2">
-                            <a id="removeCli-avalistas" class="btn btn-danger btn-sm" style="width: 30px;"> X</a>
-                        </div>
-                    </div>
-            </div>
+        </div>
+        <div id="gruposAvalistaDiv" class='myContainer row'>
         </div>
             <br>
             <div class="row">
