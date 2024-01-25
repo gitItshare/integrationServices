@@ -95,151 +95,276 @@ $.ajax({
           }).done(res => {
             let {data}= JSON.parse(res)
             console.log("DATAA", data)
-            let representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).representantes
+            let representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).agrupamentoRepresentantes
+            console.log("REPRESENTNTE", representanteCli)
 
-            let terceiros = data.find(el => el.documentoCliente == terceiroGarantidor.CPF_CNPJ.replace(/[^\w\s]/gi, '')).representantes
             console.log(avalistasTable)
             let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
             let avalistas = data.filter(el => avalistasCNPJ.includes(el.documentoCliente))
-            console.log("AQUIII", avalistas)
-            preencherLists(representanteCli, clientList, clientEmailList, clientCpfList)
-            preencherLists(terceiros, terceirosList, terceirosEmailList, terceirosCpfList)
+            let terceirosCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
+            let terceiros = data.filter(el => terceirosCNPJ.includes(el.documentoCliente))
+            console.log("AQUIII", representanteCli)
+            preencherLists(representanteCli, clientGrupos)
             preencherAvalistas(avalistas)
+            preencherTerceiros(terceiros)
         })
     })
 
 
-
-function addClient(event, id, cloneParam) {
-    try {
-        let clone
-        if (!cloneParam)
-            clone = document.getElementById(id).cloneNode(true)
-        else {
-            clone = cloneParam.children[1].children[0].cloneNode(true)
-            clone.children[0].children[1].value = ""
-            clone.children[1].children[1].value = ""
-            clone.children[2].children[1].value = ""
-        }
-        console.log("aQUIIII", clone)
-        clone.removeAttribute("hidden")
-        const buttomremove = clone.children[3].children[0].children[2].children[0]
-        buttomremove.addEventListener("click", (event) => {
-            remove(event)
-        })
-        clone.children[0].children[1].addEventListener("blur", preencherAutomatico)
-        contadorRepCli++
-        clone.id = "representante" + contadorRepCli
-        console.log("adcioonando", clone)
-        return clone
-
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-function remove(event) {
-    let self = event.target
-    const container = self.parentElement.parentElement.parentElement.parentElement
-    console.log(container)
-    container.remove()
-}
-
-buttonCli.addEventListener("click", function (event) {
-    const clone = addClient(event, "clienteContainer0")
-    buttonCli.parentElement.parentElement.insertAdjacentElement("beforebegin", clone)
-})
-
-buttonCliTerceiros.addEventListener("click", function (event) {
-    const clone = addClient(event, "tericeiroContainer0")
-    buttonCliTerceiros.parentElement.parentElement.insertAdjacentElement("beforebegin", clone)
-})
-
-
-buttonRemoveCli.addEventListener("click", function (event) {
-    const clone = remove(event, "clienteContainer0")
-})
-
-buttonRemoveCliTerceiros.addEventListener("click", function (event) {
-    const clone = remove(event, "tericeiroContainer0")
-})
-
-document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
-document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
-
-function preencherAutomatico() {
-    console.log(this.parentElement.parentElement.parentElement.parentElement)
-    let value = this.value
-    let cpf = this.parentElement.parentElement.children[1].children[1]
-    let email = this.parentElement.parentElement.children[2].children[1]
-    let label = this.parentElement.parentElement.children[0].children[0]
-    console.log("LABEELL", label)
-    const options = Array.from(clientList.options).find(el => el.value == value)
-    let condEespecial = options.getAttribute("condEespecial")
-    if(condEespecial == "true")
-        label.innerHTML = '<p style="color:tomato">Representantes Condicao Especial</p>'
-    else
-        label.innerHTML = '<p>Representantes</p>'
+    function addClient(event, id, cloneParam, representante = {}) {
+        try {
+            let clone = document.getElementById(id).cloneNode(true)
     
-    if (!value){
-        email.value = ""
-        cpf.value = ""
-        label.innerHTML = '<p>Representantes</p>'
+            if (representante.nome) {
+                clone.children[0].children[1].value = representante.nome
+                clone.children[1].children[1].value = representante.documento
+                clone.children[2].children[1].value = representante.emailContatoAssinatura
+            }
+            // console.log("aQUIIII", clone.children[2].children[0].children[2].children[0])
+            clone.removeAttribute("hidden")
+    
+            let buttomremove = clone.children[3].children[0].children[2].children[0]
+    
+            buttomremove.addEventListener("click", (event) => {
+                remove(event)
+            })
+            clone.children[0].children[1].addEventListener("blur", preencherAutomatico)
+            contadorRepCli++
+            clone.id = "representante" + contadorRepCli
+            console.log("adcioonando", clone)
+            return clone
+    
+        } catch (error) {
+            console.log(error)
+        }
     }
-    else{
-        email.value = options.getAttribute("email")
-        cpf.value = options.getAttribute("cpf")
+    
+    function remove(event) {
+        let self = event.target
+        const container = self.parentElement.parentElement.parentElement.parentElement
+        console.log(container)
+        container.remove()
     }
-}
-
-function preencherLists(array, listName, listEmail, listCpf) {
-    console.log("ARRAyy", array)
-    array.forEach((el, index) => {
-        listName.innerHTML += `<option condEespecial="${el.indicadorCondicaoEspecial}" qtdAss="${el.quantidadeAssinaturasConjunto}" cpf="${el.documento}" email="${el.emailContatoAssinatura}" name="${index}" value="${el.nome}">${el.nome}</option>`
-        listEmail.innerHTML += `<option value="${el.emailContatoAssinatura}">${el.emailContatoAssinatura}</option>`
-        listCpf.innerHTML += `<option value="${el.documento}">${el.documento}</option>`
+    
+    buttonCli.addEventListener("click", function (event) {
+        const clone = addClient(event, "clienteContainer0")
+        buttonCli.parentElement.parentElement.insertAdjacentElement("beforebegin", clone)
     })
-}
-function preencherAvalistas(avalistas) {
-    avalistas.forEach((el, index) => {
-        const clone = document.getElementById("avalistas0").cloneNode(true)
-        clone.removeAttribute("hidden")
-        let addButton = clone.children[1].children[2].children[0].children[0]
-        clone.id = el.nome
-        clone.children[0].innerText = el.nome
-        const buttomremove = clone.children[1].children[0].children[3].children[0].children[2].children[0]
-        buttomremove.addEventListener("click", (event) => {
-            remove(event)
+    
+    
+    let changeGroups = (self, representantesArray, button, idContainer, gruposDiv) => {
+        console.log("REPRESENTANTES ", button.parentElement.parentElement.parentElement.children.length)
+        if (button.parentElement.parentElement.parentElement.children.length >= 3) {
+            button.parentElement.parentElement.parentElement.children[1].innerHTML = ""
+        }
+    
+    
+        let value = self.value
+        let condEespecial = self.options[self.selectedIndex].getAttribute("condeespecial")
+        let label = self.parentElement.children[0]
+        if (condEespecial == "true")
+            label.innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
+        else
+            label.innerHTML = '<p>Grupos</p>'
+    
+        let representantes = representantesArray.find(el => el.nomeAgrupamento == self.value).representantes
+    
+        console.log("REP0 ", representantes)
+    
+        representantes.forEach(representante => {
+            const clone = addClient(null, idContainer, false, representante)
+            document.getElementById(gruposDiv).appendChild(clone)
         })
-        const inputName = clone.children[1].children[0].children[0].children[1]
-        const inputNameList = clone.children[1].children[0].children[0].children[2]
-        const inputEmail = clone.children[1].children[0].children[2].children[1]
-        const inputEmailList = clone.children[1].children[0].children[2].children[2]
-        const inputCpfList = clone.children[1].children[0].children[1].children[2]
-        const inputCpf = clone.children[1].children[0].children[1].children[1]
-
-        inputName.setAttribute("list", el.nome + "list")
-        inputNameList.id = el.nome + "list"
-        inputEmail.setAttribute("list", el.nome + "listEmail")
-        inputEmailList.id = el.nome + "listEmail"
-        inputCpf.setAttribute("list", el.nome + "listCpf")
-        inputCpfList.id = el.nome + "listCpf"
-        avalistaDIV.appendChild(clone)
-
-        addButton.addEventListener("click", function (event) {
-            const cloneCli = addClient(event, "avalistaContainer0", clone)
-
-            console.log("Clone cli", cloneCli)
-            cloneCli.setAttribute("style", "margin-bottom: 20px")
-
-            addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
-        })
-
-
-        inputName.addEventListener("blur", preencherAutomatico)
-        let representantesAvalista = el.representantes
-
-        preencherLists(representantesAvalista, inputNameList, inputEmailList, inputCpfList)
-
+    
+    
+    }
+    clientGrupos.addEventListener("change", function () {
+        changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv")
+    
     })
-}
+    document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
+    document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
+    
+    function preencherAutomatico() {
+        console.log(this.parentElement.parentElement.parentElement.parentElement)
+        let value = this.value
+        let cpf = this.parentElement.parentElement.children[1].children[1]
+        let email = this.parentElement.parentElement.children[2].children[1]
+        let label = this.parentElement.parentElement.children[0].children[0]
+        console.log("LABEELL", label)
+        const options = Array.from(clientList.options).find(el => el.value == value)
+        let condEespecial = options.getAttribute("condEespecial")
+        if (condEespecial == "true")
+            label.innerHTML = '<p style="color:tomato">Representantes Condicao Especial</p>'
+        else
+            label.innerHTML = '<p>Representantes</p>'
+    
+        if (!value) {
+            email.value = ""
+            cpf.value = ""
+            label.innerHTML = '<p>Representantes</p>'
+        } else {
+            email.value = options.getAttribute("email")
+            cpf.value = options.getAttribute("cpf")
+        }
+    }
+    
+    function preencherLists(array, listName, listEmail, listCpf) {
+        console.log("ARRAyy", array)
+        array.forEach((el, index) => {
+            listName.innerHTML += `<option condEespecial="${el.indicadorCondicaoEspecial}" name="${index}" value="${el.nomeAgrupamento
+                    }">${el.nomeAgrupamento
+                    }</option>`
+        })
+    }
+    
+    function preencherAvalistas(avalistas) {
+        avalistas.forEach((el, index) => {
+            const clone = document.getElementById("avalistas0").cloneNode(true)
+            clone.removeAttribute("hidden")
+            let addButton = clone.children[1].children[3].children[0].children[0]
+            console.log(el)
+            const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ == el.documentoCliente)
+            console.log("NOMWE", avalista)
+            let nome = avalista.Avalistas_Nome_Razao_Social
+            clone.id = nome
+            clone.children[0].innerText = nome
+            const inputNameList = clone.children[1].children[0].children[0].children[1]
+    
+            avalistaDIV.appendChild(clone)
+            let selectGroups = clone.children[1].children[0].children[0].children[1]
+            avalistaDiv = clone.children[1].children[1].id = "gruposAvalistaDiv" + el.documentoCliente
+            console.log("AVALISTAS ", avalista)
+            selectGroups.addEventListener("change", function () {
+                changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente)
+            })
+            addButton.addEventListener("click", function (event) {
+                console.log(clone)
+                const cloneCli = addClient(event, "avalistaContainer0", true)
+    
+                console.log("Clone cli", cloneCli)
+                cloneCli.setAttribute("style", "margin-bottom: 20px")
+    
+                addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+            })
+    
+    
+            // inputName.addEventListener("blur", preencherAutomatico)
+            let representantesAvalista = el.agrupamentoRepresentantes
+    
+            preencherLists(representantesAvalista, inputNameList)
+    
+        })
+    }
+    
+    function maketableCli(array, anchor) {
+        let xml = ""
+        array.forEach((el, index) => {
+            xml += "<signers>"
+            let nome = el.children[0].children[1].value
+            let cpf = el.children[1].children[1].value
+            let email = el.children[2].children[1].value
+            let tipoASs = el.children[3].children[0].children[1].children[0].value
+            let tag = anchor + (index + 1)
+            xml += "<nome>" + nome + "</nome>"
+            xml += "<email>" + email + "</email>"
+            xml += "<cpf>" + cpf + "</cpf>"
+            xml += "<tag>" + tag + "</tag>"
+            xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+            console.log(el)
+            xml += "</signers>"
+        })
+        return xml
+    }
+    
+    function maketable(array, anchor) {
+        let xml = ""
+        array.forEach((element, index) => {
+            if (index > 0) {
+                let representantes = Array.from(element.children[1].children[1].children)
+                console.log("TESTEE", representantes)
+                representantes.forEach((el, i) => {
+                    xml += "<signers>"
+                    let nome = el.children[0].children[1].value
+                    let cpf = el.children[1].children[1].value
+                    let email = el.children[2].children[1].value
+                    let tipoASs = el.children[3].children[0].children[1].children[0].value
+                    let tag = anchor + (i + index)
+                    xml += "<nome>" + nome + "</nome>"
+                    xml += "<email>" + email + "</email>"
+                    xml += "<cpf>" + cpf + "</cpf>"
+                    xml += "<tag>" + tag + "</tag>"
+                    xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+                    console.log(el)
+                    xml += "</signers>"
+                })
+            }
+        })
+        return xml
+    }
+    const buttonSave = document.getElementById("ctl00_MainContent_ctl01_btnSaveBottom")
+    
+    function makeXml() {
+        try {
+            let containerCli = Array.from(document.querySelectorAll("#nome-representante")[0].parentElement.parentElement.parentElement.children)
+            let containerAvalistas = Array.from(document.getElementById("avalistas").children)
+            let containerTerceiros = Array.from(document.getElementById("terceiros").children)
+    
+            console.log("CONTAINER", containerCli)
+            let xml = "<recipients>"
+            xml += maketableCli(containerCli, "emitente")
+            xml += maketable(containerTerceiros, "tercg")
+            xml += maketable(containerAvalistas, "aval")
+    
+            xml += "</recipients>"
+            document.getElementById("xml").value = xml
+            return xml
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    window.make = makeXml
+    
+    function preencherTerceiros(avalistas) {
+        avalistas.forEach((el, index) => {
+            const clone = document.getElementById("avalistas0").cloneNode(true)
+            clone.removeAttribute("hidden")
+            let addButton = clone.children[1].children[3].children[0].children[0]
+            console.log(el)
+            const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ == el.documentoCliente)
+            console.log("NOMWE", avalista)
+            let nome = avalista.Avalistas_Nome_Razao_Social
+            clone.id = nome
+            clone.children[0].innerText = nome
+            const inputNameList = clone.children[1].children[0].children[0].children[1]
+    
+            terceirosDIV.appendChild(clone)
+            let selectGroups = clone.children[1].children[0].children[0].children[1]
+            avalistaDiv = clone.children[1].children[1].id = "gruposTerceirosDiv" + el.documentoCliente
+            console.log("AVALISTAS ", avalista)
+            selectGroups.addEventListener("change", function () {
+                changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente)
+            })
+            addButton.addEventListener("click", function (event) {
+                console.log(clone)
+                const cloneCli = addClient(event, "tericeiroContainer0", true)
+    
+                console.log("Clone cli", cloneCli)
+                cloneCli.setAttribute("style", "margin-bottom: 20px")
+    
+                addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+            })
+    
+    
+            // inputName.addEventListener("blur", preencherAutomatico)
+            let representantesAvalista = el.agrupamentoRepresentantes
+    
+            preencherLists(representantesAvalista, inputNameList)
+    
+        })
+    }
+    buttonSave.addEventListener("mouseover", function () {
+        console.log("ATIVANDO MOUSE OVER")
+        makeXml()
+    })

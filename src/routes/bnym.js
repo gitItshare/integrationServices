@@ -32,7 +32,13 @@ router.post('/templates',async function(req, res) {
     console.log(param)
 
   //https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=bba97b1a-65fc-4e70-99ef-2fb268137beb&redirect_uri=https://www.bnymellon.com/br/pt.html
-
+  let auth = {
+    userID: process.env.userIDSafra,
+    integrationKey: process.env.integrationKeySafra,
+    dsOauthServer: process.env.dsOauthServerSafra,
+    accountID: process.env.accountIDSafra,
+    privateKey: process.env.privatekeyDemo
+}
   const scope = "signature impersonation spring_read spring_write";
     const bny = new bnyService (auth, scope)
     await bny.jwt()

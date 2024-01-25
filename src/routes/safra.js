@@ -559,6 +559,160 @@ let resp = [
                 ]
             }
         ]
+    },
+    {
+        "documentoCliente": "02974733000155",
+        "agrupamentoRepresentantes": [
+            {
+                "identificacaoSequenciaCliente": 7044,
+                "identificacaoSequenciaConta": 5,
+                "identificacaoSequenciaDocumento": 41,
+                "identificacaoSequenciaGrupoAlcada": 7,
+                "quantidadeAssinaturasConjunto": 2,
+                "indicadorCondicaoEspecial": false,
+                "codigoMoeda": "REAL",
+                "valorLimiteAlcada": 300000,
+                "identificacaoSequenciaGrupoAssinatura": 1,
+                "nomeAgrupamento": "1 - JOSE | PATRICIA",
+                "representantes": [
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "10203062892",
+                        "codigoAtribuicao": "CATEGORIA B",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JOSE MAURICIO DE SOUZA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
+                        "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
+                    },
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "18148332851",
+                        "codigoAtribuicao": "GRUPO II",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "PATRICIA ZANINI MERELLO",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
+                        "descricaoTipoAssinatura": "ICP-BRASIL"
+                    }
+                ]
+            },
+            {
+                "identificacaoSequenciaCliente": 7044,
+                "identificacaoSequenciaConta": 5,
+                "identificacaoSequenciaDocumento": 41,
+                "identificacaoSequenciaGrupoAlcada": 7,
+                "quantidadeAssinaturasConjunto": 2,
+                "indicadorCondicaoEspecial": false,
+                "codigoMoeda": "REAL",
+                "valorLimiteAlcada": 300000,
+                "identificacaoSequenciaGrupoAssinatura": 2,
+                "nomeAgrupamento": "2 - JOSE | JEFFERSON",
+                "representantes": [
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "10203062892",
+                        "codigoAtribuicao": "CATEGORIA B",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JOSE MAURICIO DE SOUZA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
+                        "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
+                    },
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "21842466895",
+                        "codigoAtribuicao": "GRUPO II",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JEFFERSON FRANCISCO PEREIRA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": null,
+                        "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
+                        "descricaoTipoAssinatura": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "documentoCliente": "02974733000156",
+        "agrupamentoRepresentantes": [
+            {
+                "identificacaoSequenciaCliente": 7044,
+                "identificacaoSequenciaConta": 5,
+                "identificacaoSequenciaDocumento": 41,
+                "identificacaoSequenciaGrupoAlcada": 7,
+                "quantidadeAssinaturasConjunto": 2,
+                "indicadorCondicaoEspecial": false,
+                "codigoMoeda": "REAL",
+                "valorLimiteAlcada": 300000,
+                "identificacaoSequenciaGrupoAssinatura": 1,
+                "nomeAgrupamento": "1 - JOSE | PATRICIA",
+                "representantes": [
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "10203062892",
+                        "codigoAtribuicao": "CATEGORIA B",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JOSE MAURICIO DE SOUZA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
+                        "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
+                    },
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "18148332851",
+                        "codigoAtribuicao": "GRUPO II",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "PATRICIA ZANINI MERELLO",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
+                        "descricaoTipoAssinatura": "ICP-BRASIL"
+                    }
+                ]
+            },
+            {
+                "identificacaoSequenciaCliente": 7044,
+                "identificacaoSequenciaConta": 5,
+                "identificacaoSequenciaDocumento": 41,
+                "identificacaoSequenciaGrupoAlcada": 7,
+                "quantidadeAssinaturasConjunto": 2,
+                "indicadorCondicaoEspecial": false,
+                "codigoMoeda": "REAL",
+                "valorLimiteAlcada": 300000,
+                "identificacaoSequenciaGrupoAssinatura": 2,
+                "nomeAgrupamento": "2 - JOSE | JEFFERSON",
+                "representantes": [
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "10203062892",
+                        "codigoAtribuicao": "CATEGORIA B",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JOSE MAURICIO DE SOUZA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
+                        "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
+                    },
+                    {
+                        "identificacaoTipoDocumento": "CP1",
+                        "documento": "21842466895",
+                        "codigoAtribuicao": "GRUPO II",
+                        "codigoCargo": "PROCURADOR",
+                        "nome": "JEFFERSON FRANCISCO PEREIRA",
+                        "dataFimMandato": "2020-01-31T00:00:00",
+                        "emailContatoAssinatura": null,
+                        "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
+                        "descricaoTipoAssinatura": null
+                    }
+                ]
+            }
+        ]
     }
 ]
 const auth = async (req,res,next) => {
@@ -581,25 +735,24 @@ router.post('/templates',async function(req, res) {
     let resp = ""
       console.log(req.body)
       let {recipients} = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
-      let param = recipients.agents.map(el => {
+      let param = recipients.signers.map(el => {
         console.log(el.testemunhas)
         
-        let testemunhas = []
-        testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
-        let assinaturas = []
-        assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
-        
         return {
-          tipo: el.tipo,
+          nome: el.nome,
           email: el.email,
-          position: el.position,
-          carimbo: el.carimbo,
-          testemunhas: testemunhas,
-          assinaturas:assinaturas
+          tipoAss: el.tipoASs,
+          tag: el.tag,
         }
       });
       console.log(param)
-
+      let auth = {
+        userID: process.env.userIDSafra,
+        integrationKey: process.env.integrationKeySafra,
+        dsOauthServer: process.env.dsOauthServerSafra,
+        accountID: process.env.accountIDSafra,
+        privateKey: process.env.privatekeyDemo
+    }
     const scope = "signature impersonation spring_read spring_write";
     console.log(auth)
       let docusign = new safraServices.Docusign(auth, scope)
