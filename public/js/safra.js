@@ -172,7 +172,8 @@ $.ajax({
     
     buttonCli.addEventListener("click", function (event) {
         const clone = addClient(event, "clienteContainer0")
-        buttonCli.parentElement.parentElement.insertAdjacentElement("beforebegin", clone)
+        buttonCli.parentElement.parentElement.parentElement.children[1].appendChild(clone)
+    
     })
     
     
@@ -267,7 +268,7 @@ $.ajax({
                 console.log("Clone cli", cloneCli)
                 cloneCli.setAttribute("style", "margin-bottom: 20px")
     
-                addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+                addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
             })
     
     
@@ -312,17 +313,20 @@ $.ajax({
     
     function maketable(array, anchor, ordem) {
         let xml = ""
-        array.forEach((element, index) => {
+        let indexFull = 1
+    
+        array.forEach((element, index, array) => {
             if (index > 0) {
                 let representantes = Array.from(element.children[1].children[1].children)
                 console.log("TESTEE", representantes)
+    
                 representantes.forEach((el, i) => {
                     xml += "<signers>"
                     let nome = el.children[0].children[1].value
                     let cpf = el.children[1].children[1].value
                     let email = el.children[2].children[1].value
                     let tipoASs = el.children[3].children[0].children[1].children[0].value
-                    let tag = anchor + (i + index)
+                    let tag = anchor + (indexFull)
                     xml += "<nome>" + nome + "</nome>"
                     xml += "<email>" + email + "</email>"
                     xml += "<cpf>" + cpf + "</cpf>"
@@ -331,6 +335,8 @@ $.ajax({
                     xml += "<ordem>" + ordem + "</ordem>"
                     console.log(el)
                     xml += "</signers>"
+                    indexFull++
+    
                 })
             }
         })
@@ -387,7 +393,7 @@ $.ajax({
                 console.log("Clone cli", cloneCli)
                 cloneCli.setAttribute("style", "margin-bottom: 20px")
     
-                addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+                addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
             })
     
     

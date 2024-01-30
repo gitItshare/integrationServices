@@ -435,7 +435,6 @@ $.ajax({
 	representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).agrupamentoRepresentantes
 	console.log("REPRESENTNTE", representanteCli)
 
-	console.log(avalistasTable)
 	let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
 	let avalistas = data.filter(el => avalistasCNPJ.includes(el.documentoCliente))
 	let terceirosCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
@@ -444,6 +443,7 @@ $.ajax({
 	preencherLists(representanteCli, clientGrupos)
 	preencherAvalistas(avalistas)
 	preencherTerceiros(terceiros)
+	console.log(avalistasTable, terceiroGarantidor, emitente)
 })
 
 
@@ -484,7 +484,7 @@ function remove(event) {
 
 buttonCli.addEventListener("click", function (event) {
 	const clone = addClient(event, "clienteContainer0")
-	buttonCli.parentElement.parentElement.insertAdjacentElement("beforebegin", clone)
+	buttonCli.parentElement.parentElement.parentElement.children[1].appendChild(clone)
 })
 
 
@@ -581,7 +581,8 @@ function preencherAvalistas(avalistas) {
 			console.log("Clone cli", cloneCli)
 			cloneCli.setAttribute("style", "margin-bottom: 20px")
 
-			addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
+		
 		})
 
 
@@ -595,7 +596,9 @@ function preencherAvalistas(avalistas) {
 
 function maketableCli(array, anchor) {
 	let xml = ""
+
 	array.forEach((el, index) => {
+		
 		xml += "<signers>"
 		let nome = el.children[0].children[1].value
 		let cpf = el.children[1].children[1].value
@@ -615,24 +618,31 @@ function maketableCli(array, anchor) {
 
 function maketable(array, anchor) {
 	let xml = ""
-	array.forEach((element, index) => {
+	let indexFull = 1
+
+	array.forEach((element, index, array) => {
 		if (index > 0) {
 			let representantes = Array.from(element.children[1].children[1].children)
 			console.log("TESTEE", representantes)
+
 			representantes.forEach((el, i) => {
 				xml += "<signers>"
 				let nome = el.children[0].children[1].value
 				let cpf = el.children[1].children[1].value
 				let email = el.children[2].children[1].value
 				let tipoASs = el.children[3].children[0].children[1].children[0].value
-				let tag = anchor + (i + index)
+				let tag = anchor + (indexFull)
 				xml += "<nome>" + nome + "</nome>"
 				xml += "<email>" + email + "</email>"
 				xml += "<cpf>" + cpf + "</cpf>"
 				xml += "<tag>" + tag + "</tag>"
 				xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+				xml +=  "<role> Representante do Emitente  </role>"
+
 				console.log(el)
 				xml += "</signers>"
+				indexFull++
+
 			})
 		}
 	})
@@ -648,8 +658,9 @@ function makeXml() {
 
 		console.log("CONTAINER", containerCli)
 		let xml = "<recipients>"
+		
 		xml += maketableCli(containerCli, "emitente")
-		xml += maketable(containerTerceiros, "tercg")
+		xml += maketable(containerTerceiros, "tercgc")
 		xml += maketable(containerAvalistas, "aval")
 
 		xml += "</recipients>"
@@ -689,7 +700,7 @@ function preencherTerceiros(avalistas) {
 			console.log("Clone cli", cloneCli)
 			cloneCli.setAttribute("style", "margin-bottom: 20px")
 
-			addButton.parentElement.parentElement.insertAdjacentElement("beforebegin", cloneCli)
+			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
 		})
 
 
