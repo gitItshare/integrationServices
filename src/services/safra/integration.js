@@ -32,6 +32,7 @@ const consulta =async (data,token) => {
     let emitenteData = templateField.Emitente
     let terceirosData = templateField.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
     let dataPoder = dayjs(new Date(templateField["Emissao_e_outros_dados_dessa_cedula"]["Data_da_emissao"])).format("YYYY-MM-DD")
+    
     let emitente = 	{
       "DocumentoCliente": emitenteData.Emitente_CNPJ,
       "Agencia": "",
@@ -43,18 +44,20 @@ const consulta =async (data,token) => {
       "codigoAto": "ASSINA",
       "dataPoder": dataPoder
     }	
-    console.log(emitente)
-    let terceiro = {
-      "DocumentoCliente": terceirosData.CPF_CNPJ,
-      "Agencia": "",
-      "Conta": "",
-      "valorContrato": templateField.Valor,
-      "tipoRepresentante": "REPRESENTANTE",
-      "codigoObjeto": cpf.isValid(terceirosData.CPF_CNPJ)? "CCB" : "GAP P/TERC",
-      "codigoAto": "ASSINA",
-      "dataPoder": dataPoder
-    }
-  
+
+    let terceirosList = terceirosData.map(avalista => {
+      return {
+        "DocumentoCliente": avalista.CPF_CNPJ,
+        "Agencia": "",
+        "Conta": "",
+        "valorContrato": templateField.Valor,
+        "tipoRepresentante": "REPRESENTANTE",
+        "codigoObjeto": cpf.isValid(avalista.CPF_CNPJ)? "CCB" : "GAP P/TERC",
+        "codigoAto": "ASSINA",
+        "dataPoder": dataPoder,
+      }
+    })
+
     let avalistasList = avalistas.map(avalista => {
       return {
         "DocumentoCliente": avalista.Avalistas_CPF_CNPJ,

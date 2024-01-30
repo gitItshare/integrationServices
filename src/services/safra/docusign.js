@@ -175,7 +175,7 @@ let dirname = path.resolve(path.dirname(''));
                         "agentCanEditEmail": "false",
                         "agentCanEditName": "false",
                         "name": el.nome["_text"],
-                        "email": "",
+                        "email": el.email["_text"],
                         "recipientId": recipientId,
                         "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
                         "accessCode": "",
@@ -193,14 +193,14 @@ let dirname = path.resolve(path.dirname(''));
                         "inheritEmailNotificationConfiguration": "false"
                     }
                     if(el.tipoAss["_text"] == "ICP"){
-                        signer.recipientSignatureProviders = {
+                        signer.recipientSignatureProviders = [{
                             "sealDocumentsWithTabsOnly": "false",
                             "signatureProviderName": "universalsignaturepen_icp_smartcard_tsp",
                             "signatureProviderOptions": {
                                 "cpfNumber":el.cpf["_text"],
                                 "signerRole":el.nome["_text"].split(" ")[0]
                             }
-                        }
+                        }]
                     }
    
                     if(el.tipoAss["_text"] == "BIOMETRIA"){

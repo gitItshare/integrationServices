@@ -73,6 +73,7 @@ let terceirosDIV = document.getElementById("terceiros")
 
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
+let testemunhaEmitente = ""
 $.ajax({
     url: url,
     method: 'GET',
@@ -86,12 +87,12 @@ $.ajax({
 
         let data = x2js.xml2json(response); // Convert XML to JSON
         console.log(data)
-        let testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
-        emitente = data.Params.TemplateFieldData.Emitente
-        terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+        testemunhaEmitente = data.Params.Params.Documents.Document.UpdatedBy
+        emitente = data.Params.Params.TemplateFieldData.Emitente
+        terceiroGarantidor = data.Params.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
         if(terceiroGarantidor.element)
             terceiroGarantidor = terceiroGarantidor.element
-        avalistasTable = data.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
+        avalistasTable = data.Params.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
         if(avalistasTable.element)
             avalistasTable = avalistasTable.element
 
@@ -303,8 +304,8 @@ $.ajax({
         xml += "<nome> Testemunha Emitente </nome>"
         xml += "<email>" + testemunhaEmitente + "</email>"
         xml += "<cpf></cpf>"
-        xml += "<tag>testemunha" + tag + "</tag>"
-        xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+        xml += "<tag>emitente1</tag>"
+        xml += "<tipoASs>DS ELETRONIC </tipoASs>"
         xml += "<ordem>" + ordem + "</ordem>"
         xml += "</signers>"
 
@@ -352,9 +353,9 @@ $.ajax({
     
             console.log("CONTAINER", containerCli)
             let xml = "<recipients>"
-            xml += maketableCli(containerCli, "emitente", 1)
-            xml += maketable(containerTerceiros, "tercg", 2)
-            xml += maketable(containerAvalistas, "aval", 3)
+            xml += maketableCli(containerCli, "sign_RC", 1)
+            xml += maketable(containerTerceiros, "sign_R1TG", 2)
+            xml += maketable(containerAvalistas, "sign_R1A", 3)
     
             xml += "</recipients>"
             document.getElementById("xml").value = xml
