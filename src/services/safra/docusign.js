@@ -117,7 +117,7 @@ let dirname = path.resolve(path.dirname(''));
                                       "pageNumber":"1",
                                       "xPosition":"",
                                       "yPosition":"",
-                                      "anchorString":"/"+el.tag["_text"]+"/",
+                                      "anchorString":"</"+el.tag["_text"]+"/>",
                                       "anchorXOffset":"0",
                                       "anchorYOffset":"0",
                                       "anchorUnits":"pixels",
@@ -209,7 +209,8 @@ let dirname = path.resolve(path.dirname(''));
                     }
                     return signer
             })
-             template.signers = signers
+            
+            template.signers = signers
             console.log(template.signers)
             const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
                 headers: {

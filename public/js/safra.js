@@ -87,12 +87,12 @@ $.ajax({
 
         let data = x2js.xml2json(response); // Convert XML to JSON
         console.log(data)
-        testemunhaEmitente = data.Params.Params.Documents.Document.UpdatedBy
-        emitente = data.Params.Params.TemplateFieldData.Emitente
-        terceiroGarantidor = data.Params.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+        testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+        emitente = data.Params.TemplateFieldData.Emitente
+        terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
         if(terceiroGarantidor.element)
             terceiroGarantidor = terceiroGarantidor.element
-        avalistasTable = data.Params.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
+        avalistasTable = data.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
         if(avalistasTable.element)
             avalistasTable = avalistasTable.element
 
