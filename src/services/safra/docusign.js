@@ -184,7 +184,7 @@ let dirname = path.resolve(path.dirname(''));
                             "inputOptions": [],
                             "workflowLabel": ""
                         },
-                        "routingOrder": index,
+                        "routingOrder": el.ordem["_text"],
                         "note": "",
                         "roleName": el.nome["_text"].split(" ")[0],
                         "deliveryMethod": "email",

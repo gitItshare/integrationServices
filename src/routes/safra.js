@@ -743,6 +743,7 @@ router.post('/templates',async function(req, res) {
           email: el.email,
           tipoAss: el.tipoASs,
           tag: el.tag,
+          ordem: el.ordem
         }
       });
       console.log(param)

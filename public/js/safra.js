@@ -61,13 +61,18 @@ let avalistasTable = [{
         "_displayValue": ""
     }
 ]
-let avalistaDIV = document.getElementById("avalistas")
-const clientesDiv = document.getElementById("clienteContainer").parentElement
-let contadorRepCli = 1
-const workflow = document.querySelector('.page-header').children[0].innerText.split("/");
+let workflow = document.querySelector('.page-header').children[1].innerText.split(" ");
+workflow = workflow[1].split("/");
 const HOSTNAME = "https://uatna11.springcm.com";
 const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[0]
+let representanteCli = []
+let representantesAvalista = []
 
+let avalistaDIV = document.getElementById("avalistas")
+let terceirosDIV = document.getElementById("terceiros")
+
+const clientesDiv = document.getElementById("clienteContainer").parentElement
+let contadorRepCli = 1
 $.ajax({
     url: url,
     method: 'GET',
@@ -81,9 +86,20 @@ $.ajax({
 
         let data = x2js.xml2json(response); // Convert XML to JSON
         console.log(data)
-        emitente = data.Params.Params.TemplateFieldData.Emitente
-        terceiroGarantidor = data.Params.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
-        avalistasTable = data.Params.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas.element
+        let testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+        emitente = data.Params.TemplateFieldData.Emitente
+        terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+        if(terceiroGarantidor.element)
+            terceiroGarantidor = terceiroGarantidor.element
+        avalistasTable = data.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
+        if(avalistasTable.element)
+            avalistasTable = avalistasTable.element
+
+        if(!Array.isArray(avalistasTable))
+            avalistasTable = [avalistasTable]
+
+        if(!Array.isArray(terceiroGarantidor))
+            terceiroGarantidor = [terceiroGarantidor]
 
         $.ajax({
             url: url,
@@ -93,6 +109,10 @@ $.ajax({
             },
             dataType: 'text'
           }).done(res => {
+            document.querySelector("#ctl00_MainContent_buttonGroup_btnDone").addEventListener("mouseover", function () {
+                console.log("ATIVANDO MOUSE OVER")
+                makeXml()
+            })
             let {data}= JSON.parse(res)
             console.log("DATAA", data)
             let representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).agrupamentoRepresentantes
@@ -101,9 +121,13 @@ $.ajax({
             console.log(avalistasTable)
             let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
             let avalistas = data.filter(el => avalistasCNPJ.includes(el.documentoCliente))
-            let terceirosCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
+            let terceirosCNPJ = terceiroGarantidor.map(el => el.CPF_CNPJ.replace(/[^\w\s]/gi, ''))
             let terceiros = data.filter(el => terceirosCNPJ.includes(el.documentoCliente))
             console.log("AQUIII", representanteCli)
+            clientGrupos.addEventListener("change", function () {
+                changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv")
+            
+            })
             preencherLists(representanteCli, clientGrupos)
             preencherAvalistas(avalistas)
             preencherTerceiros(terceiros)
@@ -166,7 +190,8 @@ $.ajax({
             label.innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
         else
             label.innerHTML = '<p>Grupos</p>'
-    
+        
+        console.log("ARRAYY", representantesArray)
         let representantes = representantesArray.find(el => el.nomeAgrupamento == self.value).representantes
     
         console.log("REP0 ", representantes)
@@ -178,10 +203,7 @@ $.ajax({
     
     
     }
-    clientGrupos.addEventListener("change", function () {
-        changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv")
-    
-    })
+
     document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
     document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
     
@@ -224,7 +246,7 @@ $.ajax({
             clone.removeAttribute("hidden")
             let addButton = clone.children[1].children[3].children[0].children[0]
             console.log(el)
-            const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ == el.documentoCliente)
+            const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
             console.log("NOMWE", avalista)
             let nome = avalista.Avalistas_Nome_Razao_Social
             clone.id = nome
@@ -257,7 +279,7 @@ $.ajax({
         })
     }
     
-    function maketableCli(array, anchor) {
+    function maketableCli(array, anchor, ordem) {
         let xml = ""
         array.forEach((el, index) => {
             xml += "<signers>"
@@ -270,14 +292,25 @@ $.ajax({
             xml += "<email>" + email + "</email>"
             xml += "<cpf>" + cpf + "</cpf>"
             xml += "<tag>" + tag + "</tag>"
-            xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+            xml += "<tipoASs>" + tipoASs + "</tipoASs>",
+            xml += "<ordem>" + ordem + "</ordem>"
+
             console.log(el)
             xml += "</signers>"
         })
+        xml+= "<signers>"
+        xml += "<nome> Testemunha Emitente </nome>"
+        xml += "<email>" + testemunhaEmitente + "</email>"
+        xml += "<cpf></cpf>"
+        xml += "<tag>testemunha" + tag + "</tag>"
+        xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+        xml += "<ordem>" + ordem + "</ordem>"
+        xml += "</signers>"
+
         return xml
     }
     
-    function maketable(array, anchor) {
+    function maketable(array, anchor, ordem) {
         let xml = ""
         array.forEach((element, index) => {
             if (index > 0) {
@@ -295,6 +328,7 @@ $.ajax({
                     xml += "<cpf>" + cpf + "</cpf>"
                     xml += "<tag>" + tag + "</tag>"
                     xml += "<tipoASs>" + tipoASs + "</tipoASs>"
+                    xml += "<ordem>" + ordem + "</ordem>"
                     console.log(el)
                     xml += "</signers>"
                 })
@@ -302,7 +336,7 @@ $.ajax({
         })
         return xml
     }
-    const buttonSave = document.getElementById("ctl00_MainContent_ctl01_btnSaveBottom")
+    const buttonSave = document.querySelector("#ctl00_MainContent_buttonGroup_btnDone")
     
     function makeXml() {
         try {
@@ -312,9 +346,9 @@ $.ajax({
     
             console.log("CONTAINER", containerCli)
             let xml = "<recipients>"
-            xml += maketableCli(containerCli, "emitente")
-            xml += maketable(containerTerceiros, "tercg")
-            xml += maketable(containerAvalistas, "aval")
+            xml += maketableCli(containerCli, "emitente", 1)
+            xml += maketable(containerTerceiros, "tercg", 2)
+            xml += maketable(containerAvalistas, "aval", 3)
     
             xml += "</recipients>"
             document.getElementById("xml").value = xml
@@ -326,23 +360,23 @@ $.ajax({
     
     window.make = makeXml
     
-    function preencherTerceiros(avalistas) {
-        avalistas.forEach((el, index) => {
+    function preencherTerceiros(array) {
+        array.forEach((el, index) => {
             const clone = document.getElementById("avalistas0").cloneNode(true)
             clone.removeAttribute("hidden")
             let addButton = clone.children[1].children[3].children[0].children[0]
             console.log(el)
-            const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ == el.documentoCliente)
-            console.log("NOMWE", avalista)
-            let nome = avalista.Avalistas_Nome_Razao_Social
+            const terceiros = terceiroGarantidor.find(terceiro => terceiro.CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
+            console.log("NOMWE", terceiros)
+            let nome = terceiros.Terceiro_Garantidor_Nome_Razao_Social
             clone.id = nome
             clone.children[0].innerText = nome
             const inputNameList = clone.children[1].children[0].children[0].children[1]
     
             terceirosDIV.appendChild(clone)
             let selectGroups = clone.children[1].children[0].children[0].children[1]
-            avalistaDiv = clone.children[1].children[1].id = "gruposTerceirosDiv" + el.documentoCliente
-            console.log("AVALISTAS ", avalista)
+            terceirosDiv = clone.children[1].children[1].id = "gruposTerceirosDiv" + el.documentoCliente
+            console.log("TERCEiROS ", terceiros)
             selectGroups.addEventListener("change", function () {
                 changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente)
             })
@@ -358,13 +392,10 @@ $.ajax({
     
     
             // inputName.addEventListener("blur", preencherAutomatico)
-            let representantesAvalista = el.agrupamentoRepresentantes
+            let representantesTerceiros = el.agrupamentoRepresentantes
     
-            preencherLists(representantesAvalista, inputNameList)
+            preencherLists(representantesTerceiros, inputNameList)
     
         })
     }
-    buttonSave.addEventListener("mouseover", function () {
-        console.log("ATIVANDO MOUSE OVER")
-        makeXml()
-    })
+    

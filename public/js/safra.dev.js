@@ -638,7 +638,7 @@ function maketable(array, anchor) {
 	})
 	return xml
 }
-const buttonSave = document.getElementById("ctl00_MainContent_ctl01_btnSaveBottom")
+const buttonSave = document.getElementById("ctl00_MainContent_buttonGroup_btnDone")
 
 function makeXml() {
 	try {
