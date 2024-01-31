@@ -117,7 +117,7 @@ let dirname = path.resolve(path.dirname(''));
                                       "pageNumber":"1",
                                       "xPosition":"",
                                       "yPosition":"",
-                                      "anchorString":"</"+el.tag["_text"]+"/>",
+                                      "anchorString":"\\"+el.tag["_text"]+"\\",
                                       "anchorXOffset":"0",
                                       "anchorYOffset":"0",
                                       "anchorUnits":"pixels",

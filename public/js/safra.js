@@ -74,6 +74,7 @@ let terceirosDIV = document.getElementById("terceiros")
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
 let testemunhaEmitente = ""
+let valorContrato = 0
 $.ajax({
     url: url,
     method: 'GET',
@@ -88,6 +89,7 @@ $.ajax({
         let data = x2js.xml2json(response); // Convert XML to JSON
         console.log(data)
         testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+        valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
         emitente = data.Params.TemplateFieldData.Emitente
         terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
         if(terceiroGarantidor.element)
@@ -101,6 +103,7 @@ $.ajax({
 
         if(!Array.isArray(terceiroGarantidor))
             terceiroGarantidor = [terceiroGarantidor]
+            valorContrato
 
         $.ajax({
             url: url,
@@ -208,7 +211,13 @@ $.ajax({
 
     document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
     document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
-    
+    document.getElementById("tipoAssinatura").addEventListener("change", function(){
+        if(this.value == "manual"){
+            document.getElementById("idDestinatario").removeAttribute("hidden")
+        } else {
+            document.getElementById("idDestinatario").setAttribute("hidden", true)
+        }
+    })
     function preencherAutomatico() {
         console.log(this.parentElement.parentElement.parentElement.parentElement)
         let value = this.value
@@ -290,7 +299,7 @@ $.ajax({
             let email = el.children[2].children[1].value
             let tipoASs = el.children[3].children[0].children[1].children[0].value
             let tag = anchor + (index + 1)
-            xml += "<nome>" + nome + "</nome>"
+            xml += "<nome>Emitente" + (index + 1) + "</nome>"
             xml += "<email>" + email + "</email>"
             xml += "<cpf>" + cpf + "</cpf>"
             xml += "<tag>" + tag + "</tag>"
@@ -304,31 +313,77 @@ $.ajax({
         xml += "<nome> Testemunha Emitente </nome>"
         xml += "<email>" + testemunhaEmitente + "</email>"
         xml += "<cpf></cpf>"
-        xml += "<tag>emitente1</tag>"
+        xml += "<tag>sign_T1</tag>"
         xml += "<tipoASs>DS ELETRONIC </tipoASs>"
         xml += "<ordem>" + ordem + "</ordem>"
         xml += "</signers>"
 
         return xml
     }
-    
-    function maketable(array, anchor, ordem) {
+    function makeTableBanco (valor, ordem) {
+        let emailBanco = ""
+        let cpfBanco =  ""
+        let emailBanco2 = ""
+        let cpfBanco2 =  ""
+        let xml = ""
+        if(valor <= 15000){
+            emailBanco = "vanessa.menezes@safra.com.br"
+            cpfBanco =  "26749486800"
+            emailBanco2 = "roberto.capel@safra.com.br"
+            cpfBanco2 =  "16651816802"
+        }else if(valor <= 50000 && valor > 15000){
+            emailBanco = "ciro.silva@safra.com.br"
+            cpfBanco =  "21839585889"
+            emailBanco2 = "jose.galvao@safra.com.br"
+            cpfBanco2 =  "3584638828"
+        }else if(valor <= 200000 && valor > 50000){
+            emailBanco = "ciro.silva@safra.com.br"
+            cpfBanco =  "21839585889"
+            emailBanco2 = "marcio.nobrega@safra.com.br"
+            cpfBanco2 =  "08594753870"
+        }else if(valor > 200000){
+            emailBanco = "agostinho.stefanelli@safra.com.br"
+            cpfBanco =  "05782565845"
+            emailBanco2 = "marcos.monteiro@safra.com.br"
+            cpfBanco2 =  "10510942830"
+        }
+
+        xml+= "<signers>"
+        xml += "<nome> Testemunha Banco </nome>"
+        xml += "<email>" + emailBanco + "</email>"
+        xml += "<cpf>"+cpfBanco+"</cpf>"
+        xml += "<tag>sign_RB1</tag>"
+        xml += "<tipoASs>ICP</tipoASs>"
+        xml += "<ordem>" + ordem + "</ordem>"
+        xml += "</signers>"
+
+        xml+= "<signers>"
+        xml += "<nome> Testemunha Banco2 </nome>"
+        xml += "<email>" + emailBanco2 + "</email>"
+        xml += "<cpf>"+cpfBanco2+"</cpf>"
+        xml += "<tag>sign_RB2</tag>"
+        xml += "<tipoASs>ICP</tipoASs>"
+        xml += "<ordem>" + ordem + "</ordem>"
+        xml += "</signers>"
+
+        return xml
+    }
+    function maketable(array, anchor, ordem, nome) {
         let xml = ""
         let indexFull = 1
     
-        array.forEach((element, index, array) => {
+        array.forEach((element, index) => {
             if (index > 0) {
                 let representantes = Array.from(element.children[1].children[1].children)
                 console.log("TESTEE", representantes)
     
                 representantes.forEach((el, i) => {
                     xml += "<signers>"
-                    let nome = el.children[0].children[1].value
                     let cpf = el.children[1].children[1].value
                     let email = el.children[2].children[1].value
                     let tipoASs = el.children[3].children[0].children[1].children[0].value
                     let tag = anchor + (indexFull)
-                    xml += "<nome>" + nome + "</nome>"
+                    xml += "<nome>" + nome + indexFull + "</nome>"
                     xml += "<email>" + email + "</email>"
                     xml += "<cpf>" + cpf + "</cpf>"
                     xml += "<tag>" + tag + "</tag>"
@@ -336,13 +391,13 @@ $.ajax({
                     xml += "<ordem>" + ordem + "</ordem>"
                     console.log(el)
                     xml += "</signers>"
-                    indexFull++
-    
+                    indexFull++    
                 })
             }
         })
         return xml
     }
+
     const buttonSave = document.querySelector("#ctl00_MainContent_buttonGroup_btnDone")
     
     function makeXml() {
@@ -354,8 +409,10 @@ $.ajax({
             console.log("CONTAINER", containerCli)
             let xml = "<recipients>"
             xml += maketableCli(containerCli, "sign_RC", 1)
-            xml += maketable(containerTerceiros, "sign_R1TG", 2)
-            xml += maketable(containerAvalistas, "sign_R1A", 3)
+            xml += makeTableBanco(valorContrato, 1)
+
+            xml += maketable(containerTerceiros, "sign_R1TG", 2, "Terceiro Garantidor")
+            xml += maketable(containerAvalistas, "sign_R1A", 3, "Avalista")
     
             xml += "</recipients>"
             document.getElementById("xml").value = xml

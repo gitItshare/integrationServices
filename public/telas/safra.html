@@ -11,6 +11,34 @@
         <textarea id="xml" hidden></textarea>
         <div class="container"  role="tabpanel" aria-labelledby="dadosContrato-tab-rebate">
             <fieldset id="clientes" class="border p-2">
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Assinaturas &nbsp;</strong></span>
+                </legend>
+                <div id="">
+                    <div class='myContainer row'>
+                        <div class="form-group col-12 col-sm-3">
+                            <label for="tipoAssinatura">
+                                <p class="label">Tipo Assinatura</p>
+                            </label>
+                            <select id="tipoAssinatura" class="form-select" aria-label="Default select example">
+                                <option value="digital" selected>Digital</option>
+                                <option value="manual" >Manual</option>
+                              </select>
+                              
+                              <br>
+                        </div>
+                        <div id="idDestinatario" class="form-group col-12 col-sm-3" hidden>
+                            <label for="destinatario">
+                                <p class="label">E-mail</p>
+                            </label>
+                            <input  id="destinatario" placeholder="Buscar"
+                                class="form-control rounded-0 novosInputs" required="">
+                              
+                              <br>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="clientes" class="border p-2">
                 <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Cliente &nbsp;</strong></span>
                 </legend>
                 <div id="clienteContainer">
