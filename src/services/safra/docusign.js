@@ -186,7 +186,7 @@ let dirname = path.resolve(path.dirname(''));
                         },
                         "routingOrder": el.ordem["_text"],
                         "note": "",
-                        "roleName": el.nome["_text"].split(" ")[0],
+                        "roleName": el.role["_text"],
                         "deliveryMethod": "email",
                         "templateLocked": "false",
                         "templateRequired": "false",
@@ -198,7 +198,7 @@ let dirname = path.resolve(path.dirname(''));
                             "signatureProviderName": "universalsignaturepen_icp_smartcard_tsp",
                             "signatureProviderOptions": {
                                 "cpfNumber":el.cpf["_text"],
-                                "signerRole":el.nome["_text"].split(" ")[0]
+                                "signerRole":""
                             }
                         }]
                     }

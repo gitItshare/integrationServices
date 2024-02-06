@@ -76,6 +76,7 @@ const consulta =async (data,token) => {
       //   terceiro,
       //  ...avalistasList
       ]}
+      
     const clientSafra = axios.create({
       headers: {
         'Content-Type': "application/json",

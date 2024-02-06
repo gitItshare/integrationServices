@@ -736,15 +736,15 @@ router.post('/templates',async function(req, res) {
       console.log(req.body)
       let {recipients} = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
       let param = recipients.signers.map(el => {
-        console.log(el.testemunhas)
-        
+        console.log(el.testemunhas) 
         return {
           nome: el.nome,
           email: el.email,
           tipoAss: el.tipoASs,
           tag: el.tag,
           ordem: el.ordem,
-          cpf: el.cpf
+          cpf: el.cpf,
+          role: el.role
         }
       });
       console.log(param)

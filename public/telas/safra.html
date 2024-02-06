@@ -1,39 +1,119 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
 <style>
-    p{
+    p {
         text-align: left !important;
         font-weight: 400;
     }
 </style>
+
 <body>
     <div class="container" style="width: 110vw;">
         <textarea id="xml" hidden></textarea>
-        <div class="container"  role="tabpanel" aria-labelledby="dadosContrato-tab-rebate">
-            <fieldset id="clientes" class="border p-2">
+        <textarea id="changeXml" hidden></textarea>
+
+        <div class="container" role="tabpanel" aria-labelledby="dadosContrato-tab-rebate">
+            <fieldset id="tipoCt" class="border p-2">
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Assinaturas &nbsp;</strong></span>
+                </legend>
+                <div id="">
+                    <table class="table table-light table-striped">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Codigo e nome da Agência</b></td>
+                                <td id="codigoNomeAgencia">xxxxx-xx</td>
+                            </tr>
+                            <tr>
+                                <td> <b>Nome Cliente</b></td>
+                                <td id="nomeCli">xxxxxxxx</td>
+                            </tr>
+                            <tr>
+                                <td> <b>Número digitalização</b></td>
+                                <td id="numeroDigital"><input  id="numDigital" placeholder="Digite"
+                                    class="form-control rounded-0 novosInputs" required=""></td>
+                            </tr>
+                            <tr>
+                                <td> <b>Número do Contrato</b></td>
+                                <td id="numCt">xxxxxxxx</td>
+                            </tr>
+                            <tr>
+                                <td><b>Número do Cedente</b></td>
+                                <td> <input  id="numCedente" placeholder="Digite"
+                                    class="form-control rounded-0 novosInputs" required=""></td>
+                            </tr>
+                            <tr>
+                                <td><b>Prioridade</b></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input disabled class="form-check-input" type="checkbox" value="" id="Retroativa">
+                                        <label class="form-check-label" for="Retroativa">
+                                            Retroativa
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input disabled class="form-check-input" type="checkbox" value="" id="ted">
+                                        <label class="form-check-label" for="ted">
+                                          TED
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input disabled class="form-check-input" type="checkbox" value="" id="Dolarizada">
+                                        <label class="form-check-label" for="Dolarizada">
+                                          Dolarizada
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input disabled class="form-check-input" type="checkbox" value="" id="cessao">
+                                        <label class="form-check-label" for="cessao">
+                                          Cessão / Fatura
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input disabled class="form-check-input" type="checkbox" value="" id="Dividendos">
+                                        <label class="form-check-label" for="Dividendos">
+                                          Dividendos
+                                        </label>
+                                      </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Segmento Solicitante</b></td>
+                                <td > <input  id="segmentoSolicitante" placeholder="Digite"
+                                    class="form-control rounded-0 novosInputs" required=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <fieldset id="tipoCt" class="border p-2">
                 <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Assinaturas &nbsp;</strong></span>
                 </legend>
                 <div id="">
                     <div class='myContainer row'>
                         <div class="form-group col-12 col-sm-3">
                             <label for="tipoAssinatura">
-                                <p class="label">Tipo Assinatura</p>
+                                <p class="label">Tipo de Contrato</p>
                             </label>
                             <select id="tipoAssinatura" class="form-select" aria-label="Default select example">
                                 <option value="digital" selected>Digital</option>
-                                <option value="manual" >Manual</option>
-                              </select>
-                              
-                              <br>
+                                <option value="manual">Manual</option>
+                            </select>
+
+                            <br>
                         </div>
                         <div id="idDestinatario" class="form-group col-12 col-sm-3" hidden>
                             <label for="destinatario">
                                 <p class="label">E-mail</p>
                             </label>
-                            <input  id="destinatario" placeholder="Buscar"
-                                class="form-control rounded-0 novosInputs" required="">
-                              
-                              <br>
+                            <input id="destinatario" placeholder="Buscar" class="form-control rounded-0 novosInputs"
+                                required="">
+
+                            <br>
                         </div>
                     </div>
                 </div>
@@ -49,27 +129,28 @@
                             </label>
                             <select id="clientGrupos" class="form-select" aria-label="Default select example">
                                 <option selected>Selecione um grupo</option>
-                              </select>
-                              
-                              <br>
+                            </select>
+
+                            <br>
                         </div>
                     </div>
-                        <div id="gruposDiv" class='myContainer row'>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <a id="addRepCli" class="btn btn-primary"> Adicionar Representante</a>
+                    <div id="gruposDiv" class='myContainer row'>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <a id="addRepCli" class="btn btn-primary"> Adicionar Representante</a>
                         </div>
                         <div hidden id="removeDiv" class="form-group">
                             <a id="removeRepCli" class="btn btn-primary"> Remover Representante</a>
                         </div>
-                        </div>
-           
+                    </div>
+
                 </div>
             </fieldset>
             <br>
             <fieldset id="terceiros" class="border p-2">
-                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Terceiro Garantidor &nbsp;</strong></span>
+                <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Terceiro Garantidor
+                            &nbsp;</strong></span>
                 </legend>
 
             </fieldset>
@@ -77,35 +158,35 @@
             <fieldset id="avalistas" class="border p-2">
                 <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalistas &nbsp;</strong></span>
                 </legend>
-       
+
             </fieldset>
         </div>
     </div>
-<div id="clienteContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
-    <div class="form-group col-12 col-sm-3">
-        <label for="nome-representante">
-            <p class="label">Representantes</p>
-        </label>
-        <input list="nome-representante-list" id="nome-representante" placeholder="Buscar"
-            class="form-control rounded-0 novosInputs" required="">
+    <div id="clienteContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+        <div class="form-group col-12 col-sm-3">
+            <label for="nome-representante">
+                <p class="label">Representantes</p>
+            </label>
+            <input list="nome-representante-list" id="nome-representante" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
             <datalist id="nome-representante-list"></datalist>
 
-    </div>
-    <div class="form-group col-12 col-sm-3">
-        <label for="cpf-representante">
-            <p class="label">CPF/CNPJ</p>
-        </label>
-        <input list="cpf-representante-list" id="cpf-representante" placeholder="Buscar"
-            class="form-control rounded-0 novosInputs" required="">
+        </div>
+        <div class="form-group col-12 col-sm-3">
+            <label for="cpf-representante">
+                <p class="label">CPF/CNPJ</p>
+            </label>
+            <input list="cpf-representante-list" id="cpf-representante" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
             <datalist id="cpf-representante-list"></datalist>
-    </div>
+        </div>
         <div class="form-group col-12 col-sm-3">
             <label for="email-representante">
                 <p class="label">E-mail</p>
             </label>
-            <input list="email-representante-list"  id="email-representante" placeholder="Buscar"
+            <input list="email-representante-list" id="email-representante" placeholder="Buscar"
                 class="form-control rounded-0 novosInputs" required="">
-                <datalist id="email-representante-list"></datalist>
+            <datalist id="email-representante-list"></datalist>
         </div>
 
         <div class="form-group col-12 col-sm-3">
@@ -117,7 +198,7 @@
                     <select id="tipo-assinatura-representante" class="form-select" aria-label="Default select example">
                         <option>Selecione</option>
                         <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                        <option  value="ICP" selected>ICP</option>
+                        <option value="ICP" selected>ICP</option>
                         <option value="BIOMETRIA">BIOMETRIA</option>
                     </select>
                 </div>
@@ -125,32 +206,32 @@
                     <a id="removeCli-representante" class="btn btn-danger btn-sm" style="width: 30px;"> X</a>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-<div id="tericeiroContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
-    <div class="form-group col-12 col-sm-3">
-        <label for="nome-representante-terceiros">
-            <p class="label">Representantes</p>
-        </label>
-        <input list="nome-representante-terceiros-list" id="nome-representante-terceiros" placeholder="Buscar"
-            class="form-control rounded-0 novosInputs" required="">
+    <div id="tericeiroContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+        <div class="form-group col-12 col-sm-3">
+            <label for="nome-representante-terceiros">
+                <p class="label">Representantes</p>
+            </label>
+            <input list="nome-representante-terceiros-list" id="nome-representante-terceiros" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
             <datalist id="nome-representante-terceiros-list"></datalist>
-    </div>
-    <div class="form-group col-12 col-sm-3">
-        <label for="cpf-representante-terceiros">
-            <p class="label">CPF/CNPJ</p>
-        </label>
-        <input list="cpf-representante-terceiros-list" id="cpf-representante-terceiros" placeholder="Buscar"
-            class="form-control rounded-0 novosInputs" required="">
+        </div>
+        <div class="form-group col-12 col-sm-3">
+            <label for="cpf-representante-terceiros">
+                <p class="label">CPF/CNPJ</p>
+            </label>
+            <input list="cpf-representante-terceiros-list" id="cpf-representante-terceiros" placeholder="Buscar"
+                class="form-control rounded-0 novosInputs" required="">
             <datalist id="cpf-representante-terceiros-list"></datalist>
-    </div>
+        </div>
         <div class="form-group col-12 col-sm-3">
             <label for="email-representante-terceiros">
                 <p class="label">E-mail</p>
             </label>
             <input list="email-representante-terceiros-list" id="email-representante-terceiros" placeholder="Buscar"
                 class="form-control rounded-0 novosInputs" required="">
-                <datalist id="email-representante-terceiros-list"></datalist>
+            <datalist id="email-representante-terceiros-list"></datalist>
         </div>
 
         <div class="form-group col-12 col-sm-3">
@@ -162,7 +243,7 @@
                     <select id="tipo-assinatura-terceiros" class="form-select" aria-label="Default select example">
                         <option>Selecione</option>
                         <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                        <option  value="ICP" selected>ICP</option>
+                        <option value="ICP" selected>ICP</option>
                         <option value="BIOMETRIA">BIOMETRIA</option>
                     </select>
                 </div>
@@ -170,16 +251,16 @@
                     <a id="removeCli-terceiros" class="btn btn-danger btn-sm" style="width: 30px;"> X</a>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-<div id="avalistaContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
-    <div class="form-group col-12 col-sm-3">
-        <label for="nome-representante-avalista">
-            <p class="label">Representantes</p>
-        </label>
-        <input  id="nome-representante-avalista" placeholder="Buscar"
-            class="form-control rounded-0 novosInputs" required="">
-    </div>
+    <div id="avalistaContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
+        <div class="form-group col-12 col-sm-3">
+            <label for="nome-representante-avalista">
+                <p class="label">Representantes</p>
+            </label>
+            <input id="nome-representante-avalista" placeholder="Buscar" class="form-control rounded-0 novosInputs"
+                required="">
+        </div>
         <div class="form-group col-12 col-sm-3">
             <label for="cnpj-representante-avalista">
                 <p class="label">CNPJ</p>
@@ -188,12 +269,12 @@
                 class="form-control rounded-0 novosInputs" required="">
         </div>
         <div class="form-group col-12 col-sm-3">
-            <label for="email-representante-terceiros">
+            <label for="email-representante-avalistas">
                 <p class="label">E-mail</p>
             </label>
-            <input list="email-representante-terceiros-list" id="email-representante-terceiros" placeholder="Buscar"
+            <input list="email-representante-avalistas-list" id="email-representante-avalistas" placeholder="Buscar"
                 class="form-control rounded-0 novosInputs" required="">
-                <datalist id="email-representante-terceiros-list"></datalist>
+            <datalist id="email-representante-avalistas-list"></datalist>
         </div>
         <div class="form-group col-12 col-sm-3">
             <div class="row">
@@ -204,7 +285,7 @@
                     <select id="tipo-assinatura-avalista" class="form-select" aria-label="Default select example">
                         <option>Selecione</option>
                         <option value="DS ELETRONIC"> DS ELETRONIC</option>
-                        <option  value="ICP" selected>ICP</option>
+                        <option value="ICP" selected>ICP</option>
                         <option value="BIOMETRIA">BIOMETRIA</option>
                     </select>
                 </div>
@@ -212,40 +293,40 @@
                     <a id="removeCli-avalista" class="btn btn-danger btn-sm" style="width: 30px;"> X</a>
                 </div>
             </div>
+        </div>
+
     </div>
-    
-</div>
-<fieldset id="avalistas0" hidden class="border p-2">
-    <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalista &nbsp;</strong></span>
-    </legend>
-    <div id="aavalistasContainer">
-        <div class='myContainer row'>
-            <div class="form-group col-12 col-sm-3">
-                <label for="nome-representante">
-                    <p class="label">Grupos de Representantes</p>
-                </label>
-                <select id="avalistasGroups" class="form-select" aria-label="Default select example">
-                    <option selected>Selecione um grupo</option>
-                  </select>
-                  
-                  <br>
+    <fieldset id="avalistas0" hidden class="border p-2">
+        <legend class="w-auto"><span class="text-muted"><strong>&nbsp; Avalista &nbsp;</strong></span>
+        </legend>
+        <div id="aavalistasContainer">
+            <div class='myContainer row'>
+                <div class="form-group col-12 col-sm-3">
+                    <label for="nome-representante">
+                        <p class="label">Grupos de Representantes</p>
+                    </label>
+                    <select id="avalistasGroups" class="form-select" aria-label="Default select example">
+                        <option selected>Selecione um grupo</option>
+                    </select>
+
+                    <br>
+                </div>
             </div>
-        </div>
-        <div id="gruposAvalistaDiv" class='myContainer row'>
-        </div>
+            <div id="gruposAvalistaDiv" class='myContainer row'>
+            </div>
             <br>
             <div class="row">
                 <div class="form-group">
                     <a id="addRepCli-avalista" class="btn btn-primary"> Adicionar Representante</a>
-            </div>
-            <div hidden id="removeDiv" class="form-group">
-                <a id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</a>
-            </div>
+                </div>
+                <div hidden id="removeDiv" class="form-group">
+                    <a id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</a>
+                </div>
             </div>
 
-    </div>
+        </div>
 
-</fieldset>
+    </fieldset>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
