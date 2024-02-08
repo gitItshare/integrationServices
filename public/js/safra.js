@@ -13,7 +13,13 @@ const clientCpfList = document.getElementById("cpf-representante-list")
 const buttonAvalista = document.getElementById("addRepCli-avalista")
 const buttonRemoveAvalista = document.getElementById("removeCli-avalista")
 const x2js = new X2JS();
+let fakestate = '{"terceiros":[[{"nome":"JOSE MAURICIO DE SOUZA","cpf":"10203062892","email":"andre.cunha@safra.com.br","tipo":"ICP"},{"nome":"PATRICIA ZANINI MERELLO","cpf":"18148332851","email":"andre.cunha@safra.com.br","tipo":"ICP"}],[{"nome":"JOSE MAURICIO DE SOUZA","cpf":"10203062892","email":"andre.cunha@safra.com.br","tipo":"ICP"},{"nome":"JEFFERSON FRANCISCO PEREIRA","cpf":"21842466895","email":"","tipo":"ICP"}]],"avalistas":[[{"nome":"JOSE MAURICIO DE SOUZA","cpf":"10203062892","email":"andre.cunha@safra.com.br","tipo":"ICP"},{"nome":"JEFFERSON FRANCISCO PEREIRA","cpf":"21842466895","email":"","tipo":"ICP"}]],"emitente":[{"nome":"JOSE MAURICIO DE SOUZA","cpf":"10203062892","email":"andre.cunha@safra.com.br","tipo":"ICP"},{"nome":"PATRICIA ZANINI MERELLO","cpf":"18148332851","email":"andre.cunha@safra.com.br","tipo":"ICP"}]}'
 const changes = {
+    terceiros: [],
+    avalistas: [],
+    emitente: []
+}
+const state = {
     terceiros: [],
     avalistas: [],
     emitente: []
@@ -122,6 +128,7 @@ $.ajax({
         document.querySelector("#ctl00_MainContent_buttonGroup_btnDone").addEventListener("mouseover", function () {
             console.log("ATIVANDO MOUSE OVER")
             makeXml()
+            saveState()
         })
         let {
             data
@@ -166,25 +173,7 @@ function preencherRevisao () {
             if(el.HtmlId ==  "clientGrupos"){
                 let clientGroups = document.getElementById(el.HtmlId)
                 clientGroups.value = el.HtmlValue
-                clientGroups.dispatchEvent(new Event("change"))
          
-            }
-            if(el.HtmlId == "email-representante"){
-                let qtd = el.HtmlValue.split(",")
-                qtd.forEach((value, index) =>{
-                    if(index > 2)
-                        document.getElementById("addRepCli").dispatchEvent(new Event("click"))
-                    let emails = document.querySelectorAll("#"+el.HtmlId)
-                    console.log("TESTEE", emails, index, value)
-                    emails[index].value = value
-                })
-            }
-            if(el.HtmlId == "tipo-assinatura-representante"){
-                let qtd = el.HtmlValue.split(",")
-                qtd.forEach((value, index) =>{
-                    let campos = document.querySelectorAll("#"+el.HtmlId)
-                    campos[index].value = value
-                })
             }
 
             if(el.HtmlId == "avalistasGroups"){
@@ -195,10 +184,10 @@ function preencherRevisao () {
                     console.log("VALUE", value)
                     if(campos[index]){
                         campos[index].value = value
-                        campos[index].dispatchEvent(new Event("change"))
                     }
                 })
             }
+
             if(el.HtmlId == "terceirosGroups"){
                 let qtd = el.HtmlValue.split(",")
                 console.log("ARRAY", qtd)
@@ -207,11 +196,39 @@ function preencherRevisao () {
                     console.log("VALUE", value)
                     if(campos[index]){
                         campos[index].value = value
-                        campos[index].dispatchEvent(new Event("change"))
                     }
                 })
             }
+
+            if(el.HtmlId == "state"){
+                let state = JSON.parse(el.HtmlValue)
+                state = fakestate
+            }
         })
+        preencherState()
+        function preencherState (){
+            let json = JSON.parse(fakestate)
+            json.emitente.forEach(el => {
+                const clone = addClient(null, "clienteContainer0", el, "emitente")
+                buttonCli.parentElement.parentElement.parentElement.children[1].appendChild(clone)
+            })
+            json.avalistas.forEach((el, index) => {
+                el.forEach(element => {
+                    const clone = addClient(null, "avalistaContainer0", element, "avalistas")
+                    let button= document.querySelectorAll("#addRepCli-avalista")
+                    button[index].parentElement.parentElement.parentElement.children[1].appendChild(clone)
+                })
+
+            })
+            json.terceiros.forEach((el, index) => {
+                el.forEach(element => {
+                    const clone = addClient(null, "tericeiroContainer0", element, "terceiros")
+                    let button= document.querySelectorAll("#addRepCli-terceiros")
+                    button[index].parentElement.parentElement.parentElement.children[1].appendChild(clone)
+                })
+      
+            })
+        }
     })
 }
 
@@ -221,8 +238,9 @@ function addClient(event, id, representante = {}, change, noSave) {
 
         if (representante.nome) {
             clone.children[0].children[1].value = representante.nome
-            clone.children[1].children[1].value = representante.documento
-            clone.children[2].children[1].value = representante.emailContatoAssinatura
+            clone.children[1].children[1].value = representante.documento || representante.cpf
+            clone.children[2].children[1].value = representante.emailContatoAssinatura || representante.email
+            clone.children[3].children[0].children[1].children[0].value = representante.tipo
         }
         // console.log("aQUIIII", clone.children[2].children[0].children[2].children[0])
         clone.removeAttribute("hidden")
@@ -351,7 +369,6 @@ function preencherAvalistas(avalistas) {
         clone.id = nome
         clone.children[0].innerText = nome
         const inputNameList = clone.children[1].children[0].children[0].children[1]
-
         avalistaDIV.appendChild(clone)
         let selectGroups = clone.children[1].children[0].children[0].children[1]
         avalistaDiv = clone.children[1].children[1].id = "gruposAvalistaDiv" + el.documentoCliente
@@ -387,7 +404,7 @@ function maketableCli(array, anchor, ordem) {
         let email = el.children[2].children[1].value
         let tipoASs = el.children[3].children[0].children[1].children[0].value
         let tag = anchor + (index + 1)
-        xml += "<nome>Emitente" + (index + 1) + "</nome>"
+        xml += "<role>Emitente" + (index + 1) + "</role>"
         xml += "<nome>" + nome + "</nome>"
 
         xml += "<email>" + email + "</email>"
@@ -401,6 +418,7 @@ function maketableCli(array, anchor, ordem) {
     })
     xml += "<signers>"
     xml += "<nome> Testemunha Emitente </nome>"
+    xml += "<role> Testemunha Emitente </role>"
     xml += "<email>" + testemunhaEmitente + "</email>"
     xml += "<cpf></cpf>"
     xml += "<tag>sign_T1</tag>"
@@ -533,6 +551,7 @@ function preencherTerceiros(array) {
         const terceiros = terceiroGarantidor.find(terceiro => terceiro.CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
         console.log("NOMWE", terceiros)
         let nome = terceiros.Terceiro_Garantidor_Nome_Razao_Social
+        
         clone.id = nome
         clone.children[0].innerText = nome
         const inputNameList = clone.children[1].children[0].children[0].children[1]
@@ -639,3 +658,58 @@ function saveChanges() {
 
     return xml
 }
+
+function saveState(){       
+    let clienteContainer = Array.from(document.getElementById("gruposDiv").children)
+    let clientState = clienteContainer.map(el => {
+        return{
+            nome: el.children[0].children[1].value,
+            cpf: el.children[1].children[1].value,
+            email: el.children[2].children[1].value,
+            tipo: el.children[3].children[0].children[1].children[0].value
+        }
+    })
+
+    let terceiros = Array.from(document.getElementById("terceiros").children)
+    let terceiroState = []
+    terceiros.forEach((el, index)=> {
+        if(index > 0){
+            let terceirosContainer = Array.from(el.children[1].children[1].children)
+            let mapped = terceirosContainer.map(container => {
+                return{
+                    nome: container.children[0].children[1].value,
+                    cpf: container.children[1].children[1].value,
+                    email: container.children[2].children[1].value,
+                    tipo: container.children[3].children[0].children[1].children[0].value
+                }
+            })
+            terceiroState.push(mapped)
+        }
+    })
+    let avalistas = Array.from(document.getElementById("avalistas").children)
+    let avalistaState = []
+    avalistas.forEach((el, index)=> {
+        if(index > 0){
+            let avalistaContainer = Array.from(el.children[1].children[1].children)
+            let mapped =  avalistaContainer.map(container => {
+                return{
+                    nome: container.children[0].children[1].value,
+                    cpf: container.children[1].children[1].value,
+                    email: container.children[2].children[1].value,
+                    tipo: container.children[3].children[0].children[1].children[0].value
+                }
+            })
+            avalistaState.push(mapped)
+        }
+    })
+    console.log("avalista", avalistaState)
+    console.log("terceiro", terceiroState)
+    console.log("cliente", clientState)
+
+    state.avalistas = avalistaState
+    state.terceiros = terceiroState
+    state.emitente = clientState
+    document.getElementById("state").value = JSON.stringify(state)
+}
+
+window.saveState = saveState
