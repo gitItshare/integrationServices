@@ -8,6 +8,19 @@
         text-align: left !important;
         font-weight: 400;
     }
+    #avalistas{
+        display: flex;
+        flex-direction: column;
+    }
+    #terceiros{
+        display: flex;
+        flex-direction: column;
+    }
+    .containerStatus{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 
 <body>
@@ -57,7 +70,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input disabled class="form-check-input" type="checkbox" value="" id="ted">
+                                        <input class="form-check-input" type="checkbox" value="" id="ted">
                                         <label class="form-check-label" for="ted">
                                           TED
                                         </label>
@@ -141,8 +154,18 @@
                         <div class="form-group">
                             <a id="addRepCli" class="btn btn-primary"> Adicionar Representante</a>
                         </div>
-                        <div hidden id="removeDiv" class="form-group">
-                            <a id="removeRepCli" class="btn btn-primary"> Remover Representante</a>
+                        <a id="hasChangeCli" class="btn btn-primary" hidden> false </a>
+                        <div class="containerStatus" hidden>
+                        <h3>Comentários FPO</h3>
+                        <select id="statusCli" class="form-select" aria-label="Default select example">
+                            <option selected>Status</option>
+                            <option value="ok">OK</option>
+                            <option value="nao">Nao OK</option>
+                        </select>
+                        <textarea id="statusComentcli" placeholder="Comentarios"></textarea>
+                        <h3>Comentários Middle office</h3>
+                        <textarea id="statusComentcliMO" placeholder="Comentarios"></textarea>
+
                         </div>
                     </div>
 
@@ -161,6 +184,17 @@
                 </legend>
 
             </fieldset>
+        </div>
+        <div class="form-group" id="statusDIV" hidden>
+            <h2>
+               Status da analise
+            </h2>
+            <select id="status"  class="form-select" aria-label="Default select example">
+                <option selected>Selecione um grupo</option>
+                <option>Analise OK</option>
+                <option>Timbre Pendencia</option>
+                <option>Pendencia de Poderes</option>
+            </select>
         </div>
     </div>
     <div id="clienteContainer0" hidden style="margin-bottom: 10px;" class='myContainer row'>
@@ -266,7 +300,7 @@
             <label for="cnpj-representante-avalista">
                 <p class="label">CNPJ</p>
             </label>
-            <input disabled=true id="cnpj-representante-avalista" placeholder="Buscar"
+            <input  id="cnpj-representante-avalista" placeholder="Buscar"
                 class="form-control rounded-0 novosInputs" required="">
         </div>
         <div class="form-group col-12 col-sm-3">
@@ -315,14 +349,24 @@
             </div>
             <div id="gruposAvalistaDiv" class='myContainer row'>
             </div>
-            <br>
             <div class="row">
                 <div class="form-group">
                     <a id="addRepCli-avalista" class="btn btn-primary"> Adicionar Representante</a>
                 </div>
-                <div hidden id="removeDiv" class="form-group">
-                    <a id="removeRepCli-terceiros" class="btn btn-primary"> Remover Representante</a>
-                </div>
+                <a id="hasChange" class="btn btn-primary" hidden> false </a>
+                <div class="containerStatus" hidden>
+                    <h3>Comentários FPO</h3>
+                    <select id="statusAva" class="form-select" aria-label="Default select example">
+                        <option selected>Status</option>
+                        <option value="ok">OK</option>
+                        <option value="nao">Nao OK</option>
+                    </select>
+                    <textarea id="statusComentAva" placeholder="Comentarios"></textarea>
+                    <h3>Comentários Middle office</h3>
+                    <textarea id="statusComentAvaMO" placeholder="Comentarios"></textarea>
+
+                <div>
+
             </div>
 
         </div>

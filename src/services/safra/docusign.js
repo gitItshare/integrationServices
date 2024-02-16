@@ -97,7 +97,26 @@ let dirname = path.resolve(path.dirname(''));
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
                         }
-                    ]
+                    ],
+                    "carbonCopies": [{
+                        "agentCanEditEmail": "false",
+                        "agentCanEditName": "false",
+                        "name": "BO Contratos",
+                        "email": "regcont@safra.com.br",
+                        "recipientId": "40344879",
+                        "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
+                        "accessCode": "",
+                        "requireIdLookup": "false",
+                        "routingOrder": "5",
+                        "note": "",
+                        "roleName": "BO Contratos",
+                        "completedCount": "0",
+                        "deliveryMethod": "email",
+                        "templateLocked": "false",
+                        "templateRequired": "false",
+                        "inheritEmailNotificationConfiguration": "false",
+                        "recipientType": "carboncopy"
+                    }],
             }
             let recipients = []
             console.log(params)
@@ -207,9 +226,12 @@ let dirname = path.resolve(path.dirname(''));
                         signer.clientUserId = el.cpf["_text"]
                         signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
                     }
+                    if(el.tipoAss["_text"] == "copia"){
+                        
+                    }
                     return signer
             })
-            
+            template.carbon
             template.signers = signers
             console.log(template.signers)
             const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
