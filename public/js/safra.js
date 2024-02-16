@@ -82,7 +82,7 @@ let representantesAvalista = []
 let templateField = {}
 let avalistaDIV = document.getElementById("avalistas")
 let terceirosDIV = document.getElementById("terceiros")
-
+let grupoTestemunhas = {}
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
 let testemunhaEmitente = ""
@@ -106,6 +106,7 @@ $.ajax({
     templateField = data.Params.TemplateFieldData
     emitente = data.Params.TemplateFieldData.Emitente
     terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+    grupoTestemunhas = data.Params.TemplateFieldData.Documents.Document.Cadastro
 
     if (terceiroGarantidor.element)
         terceiroGarantidor = terceiroGarantidor.element
@@ -557,6 +558,25 @@ function maketableCli(array, anchor, ordem) {
         console.log(el)
         xml += "</signers>"
     })
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+    let lenghtGrupo = grupoTestemunhas.Nome.length-1
+
+    let randomIndex = getRandomInt(lenghtGrupo)
+    let nomeTest = grupoTestemunhas.Nome.find(el => el["_SetNumber"] == randomIndex+1)
+    let emailTest = grupoTestemunhas.Endereco.find(el => el["_SetNumber"] == randomIndex+1)
+
+    xml += "<signers>"
+    xml += "<nome>"+nomeTest["__text"]+"</nome>"
+    xml += "<role> Testemunha Emitente2 </role>"
+    xml += "<email>" + emailTest["__text"] + "</email>"
+    xml += "<cpf></cpf>"
+    xml += "<tag>sign_T2</tag>"
+    xml += "<tipoASs>DS ELETRONIC</tipoASs>"
+    xml += "<ordem>" + 1 + "</ordem>"
+    xml += "</signers>"
+
     xml += "<signers>"
     xml += "<nome> Testemunha Emitente </nome>"
     xml += "<role> Testemunha Emitente </role>"
