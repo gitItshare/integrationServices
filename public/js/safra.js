@@ -565,7 +565,7 @@ function maketableCli(array, anchor, ordem) {
 
     let randomIndex = getRandomInt(lenghtGrupo)
     let nomeTest = grupoTestemunhas.Nome.find(el => el["_SetNumber"] == randomIndex+1)
-    let emailTest = grupoTestemunhas.Endereco.find(el => el["_SetNumber"] == randomIndex+1)
+    let emailTest = grupoTestemunhas.Email.find(el => el["_SetNumber"] == randomIndex+1)
 
     xml += "<signers>"
     xml += "<nome>"+nomeTest["__text"]+"</nome>"
@@ -595,16 +595,6 @@ function maketableCli(array, anchor, ordem) {
     xml += "<tag>sign_T1</tag>"
     xml += "<tipoASs>DS ELETRONIC</tipoASs>"
     xml += "<ordem>" + 3 + "</ordem>"
-    xml += "</signers>"
-
-    xml += "<signers>"
-    xml += "<nome> BO Contratos </nome>"
-    xml += "<role> BO Contratos </role>"
-    xml += "<email>regcont@safra.com.br</email>"
-    xml += "<cpf></cpf>"
-    xml += "<tag>sign_T1</tag>"
-    xml += "<tipoASs>copia</tipoASs>"
-    xml += "<ordem>" + 5 + "</ordem>"
     xml += "</signers>"
 
     return xml
@@ -707,7 +697,7 @@ function makeXml() {
         xml += makeTableBanco(valorContrato, 1)
 
         xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor")
-        xml += maketable(containerAvalistas, "sign_R1A", 3, "Avalista")
+        xml += maketable(containerAvalistas, "A", 3, "Avalista")
 
         xml += "</recipients>"
         document.getElementById("xml").value = xml

@@ -121,7 +121,7 @@ let dirname = path.resolve(path.dirname(''));
             console.log(params)
 
             let signers = params.map((el, index) => {
-                    let recipientId = "2132"+index
+                    let recipientId = "123"+index
                     let tabs = {
                                 "signHereTabs":[
                                    {
@@ -225,9 +225,6 @@ let dirname = path.resolve(path.dirname(''));
                         signer.clientUserId = el.cpf["_text"]
                         signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
                     }
-                    if(el.tipoAss["_text"] == "copia"){
-                        
-                    }
                     return signer
             })
             template.signers = signers
@@ -253,14 +250,18 @@ let dirname = path.resolve(path.dirname(''));
             }); 
 
             for(let tab of testemunhastabs){
-                console.log(tab)
+                try {
+                    console.log(tab)
                 
-                await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {signHereTabs: [tab]}, {
-                headers: {
-                     'Authorization': this.authToken
-                 }
-             }); 
-             console.log("tab inserida..")
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {signHereTabs: [tab]}, {
+                    headers: {
+                         'Authorization': this.authToken
+                     }
+                 }); 
+                 console.log("tab inserida..")  
+                } catch (error) {
+                    console.log("tab nao inserida")
+                }
             }
             console.log(resp.data.recipientUpdateResults)
              return "resp"
