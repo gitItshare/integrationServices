@@ -62,7 +62,7 @@ let dirname = path.resolve(path.dirname(''));
 
         try {
             console.log(this.authToken)
-            let testemunhastabs = []
+            let testemunhastabs = {signHereTabs:[]}
             
             let template = {
                     "signers": [
@@ -201,7 +201,7 @@ let dirname = path.resolve(path.dirname(''));
                                     signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
                                 }
                                 signers.push(signer)
-                                testemunhastabs.push(signer.tabs.signHereTabs[0])
+                                testemunhastabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                              } else {
                                 signer = {
                                     "defaultRecipient": "false",
@@ -283,9 +283,10 @@ let dirname = path.resolve(path.dirname(''));
                                     "inheritEmailNotificationConfiguration": "false"
                                 }
                                 signers.push(signer)
-                                testemunhastabs.push(signer.tabs.approveTabs[0])
-                                testemunhastabs.push(signer.tabs.declineTabs[0])
-
+                                testemunhastabs.approveTabs = []
+                                testemunhastabs.approveTabs.push(signer.tabs.approveTabs[0])
+                                testemunhastabs.declineTabs = []
+                                testemunhastabs.declineTabs.push(signer.tabs.declineTabs[0])
                             }
             })
             template.signers = signers
@@ -310,11 +311,39 @@ let dirname = path.resolve(path.dirname(''));
                 }
             }); 
 
-            for(let tab of testemunhastabs){
+            for(let tab of testemunhastabs.signHereTabs){
                 try {
                     console.log(tab)
                 
                     await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {signHereTabs: [tab]}, {
+                    headers: {
+                         'Authorization': this.authToken
+                     }
+                 }); 
+                 console.log("tab inserida..")  
+                } catch (error) {
+                    console.log("tab nao inserida")
+                }
+            }
+            for(let tab of testemunhastabs.approveTabs){
+                try {
+                    console.log(tab)
+                
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {approveTabs: [tab]}, {
+                    headers: {
+                         'Authorization': this.authToken
+                     }
+                 }); 
+                 console.log("tab inserida..")  
+                } catch (error) {
+                    console.log("tab nao inserida")
+                }
+            }
+            for(let tab of testemunhastabs.declineTabs){
+                try {
+                    console.log(tab)
+                
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {declineTabs: [tab]}, {
                     headers: {
                          'Authorization': this.authToken
                      }
