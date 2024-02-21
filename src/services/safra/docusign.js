@@ -121,8 +121,10 @@ let dirname = path.resolve(path.dirname(''));
             let recipients = []
             console.log(params)
 
-            let signers = params.map((el, index) => {
+            let signers = []
+            params.forEach((el, index) => {
                     let recipientId = "123"+index
+                    let signer = {}
                     let tabs = {
                                 "signHereTabs":[
                                    {
@@ -153,7 +155,7 @@ let dirname = path.resolve(path.dirname(''));
                              }
                              testemunhastabs.push(tabs.signHereTabs[0])
                              if(el.tipoAss["_text"] != "validador"){
-                                let signer = {
+                                signer = {
                                     "defaultRecipient": "false",
                     
                                     "signInEachLocation": "false",
@@ -227,6 +229,7 @@ let dirname = path.resolve(path.dirname(''));
                                     signer.clientUserId = el.cpf["_text"]
                                     signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
                                 }
+                                signers.push(signer)
                              } else {
                                 template.agents.push( {
                                     "name": "Validador BackOffice",
@@ -246,7 +249,6 @@ let dirname = path.resolve(path.dirname(''));
                                     "inheritEmailNotificationConfiguration": "false"
                                 })
                              }
-                    return signer
             })
             template.signers = signers
             console.log(template.signers)

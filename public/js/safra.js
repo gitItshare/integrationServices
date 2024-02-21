@@ -518,6 +518,8 @@ function preencherAvalistas(avalistas) {
         })
         addButton.addEventListener("click", function (event) {
             console.log(clone)
+            document.getElementById("tipoCt").removeAttribute("hidden")
+
             const cloneCli = addClient(event, "avalistaContainer0", {}, "avalistas")
 
             console.log("Clone cli", cloneCli)
@@ -610,7 +612,6 @@ function makeTableBanco(valor, ordem) {
     let nome2 = ""
     let xml = ""
     if (valor <= 15000) {
-        nome
         emailBanco = "vanessa.menezes@safra.com.br"
         cpfBanco = "26749486800"
         nome1 = "Vanessa Menezes"
@@ -756,6 +757,8 @@ function preencherTerceiros(array) {
             changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente, "terceiros")
         })
         addButton.addEventListener("click", function (event) {
+            document.getElementById("tipoCt").removeAttribute("hidden")
+
             console.log(clone)
             const cloneCli = addClient(event, "tericeiroContainer0", {}, "terceiros")
 
