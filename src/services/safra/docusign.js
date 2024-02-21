@@ -125,35 +125,6 @@ let dirname = path.resolve(path.dirname(''));
             params.forEach((el, index) => {
                     let recipientId = "123"+index
                     let signer = {}
-                    let tabs = {
-                                "signHereTabs":[
-                                   {
-                                      "stampType":"signature",
-                                      "name":"SignHere",
-                                      "tabLabel":"Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
-                                      "scaleValue":"1",
-                                      "optional":"false",
-                                      "documentId":"1",
-                                      "recipientId":recipientId,
-                                      "pageNumber":"1",
-                                      "xPosition":"",
-                                      "yPosition":"",
-                                      "anchorString":"\\"+el.tag["_text"]+"\\",
-                                      "anchorXOffset":"0",
-                                      "anchorYOffset":"0",
-                                      "anchorUnits":"pixels",
-                                      "anchorCaseSensitive":"false",
-                                      "anchorMatchWholeWord":"true",
-                                      "anchorHorizontalAlignment":"left",
-                                      "anchorTabProcessorVersion":"v1_3",
-                                      "tabId":"15bdf337-9e98-43af-b560-6019d250e5bb",
-                                      "templateLocked":"false",
-                                      "templateRequired":"false",
-                                      "tabType":"signhere"
-                                   },
-                                ]
-                             }
-                             testemunhastabs.push(tabs.signHereTabs[0])
                              if(el.tipoAss["_text"] != "validador"){
                                 signer = {
                                     "defaultRecipient": "false",
@@ -230,11 +201,73 @@ let dirname = path.resolve(path.dirname(''));
                                     signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
                                 }
                                 signers.push(signer)
+                                testemunhastabs.push(signer.tabs.signHereTabs[0])
                              } else {
-                                template.agents.push( {
-                                    "name": "Validador BackOffice",
+                                signer = {
+                                    "defaultRecipient": "false",
+                                    "signInEachLocation": "false",
+                                    "tabs": {
+                                        "approveTabs": [{
+                                            "buttonText": "Approve",
+                                            "tabLabel": "Approve 23167709-51a6-4753-b3ae-5ff522747962",
+                                            "font": "helvetica",
+                                            "fontColor": "black",
+                                            "fontSize": "size9",
+                                            "localePolicy": {},
+                                            "documentId": "83374671",
+                                            "recipientId": recipientId,
+                                            "pageNumber": "1",
+                                            "xPosition": "",
+                                            "yPosition": "",
+                                            "width": "70",
+                                            "height": "22",
+                                            "anchorString": "/validadorA/",
+                                            "anchorXOffset": "0",
+                                            "anchorYOffset": "0",
+                                            "anchorUnits": "pixels",
+                                            "anchorCaseSensitive": "false",
+                                            "anchorMatchWholeWord": "true",
+                                            "anchorHorizontalAlignment": "left",
+                                            "anchorTabProcessorVersion": "v1_3",
+                                            "tabId": "955bc722-9a2f-4b1b-a72b-c2f16f777b33",
+                                            "templateLocked": "false",
+                                            "templateRequired": "false",
+                                            "tabType": "approve"
+                                        }],
+                                        "declineTabs": [{
+                                            "buttonText": "Decline",
+                                            "declineReason": "",
+                                            "tabLabel": "Decline 7da7a2eb-44bc-46f1-b283-b6d719441441",
+                                            "font": "helvetica",
+                                            "fontColor": "black",
+                                            "fontSize": "size9",
+                                            "localePolicy": {},
+                                            "documentId": "83374671",
+                                            "recipientId": recipientId,
+                                            "pageNumber": "2",
+                                            "xPosition": "",
+                                            "yPosition": "",
+                                            "width": "70",
+                                            "height": "22",
+                                            "anchorString": "/validadorD/",
+                                            "anchorXOffset": "0",
+                                            "anchorYOffset": "0",
+                                            "anchorUnits": "pixels",
+                                            "anchorCaseSensitive": "false",
+                                            "anchorMatchWholeWord": "true",
+                                            "anchorHorizontalAlignment": "left",
+                                            "anchorTabProcessorVersion": "v1_3",
+                                            "tabId": "248ddb9d-8dc7-4be4-a576-e840bbbca86a",
+                                            "templateLocked": "false",
+                                            "templateRequired": "false",
+                                            "tabType": "decline"
+                                        }]
+                                    },
+                                    "agentCanEditEmail": "false",
+                                    "agentCanEditName": "false",
+                                    "name": el.nome["_text"],
                                     "email": "henrique.rodrigues@itshare.com.br",
-                                    "recipientId": "123445",
+                                    "recipientId": recipientId,
                                     "accessCode": "",
                                     "requireIdLookup": "false",
                                     "identityVerification": {
@@ -243,12 +276,17 @@ let dirname = path.resolve(path.dirname(''));
                                     },
                                     "routingOrder": "3",
                                     "note": "",
-                                    "roleName": "Validador",
+                                    "roleName": el.role["_text"],
+                                    "deliveryMethod": "email",
                                     "templateLocked": "false",
                                     "templateRequired": "false",
                                     "inheritEmailNotificationConfiguration": "false"
-                                })
-                             }
+                                }
+                                signers.push(signer)
+                                testemunhastabs.push(signer.tabs.approveTabs[0])
+                                testemunhastabs.push(signer.tabs.declineTabs[0])
+
+                            }
             })
             template.signers = signers
             console.log(template.signers)
