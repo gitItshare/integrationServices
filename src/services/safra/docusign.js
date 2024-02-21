@@ -116,6 +116,7 @@ let dirname = path.resolve(path.dirname(''));
                         "inheritEmailNotificationConfiguration": "false",
                         "recipientType": "carboncopy"
                     }],
+                    agents: []
             }
             let recipients = []
             console.log(params)
@@ -147,84 +148,104 @@ let dirname = path.resolve(path.dirname(''));
                                       "templateLocked":"false",
                                       "templateRequired":"false",
                                       "tabType":"signhere"
-                                   }
+                                   },
                                 ]
                              }
                              testemunhastabs.push(tabs.signHereTabs[0])
-                    let signer = {
-                        "defaultRecipient": "false",
-        
-                        "signInEachLocation": "false",
-                        "recipientSignatureProviders": [
-                            {
-                                "sealDocumentsWithTabsOnly": "false",
-                                "signatureProviderName": "universalsignaturepen_imageonly",
-                                "signatureProviderOptions": {}
-                            }
-                        ],
-                        "tabs":{
-                            "signHereTabs":[
-                               {
-                                  "stampType":"signature",
-                                  "name":"SignHere",
-                                  "tabLabel":"Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
-                                  "scaleValue":"1",
-                                  "optional":"false",
-                                  "documentId":"1",
-                                  "recipientId":recipientId,
-                                  "pageNumber":"1",
-                                  "xPosition":"",
-                                  "yPosition":"",
-                                  "anchorString":"\\"+el.tag["_text"]+"\\",
-                                  "anchorXOffset":"0",
-                                  "anchorYOffset":"0",
-                                  "anchorUnits":"pixels",
-                                  "anchorCaseSensitive":"false",
-                                  "anchorMatchWholeWord":"true",
-                                  "anchorHorizontalAlignment":"left",
-                                  "anchorTabProcessorVersion":"v1_3",
-                                  "tabId":"15bdf337-9e98-43af-b560-6019d250e5bb",
-                                  "templateLocked":"false",
-                                  "templateRequired":"false",
-                                  "tabType":"signhere"
-                               }
-                            ]
-                         },
-                        "agentCanEditEmail": "false",
-                        "agentCanEditName": "false",
-                        "name": el.nome["_text"],
-                        "email": el.email["_text"],
-                        "recipientId": recipientId,
-                        "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
-                        "accessCode": "",
-                        "requireIdLookup": "false",
-                        "identityVerification": {
-                            "inputOptions": [],
-                            "workflowLabel": ""
-                        },
-                        "routingOrder": el.ordem["_text"],
-                        "note": "",
-                        "roleName": el.role["_text"],
-                        "deliveryMethod": "email",
-                        "templateLocked": "false",
-                        "templateRequired": "false",
-                        "inheritEmailNotificationConfiguration": "false"
-                    }
-                    if(el.tipoAss["_text"] == "ICP"){
-                        signer.recipientSignatureProviders = [{
-                            "sealDocumentsWithTabsOnly": "false",
-                            "signatureProviderName": "universalsignaturepen_icp_smartcard_tsp",
-                            "signatureProviderOptions": {
-                                "cpfNumber":el.cpf["_text"],
-                                "signerRole":""
-                            }
-                        }]
-                    }
-   
-                    if(el.tipoAss["_text"] == "BIOMETRIA"){
-                        signer.clientUserId = el.cpf["_text"]
-                        signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
-                    }
+                             if(el.tipoAss["_text"] != "validador"){
+                                let signer = {
+                                    "defaultRecipient": "false",
+                    
+                                    "signInEachLocation": "false",
+                                    "recipientSignatureProviders": [
+                                        {
+                                            "sealDocumentsWithTabsOnly": "false",
+                                            "signatureProviderName": "universalsignaturepen_imageonly",
+                                            "signatureProviderOptions": {}
+                                        }
+                                    ],
+                                    "tabs":{
+                                        "signHereTabs":[
+                                           {
+                                              "stampType":"signature",
+                                              "name":"SignHere",
+                                              "tabLabel":"Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
+                                              "scaleValue":"1",
+                                              "optional":"false",
+                                              "documentId":"1",
+                                              "recipientId":recipientId,
+                                              "pageNumber":"1",
+                                              "xPosition":"",
+                                              "yPosition":"",
+                                              "anchorString":"\\"+el.tag["_text"]+"\\",
+                                              "anchorXOffset":"0",
+                                              "anchorYOffset":"0",
+                                              "anchorUnits":"pixels",
+                                              "anchorCaseSensitive":"false",
+                                              "anchorMatchWholeWord":"true",
+                                              "anchorHorizontalAlignment":"left",
+                                              "anchorTabProcessorVersion":"v1_3",
+                                              "tabId":"15bdf337-9e98-43af-b560-6019d250e5bb",
+                                              "templateLocked":"false",
+                                              "templateRequired":"false",
+                                              "tabType":"signhere"
+                                           }
+                                        ]
+                                     },
+                                    "agentCanEditEmail": "false",
+                                    "agentCanEditName": "false",
+                                    "name": el.nome["_text"],
+                                    "email": el.email["_text"],
+                                    "recipientId": recipientId,
+                                    "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
+                                    "accessCode": "",
+                                    "requireIdLookup": "false",
+                                    "identityVerification": {
+                                        "inputOptions": [],
+                                        "workflowLabel": ""
+                                    },
+                                    "routingOrder": el.ordem["_text"],
+                                    "note": "",
+                                    "roleName": el.role["_text"],
+                                    "deliveryMethod": "email",
+                                    "templateLocked": "false",
+                                    "templateRequired": "false",
+                                    "inheritEmailNotificationConfiguration": "false"
+                                }
+                                if(el.tipoAss["_text"] == "ICP"){
+                                    signer.recipientSignatureProviders = [{
+                                        "sealDocumentsWithTabsOnly": "false",
+                                        "signatureProviderName": "universalsignaturepen_icp_smartcard_tsp",
+                                        "signatureProviderOptions": {
+                                            "cpfNumber":el.cpf["_text"],
+                                            "signerRole":""
+                                        }
+                                    }]
+                                }
+               
+                                if(el.tipoAss["_text"] == "BIOMETRIA"){
+                                    signer.clientUserId = el.cpf["_text"]
+                                    signer.embeddedRecipientStartURL =  `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
+                                }
+                             } else {
+                                template.agents.push( {
+                                    "name": "Validador BackOffice",
+                                    "email": "henrique.rodrigues@itshare.com.br",
+                                    "recipientId": "123445",
+                                    "accessCode": "",
+                                    "requireIdLookup": "false",
+                                    "identityVerification": {
+                                        "inputOptions": [],
+                                        "workflowLabel": ""
+                                    },
+                                    "routingOrder": "3",
+                                    "note": "",
+                                    "roleName": "Validador",
+                                    "templateLocked": "false",
+                                    "templateRequired": "false",
+                                    "inheritEmailNotificationConfiguration": "false"
+                                })
+                             }
                     return signer
             })
             template.signers = signers

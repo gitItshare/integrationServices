@@ -561,11 +561,12 @@ function maketableCli(array, anchor, ordem) {
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
-    let lenghtGrupo = grupoTestemunhas.Nome.length-1
+    let lenghtGrupo = grupoTestemunhas.Nome.length
 
     let randomIndex = getRandomInt(lenghtGrupo)
-    let nomeTest = grupoTestemunhas.Nome.find(el => el["_SetNumber"] == randomIndex+1)
-    let emailTest = grupoTestemunhas.Email.find(el => el["_SetNumber"] == randomIndex+1)
+    console.log("RANDOM INDEX", randomIndex)
+    let nomeTest = grupoTestemunhas.Nome[randomIndex]
+    let emailTest = grupoTestemunhas.Email[randomIndex]
 
     xml += "<signers>"
     xml += "<nome>"+nomeTest["__text"]+"</nome>"
@@ -593,7 +594,7 @@ function maketableCli(array, anchor, ordem) {
     xml += "<email>docusignbo@safra.com.br</email>"
     xml += "<cpf></cpf>"
     xml += "<tag>sign_T1</tag>"
-    xml += "<tipoASs>DS ELETRONIC</tipoASs>"
+    xml += "<tipoASs>validador</tipoASs>"
     xml += "<ordem>" + 3 + "</ordem>"
     xml += "</signers>"
 
@@ -605,31 +606,42 @@ function makeTableBanco(valor, ordem) {
     let cpfBanco = ""
     let emailBanco2 = ""
     let cpfBanco2 = ""
+    let nome1 = ""
+    let nome2 = ""
     let xml = ""
     if (valor <= 15000) {
+        nome
         emailBanco = "vanessa.menezes@safra.com.br"
         cpfBanco = "26749486800"
+        nome1 = "Vanessa Menezes"
         emailBanco2 = "roberto.capel@safra.com.br"
         cpfBanco2 = "16651816802"
+        nome2 = "Roberto Capel"
     } else if (valor <= 50000 && valor > 15000) {
         emailBanco = "ciro.silva@safra.com.br"
         cpfBanco = "21839585889"
+        nome1 = "Ciro Silva"
         emailBanco2 = "jose.galvao@safra.com.br"
         cpfBanco2 = "3584638828"
+        nome2 = "Jose Galvao"
     } else if (valor <= 200000 && valor > 50000) {
         emailBanco = "ciro.silva@safra.com.br"
         cpfBanco = "21839585889"
+        nome1 = "Ciro Silva"
         emailBanco2 = "marcio.nobrega@safra.com.br"
         cpfBanco2 = "08594753870"
+        nome2 = "Marcio Nobrega"
     } else if (valor > 200000) {
         emailBanco = "agostinho.stefanelli@safra.com.br"
         cpfBanco = "05782565845"
+        nome1 = "Agostinho Stefanelli"
         emailBanco2 = "marcos.monteiro@safra.com.br"
         cpfBanco2 = "10510942830"
+        nome2 = "Marcos Monteiro"
     }
 
     xml += "<signers>"
-    xml += "<nome> Banco </nome>"
+    xml += "<nome>" + nome1 + "</nome>"
     xml += "<role> Banco </role>"
     xml += "<email>" + emailBanco + "</email>"
     xml += "<cpf>" + cpfBanco + "</cpf>"
@@ -639,7 +651,7 @@ function makeTableBanco(valor, ordem) {
     xml += "</signers>"
 
     xml += "<signers>"
-    xml += "<nome> Banco2 </nome>"
+    xml += "<nome>" + nome2 + "</nome>"
     xml += "<role> Banco2 </role>"
     xml += "<email>" + emailBanco2 + "</email>"
     xml += "<cpf>" + cpfBanco2 + "</cpf>"
@@ -666,7 +678,7 @@ function maketable(array, anchor, ordem, role) {
                 let cpf = el.children[1].children[1].value
                 let email = el.children[2].children[1].value
                 let tipoASs = el.children[3].children[0].children[1].children[0].value
-                let tag = "sign_R"+ index + anchor + (indexFull)
+                let tag = "sign_R"+ (i+1) + anchor + (index)
                 xml += "<role>" + role + indexFull + "</role>"
                 xml += "<nome>" + nome + "</nome>"
                 xml += "<email>" + email + "</email>"
@@ -775,25 +787,34 @@ function preencherTabela(templateField) {
         document.getElementById("segmentoSolicitante").value = templateField.Geral_Info.Cliente_Segmento
 
     let geralInfo = templateField.Geral_Info
-    let dataEmissao = new Date(templateField["Data_da_emissao"])
+    let dataEmissao = new Date(templateField["Data_da_emissao_unformatted"])
     let hoje = new Date()
     let dolarizada = ["6307", "6308"]
     let cessao = ["3336", "33333", "33332", "3313", "2542"]
     let header = document.querySelector("#ctl00_MainContent_ContentHeader").children[0].innerText
     let garantia = templateField.Garantia_Cod
 
-     if (hoje > dataEmissao)
-        document.getElementById("Retroativa").setAttribute("checked", true)
-    else if (geralInfo) {
+     if (dataEmissao < hoje){
+        if(dataEmissao.getDate() < hoje.getDate())
+            document.getElementById("Retroativa").setAttribute("checked", true)
+        if(dataEmissao.getMonth() <= hoje.getMonth())
+            document.getElementById("Retroativa").setAttribute("checked", true)
+        if(dataEmissao.getFullYear() <= hoje.getFullYear())
+            document.getElementById("Retroativa").setAttribute("checked", true)
+        else
+            document.getElementById("Retroativa").removeAttribute("checked")
+     }else {
+        document.getElementById("Retroativa").removeAttribute("checked")
+     }
+     
+    if (geralInfo) {
         if (dolarizada.includes(templateField.Geral_Info.Cliente_Modalidade["_key"]))
             document.getElementById("Dolarizada").setAttribute("checked", true)
         else if (cessao.includes(templateField.Geral_Info.Cliente_Modalidade["_key"]))
             document.getElementById("cessao").setAttribute("checked", true)
     } 
-    if (header == "Validar FPO")
-        document.getElementById("ted").setAttribute("checked", true)
 
-    else if (garantia == "14")
+    if (garantia == "14")
         document.getElementById("Dividendos").setAttribute("checked", true)
 }
 
