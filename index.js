@@ -1,10 +1,17 @@
 import express from 'express'
-const app = express()
-const port = 3000
 import bodyParser from 'body-parser'
 import routes from "./src/routes/index.js"
 import dotenv from "dotenv"
+import path from 'path';
+import estrategiaServices from "./src/services/estrategia/index.js";
+
+const app = express()
+const port = 3000
 dotenv.config()
+let rootPath = process.env.rootPath
+global.appRoot = path.resolve(rootPath)
+
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 

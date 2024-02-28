@@ -31,21 +31,25 @@ router.post('/templates',async function(req, res) {
       }
     });
     console.log(param)
-
-  //https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=bba97b1a-65fc-4e70-99ef-2fb268137beb&redirect_uri=https://www.bnymellon.com/br/pt.html
-  let auth = {
-    userID: process.env.clientIDBNY,
-    integrationKey: process.env.integratorKeyBny,
+    //https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=d2c169da-974c-40c5-ae3d-b3b47b029391&redirect_uri=http://localhost:3000/
+    let auth = {
+    userID: process.env.userID,
+    integrationKey: process.env.estrategiaIK,
     dsOauthServer: process.env.dsOauthServerSafra,
-    accountID: process.env.accountIDBny,
-    privateKey: process.env.privatekeyBny
+    accountID: process.env.estrategiaaccountID,
+    privateKey: process.env.estrategiaKey
 }
   const scope = "signature impersonation spring_read spring_write";
     const bny = new bnyService (auth, scope)
     await bny.jwt()
     await bny.authenticate()
-    resp = await bny.makeTemplate(param)
-    res.json(resp);
+    let a = 0
+
+    while( a <= 20){
+      await bny.makeTemplate(param) 
+      a++
+    }
+    res.send("resp");
 });
 
 export default router

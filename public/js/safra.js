@@ -680,7 +680,7 @@ function maketable(array, anchor, ordem, role) {
                 let email = el.children[2].children[1].value
                 let tipoASs = el.children[3].children[0].children[1].children[0].value
                 let tag = "sign_R"+ (i+1) + anchor + (index)
-                xml += "<role>" + role + indexFull + "</role>"
+                xml += "<role>" + role + (i+1) + "</role>"
                 xml += "<nome>" + nome + "</nome>"
                 xml += "<email>" + email + "</email>"
                 xml += "<cpf>" + cpf + "</cpf>"
@@ -807,8 +807,11 @@ function preencherTabela(templateField) {
         else
             document.getElementById("Retroativa").removeAttribute("checked")
      }else {
-        document.getElementById("Retroativa").removeAttribute("checked")
+            document.getElementById("Retroativa").removeAttribute("checked")
      }
+     
+     if(dataEmissao.getDate() == hoje.getDate() && dataEmissao.getMonth() == hoje.getMonth() && dataEmissao.getFullYear() <= hoje.getFullYear())
+        document.getElementById("Retroativa").removeAttribute("checked")
      
     if (geralInfo) {
         if (dolarizada.includes(templateField.Geral_Info.Cliente_Modalidade["_key"]))
