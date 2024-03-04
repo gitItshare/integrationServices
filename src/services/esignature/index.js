@@ -222,15 +222,15 @@ class Docusign {
             //this.burstLimit = error.response.headers["x-burstlimit-remaining"]
         }
     }
-    async updateDocumentCLM(file,ds_account_id,folder_id) {
+    async updateDocumentCLM(data,ds_account_id,folder_id) {
         const form = new FormData();
-        form.append(file.name, file.file);
+        form.append(data.name, fs.createReadStream(data.pathToFile));
         const response = await axios({
             method: 'post',
             url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
             data: form,
             headers: {
-                'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+                'Content-Type': `multipart/form-data`,
                 'Authorization': this.authToken
             }
         });

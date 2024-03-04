@@ -252,9 +252,16 @@ class ExtracaoMassiva {
         }
     }
     async uploadLotes(){
-        let docusign = await this.authentication()
-        let file = await fs.readFileSync(global.appRoot +"/uploads/2272024/00a2d4d7-d19a-43f9-b483-4f79ede80c26.zip")
-        await docusign.updateDocumentCLM({file, name:"0a0ae2fe-e20f-43dc-b1e6-1d85b63c2ce7.pdf"}, "31561", "b5b26a41-2cd6-ee11-b829-48df37a6f7d0")
+        try {
+            let docusign = await this.authentication()
+            let file = fs.createReadStream(global.appRoot +"/uploads/2272024/00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf")
+             await docusign.updateDocumentCLM({pathToFile: global.appRoot +"/uploads/2272024/00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf", name:"00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf"}, "31561", "b5b26a41-2cd6-ee11-b829-48df37a6f7d0")
+            // await docusign.getEnvelopeDocuments("00a2d4d7-d19a-43f9-b483-4f79ede80c26", "Errorlog")
+        } catch (error) {
+            console.log(error.response.data)
+        }
     }
 }
+
+
 export default new ExtracaoMassiva();

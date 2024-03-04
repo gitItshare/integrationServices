@@ -33,22 +33,20 @@ router.post('/templates',async function(req, res) {
     console.log(param)
     //https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=d2c169da-974c-40c5-ae3d-b3b47b029391&redirect_uri=http://localhost:3000/
     let auth = {
-    userID: process.env.userID,
-    integrationKey: process.env.estrategiaIK,
+    userID: process.env.clientIDBNY,
+    integrationKey: process.env.integratorKeyBny,
     dsOauthServer: process.env.dsOauthServerSafra,
-    accountID: process.env.estrategiaaccountID,
-    privateKey: process.env.estrategiaKey
+    accountID: process.env.accountIDBny,
+    privateKey: process.env.privatekeyBny
 }
   const scope = "signature impersonation spring_read spring_write";
     const bny = new bnyService (auth, scope)
     await bny.jwt()
     await bny.authenticate()
-    let a = 0
 
-    while( a <= 20){
-      await bny.makeTemplate(param) 
-      a++
-    }
+    await bny.makeTemplate(param) 
+
+    
     res.send("resp");
 });
 

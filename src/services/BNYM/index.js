@@ -15,7 +15,7 @@ class Bnym {
         this.accountID = docusignCredentials.accountID
         this.privateKey = docusignCredentials.privateKey
         this.scope = scope
-        this.authUrl = 'https://account-d.docusign.com/oauth/token?'
+        this.authUrl = 'https://account.docusign.com/oauth/token?'
         this.jwtToken = ""
         this.authToken = ""
     }
@@ -42,7 +42,7 @@ class Bnym {
             const payload = {
                 "iss": this.integrationKey,
                 "sub": this.userID,
-                "aud": "account-d.docusign.com",
+                "aud": "account.docusign.com",
                 "iat": exp,
                 "exp": iat,
                 "scope": this.scope
@@ -60,7 +60,6 @@ class Bnym {
     async makeTemplate(params) {
         try {
             console.log(this.authToken)
-            console.log(document)
             let template = {
                 "signers": [],
                 agents: []
