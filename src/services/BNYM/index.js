@@ -90,7 +90,7 @@ class Bnym {
                                         "scaleValue": "1",
                                         "optional": "false",
                                         "documentId": "1",
-                                        "recipientId": recipientId + 1 + index + i,
+                                        "recipientId": recipientId ,
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
@@ -114,7 +114,7 @@ class Bnym {
                                         "scaleValue": "1",
                                         "optional": "true",
                                         "documentId": "1",
-                                        "recipientId": recipientId + 1 + 1,
+                                        "recipientId": recipientId,
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
@@ -138,7 +138,7 @@ class Bnym {
                             "agentCanEditName": "false",
                             "name": sign.nome["_text"],
                             "email": "",
-                            "recipientId": recipientId + 1 + index + i,
+                            "recipientId": recipientId,
                             "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
                             "accessCode": "",
                             "requireIdLookup": "false",
@@ -181,7 +181,7 @@ class Bnym {
                                     "scaleValue": "1",
                                     "optional": "false",
                                     "documentId": "1",
-                                    "recipientId": recipientId + 2 + index,
+                                    "recipientId": recipientId + 2,
                                     "pageNumber": "1",
                                     "xPosition": "",
                                     "yPosition": "",
@@ -204,7 +204,7 @@ class Bnym {
                                     "scaleValue": "1",
                                     "optional": "true",
                                     "documentId": "1",
-                                    "recipientId": "37304",
+                                    "recipientId": recipientId + 2,
                                     "pageNumber": "1",
                                     "xPosition": "276",
                                     "yPosition": "437",
@@ -226,7 +226,7 @@ class Bnym {
                             "agentCanEditName": "false",
                             "name": testemunha.nome["_text"],
                             "email": "",
-                            "recipientId": recipientId + 2 + index,
+                            "recipientId": recipientId + 2,
                             "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
                             "accessCode": "",
                             "requireIdLookup": "false",
@@ -271,15 +271,15 @@ class Bnym {
                 }
             })
 
-            template.recipients.signers = recipients
-            template.recipients.agents = agents
+            template.signers = recipients
+            template.agents = agents
             const templateSigners = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
                 headers: {
                     'Authorization': this.authToken
                 }
             });
             const recipient = templateSigners.data
-            console.log("OPOORA", testemunhastabs)
+            console.log("OPOORA", tabs)
             if (templateSigners.data.signers.length > 0)
                 await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
                     headers: {
@@ -293,7 +293,7 @@ class Bnym {
                 }
             });
 
-            for (let tab of testemunhastabs.signHereTabs) {
+            for (let tab of tabs.signHereTabs) {
                 try {
                     console.log(tab)
 
@@ -309,7 +309,7 @@ class Bnym {
                     console.log("tab nao inserida")
                 }
             }
-            for (let tab of testemunhastabs.initialHereTabs) {
+            for (let tab of tabs.initialHereTabs) {
                 try {
                     console.log(tab)
 
@@ -322,7 +322,7 @@ class Bnym {
                     });
                     console.log("tab inserida..")
                 } catch (error) {
-                    console.log("tab nao inserida")
+                    console.log(error)
                 }
             }
             // console.log(template.recipients.signers.map(el => el.tabs.signHereTabs))
