@@ -12,9 +12,10 @@ router.post('/templates',async function(req, res) {
   let resp = ""
     console.log(req.body)
     let {recipients} = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
-    let param = recipients.agents.map(el => {
+    let agents = []
+    agents = Array.isArray(recipients.agents) ? [...recipients.agents] : [recipients.agents]
+    let param = agents.map(el => {
       console.log(el.testemunhas)
-      
       let testemunhas = []
       testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
       let assinaturas = []
