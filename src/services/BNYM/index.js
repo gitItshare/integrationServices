@@ -149,7 +149,7 @@ class Bnym {
                             "routingOrder": index + 1,
                             "note": "",
                             "roleName": sign.nome["_text"],
-                            "deliveryMethod": "email",
+                            "deliveryMethod": "",
                             "templateLocked": "false",
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
@@ -253,8 +253,8 @@ class Bnym {
                 recipients.push(...signers)
 
                 return {
-                    "name": "BNY Mellon - CENTRALIZADOR",
-                    "email": "bnymcontratosdedistribuicao@bnymellon.com.br",
+                    "name": el.tipo["_text"] + " - CENTRALIZADOR",
+                    "email": el.email["_text"],
                     "accessCode": "",
                     "requireIdLookup": "false",
                     "identityVerification": {
@@ -264,7 +264,7 @@ class Bnym {
                     recipientId: recipientId,
                     "routingOrder": index + 1,
                     "note": "",
-                    "roleName": el.tipo["_text"] + " CENTRALIZADOR",
+                    "roleName": "CENTRALIZADOR",
                     "templateLocked": "false",
                     "templateRequired": "false",
                     "inheritEmailNotificationConfiguration": "false"
