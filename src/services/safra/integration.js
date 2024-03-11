@@ -15,7 +15,6 @@ const auth = async () => {
           client_secret: process.env.secretSafra,
           grant_type: "client_credentials"
         })
-        
         console.log(data)
         let resp = await client.post(url, data)
         console.log(resp)

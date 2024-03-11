@@ -45,7 +45,7 @@ router.post('/templates',async function(req, res) {
     await bny.jwt()
     await bny.authenticate()
 
-    await bny.makeTemplate(param) 
+    await bny.makeTemplate(param, req.body.envelopeId) 
 
     
     res.send("resp");

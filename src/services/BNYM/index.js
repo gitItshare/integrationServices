@@ -57,12 +57,12 @@ class Bnym {
             this.jwtToken = ''
         }
     }
-    async makeTemplate(params) {
+    async makeTemplate(params, envelopeId) {
         try {
             console.log(this.authToken)
             let template = {
                 "signers": [],
-                agents: []
+                "agents": []
             }
             let tabs = {
                 signHereTabs: []
@@ -146,10 +146,10 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": index + 1,
+                            "routingOrder": index + 2,
                             "note": "",
                             "roleName": sign.nome["_text"],
-                            "deliveryMethod": "",
+                            "deliveryMethod": "email",
                             "templateLocked": "false",
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
@@ -234,7 +234,7 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": index + 1,
+                            "routingOrder": index + 2,
                             "note": "",
                             "roleName": testemunha.nome["_text"],
                             "deliveryMethod": "email",
@@ -255,49 +255,55 @@ class Bnym {
                 return {
                     "name": el.tipo["_text"] + " - CENTRALIZADOR",
                     "email": el.email["_text"],
+                    recipientId: "6640"+index,
                     "accessCode": "",
                     "requireIdLookup": "false",
-                    "identityVerification": {
-                        "inputOptions": [],
-                        "workflowLabel": ""
-                    },
-                    recipientId: recipientId,
-                    "routingOrder": index + 1,
+                    "routingOrder": "1",
                     "note": "",
                     "roleName": "CENTRALIZADOR",
+                    "completedCount": "0",
+                    "deliveryMethod": "email",
                     "templateLocked": "false",
                     "templateRequired": "false",
-                    "inheritEmailNotificationConfiguration": "false"
+                    "inheritEmailNotificationConfiguration": "false",
+                    "recipientType": "agent"
                 }
             })
 
             template.signers = recipients
             template.agents = agents
-            const templateSigners = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
+            // const templateSigners = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
+            //     headers: {
+            //         'Authorization': this.authToken
+            //     }
+            // });
+            // const recipient = templateSigners.data
+            // console.log("OPOORA", agents)
+            // if (templateSigners.data.signers.length > 0)
+            //     await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
+            //         headers: {
+            //             'Authorization': this.authToken
+            //         },
+            //         data: recipient
+            //     });
+            console.log(template)
+            await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
+                headers: {
+                    'Authorization': this.authToken
+                },
+                data: {signers:[{'recipientId': '1'}]}
+            });
+            const resp = await axios.put(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, template, {
                 headers: {
                     'Authorization': this.authToken
                 }
             });
-            const recipient = templateSigners.data
-            console.log("OPOORA", tabs)
-            if (templateSigners.data.signers.length > 0)
-                await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
-                    headers: {
-                        'Authorization': this.authToken
-                    },
-                    data: recipient
-                });
-            const resp = await axios.put(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, template, {
-                headers: {
-                    'Authorization': this.authToken
-                }
-            });
-
+ 
             for (let tab of tabs.signHereTabs) {
                 try {
-                    console.log(tab)
+                    // console.log(tab)
 
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients/${tab.recipientId}/tabs`, {
+                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
                         signHereTabs: [tab]
                     }, {
                         headers: {
@@ -311,9 +317,9 @@ class Bnym {
             }
             for (let tab of tabs.initialHereTabs) {
                 try {
-                    console.log(tab)
+                    // console.log(tab)
 
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients/${tab.recipientId}/tabs`, {
+                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
                         initialHereTabs: [tab]
                     }, {
                         headers: {
@@ -325,12 +331,7 @@ class Bnym {
                     console.log(error)
                 }
             }
-            // console.log(template.recipients.signers.map(el => el.tabs.signHereTabs))
-            // const resp = await axios.post(`https://demo.docusign.net/restapi/v2/accounts/22589434/templates`, template, {
-            //     headers: {
-            //         'Authorization': this.authToken
-            //     }
-            // }); 
+
             return resp.data
         } catch (error) {
             console.log(error)
