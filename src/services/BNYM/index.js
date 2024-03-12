@@ -69,7 +69,12 @@ class Bnym {
             }
 
             let recipients = []
+            let indexTestemunha = 0
+            let indexRepresentante = 0
+            let indexAgent = 0
             let agents = params.map((el, index) => {
+  
+                indexAgent = index+1
                 let recipientId = "2132" + index
                 let signers = []
                 if (el.assinaturas[0]) {
@@ -146,7 +151,7 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": index + 2,
+                            "routingOrder": indexAgent,
                             "note": "",
                             "roleName": sign.nome["_text"],
                             "deliveryMethod": "email",
@@ -154,6 +159,7 @@ class Bnym {
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
                         }
+                        
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[1])
                         return signer
@@ -161,7 +167,7 @@ class Bnym {
                 }
                 let testemunhas = []
                 if (el.testemunhas[0]) {
-                    testemunhas = el.testemunhas.map((testemunha, index) => {
+                    testemunhas = el.testemunhas.map((testemunha) => {
                         let signer = {
                             "defaultRecipient": "false",
 
@@ -234,7 +240,7 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": index + 2,
+                            "routingOrder": indexAgent,
                             "note": "",
                             "roleName": testemunha.nome["_text"],
                             "deliveryMethod": "email",
@@ -252,13 +258,13 @@ class Bnym {
                 recipients.push(...testemunhas)
                 recipients.push(...signers)
 
-                return {
+                let agent ={
                     "name": el.tipo["_text"] + " - CENTRALIZADOR",
-                    "email": el.email["_text"],
+                    "email": el.email["_text"].trim(),
                     recipientId: "6640"+index,
                     "accessCode": "",
                     "requireIdLookup": "false",
-                    "routingOrder": "1",
+                    "routingOrder": indexAgent,
                     "note": "",
                     "roleName": "CENTRALIZADOR",
                     "completedCount": "0",
@@ -268,25 +274,14 @@ class Bnym {
                     "inheritEmailNotificationConfiguration": "false",
                     "recipientType": "agent"
                 }
+                return agent
             })
 
             template.signers = recipients
             template.agents = agents
-            // const templateSigners = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
-            //     headers: {
-            //         'Authorization': this.authToken
-            //     }
-            // });
-            // const recipient = templateSigners.data
-            // console.log("OPOORA", agents)
-            // if (templateSigners.data.signers.length > 0)
-            //     await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/templates/54d9fd9d-8e20-44ba-bad5-abe6dfea5c0f/recipients`, {
-            //         headers: {
-            //             'Authorization': this.authToken
-            //         },
-            //         data: recipient
-            //     });
-            console.log(template)
+
+
+            console.log(template.agents)
             await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -298,7 +293,6 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
- 
             for (let tab of tabs.signHereTabs) {
                 try {
                     // console.log(tab)
@@ -332,7 +326,7 @@ class Bnym {
                 }
             }
 
-            return resp.data
+            return "resp.data"
         } catch (error) {
             console.log(error)
         }
