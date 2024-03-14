@@ -82,11 +82,6 @@ class Bnym {
                         let signer = {
                             "defaultRecipient": "false",
                             "signInEachLocation": "false",
-                            "recipientSignatureProviders": [{
-                                "sealDocumentsWithTabsOnly": "false",
-                                "signatureProviderName": "universalsignaturepen_imageonly",
-                                "signatureProviderOptions": {}
-                            }],
                             "tabs": {
                                 "signHereTabs": [{
                                         "stampType": "signature",
@@ -137,7 +132,6 @@ class Bnym {
                                         "tabType": "signhereoptional"
                                     }
                                 ],
-
                             },
                             "agentCanEditEmail": "false",
                             "agentCanEditName": "false",
@@ -159,7 +153,13 @@ class Bnym {
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
                         }
-                        
+                        if(el.tipoAss["_text"] == "ICP"){
+                            signer.recipientSignatureProviders = [{
+                                "sealDocumentsWithTabsOnly": "false",
+                                "signatureProviderName": "universalsignaturepen_imageonly",
+                                "signatureProviderOptions": {}
+                            }]
+                        } 
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[1])
                         return signer
@@ -248,6 +248,13 @@ class Bnym {
                             "templateRequired": "false",
                             "inheritEmailNotificationConfiguration": "false"
                         }
+                        if(el.tipoAss["_text"] == "ICP"){
+                            signer.recipientSignatureProviders = [{
+                                "sealDocumentsWithTabsOnly": "false",
+                                "signatureProviderName": "universalsignaturepen_imageonly",
+                                "signatureProviderOptions": {}
+                            }]
+                        } 
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.initialHereTabs = []
                         tabs.initialHereTabs.push(signer.tabs.initialHereTabs[0])
@@ -272,7 +279,9 @@ class Bnym {
                     "templateLocked": "false",
                     "templateRequired": "false",
                     "inheritEmailNotificationConfiguration": "false",
-                    "recipientType": "agent"
+                    "recipientType": "agent",
+                    "agentCanEditEmail": "true",
+                    "agentCanEditName": "true",
                 }
                 return agent
             })

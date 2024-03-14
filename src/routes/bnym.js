@@ -28,7 +28,8 @@ router.post('/templates',async function(req, res) {
         carimbo: el.carimbo,
         testemunhas: testemunhas,
         assinaturas:assinaturas,
-        ancora: el.ancora
+        ancora: el.ancora,
+        tipoAss: el.tipoAss
       }
     });
     console.log(param)
