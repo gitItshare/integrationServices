@@ -159,7 +159,7 @@ class Bnym {
                                 "signatureProviderName": "universalsignaturepen_imageonly",
                                 "signatureProviderOptions": {}
                             }]
-                        } 
+                        }
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[1])
                         return signer
@@ -254,7 +254,7 @@ class Bnym {
                                 "signatureProviderName": "universalsignaturepen_imageonly",
                                 "signatureProviderOptions": {}
                             }]
-                        } 
+                        }
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.initialHereTabs = []
                         tabs.initialHereTabs.push(signer.tabs.initialHereTabs[0])
@@ -281,7 +281,7 @@ class Bnym {
                     "inheritEmailNotificationConfiguration": "false",
                     "recipientType": "agent",
                     "agentCanEditEmail": "true",
-                    "agentCanEditName": "true",
+                    "agentCanEditName": "true"
                 }
                 return agent
             })

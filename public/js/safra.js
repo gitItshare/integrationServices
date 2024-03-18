@@ -73,7 +73,7 @@ let avalistasTable = [{
         "_displayValue": ""
     }
 ]
-let workflow = document.querySelector('.page-header').children[1].innerText.split(" ");
+let workflow = document.querySelector('.page-header').children[1].innerText.split(": ");
 workflow = workflow[1].split("/");
 const HOSTNAME = "https://uatna11.springcm.com";
 const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[0]
@@ -176,17 +176,7 @@ $.ajax({
         }else if(workflow[3]){
             preencherRevisao()
         }
-        const urlSxform = HOSTNAME + '/atlas/Documents/get.ashx/a8e45c3f-84c7-ee11-b842-48df378a7098'
-        $.ajax({
-            url: urlSxform,
-            method: 'GET',
-            headers: {
-                'Accept': '*/*'
-            },
-            dataType: 'text'
-        }).done(data => {
-            console.log("Dados sxfFORM", data)
-        })
+
     })
 })
 
