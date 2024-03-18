@@ -134,7 +134,7 @@ class Bnym {
                                 ],
                             },
                             "agentCanEditEmail": "false",
-                            "agentCanEditName": "false",
+                            "agentCanEditName": "true",
                             "name": sign.nome["_text"],
                             "email": "",
                             "recipientId": recipientId,
@@ -229,7 +229,7 @@ class Bnym {
                                 }]
                             },
                             "agentCanEditEmail": "false",
-                            "agentCanEditName": "false",
+                            "agentCanEditName": "true",
                             "name": testemunha.nome["_text"],
                             "email": "",
                             "recipientId": recipientId + 2,
