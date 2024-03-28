@@ -1,12 +1,11 @@
 import axios from "axios";
-const sankhyaToken = process.env.sankhyaToken
+
 const sankhyaClient = (baseURL) => axios.create({
     headers: {
-      'Authorization': sankhyaToken,
       token: process.env.token,
       appkey: process.env.appkey,
-      username: process.env.username,
-      password: process.env.username.password
+      username: process.env.usernameSankya,
+      password: process.env.passwordSankya
     }
   });
 

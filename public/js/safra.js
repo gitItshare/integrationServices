@@ -85,6 +85,7 @@ let grupoTestemunhas = {}
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
 let testemunhaEmitente = ""
+let nomeTestemunhaEmitente
 let valorContrato = 0
 let hasChange = false
 $.ajax({

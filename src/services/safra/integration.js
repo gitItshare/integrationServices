@@ -39,7 +39,7 @@ const consulta =async (data,token) => {
       // "valorContrato": templateField.Valor,
       "valorContrato": 100.43,
       "tipoRepresentante": "REPRESENTANTE",
-      "codigoObjeto": cpf.isValid(emitenteData.Emitente_CNPJ)? "CCB" : "CCB",
+      "codigoObjeto": cpf.isValid(emitenteData.Emitente_CNPJ)? "CCB" : "CESSF MOV",
       "codigoAto": "ASSINA",
       "dataPoder": dataPoder
     }	

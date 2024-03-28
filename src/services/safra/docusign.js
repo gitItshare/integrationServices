@@ -63,7 +63,8 @@ class Docusign {
         try {
             console.log(this.authToken)
             let testemunhastabs = {
-                signHereTabs: []
+                signHereTabs: [],
+                radioGroupTabs: []
             }
 
             let template = {
@@ -149,6 +150,50 @@ class Docusign {
                         "templateLocked": "false",
                         "templateRequired": "false",
                         "inheritEmailNotificationConfiguration": "false"
+                    }
+                    if(el.tag["_text"] == "sign_RC1"){
+                        testemunhastabs.radioGroupTabs = [
+                            {
+                              "radios": [
+                                {
+                                  "pageNumber": "sample string 1",
+                                  "xPosition": "",
+                                  "yPosition": "",
+                                  "anchorString": "\\sign_RC1Radio\\",
+                                  "anchorXOffset": "",
+                                  "anchorYOffset": "sample string 6",
+                                  "anchorUnits": "sample string 7",
+                                  "anchorIgnoreIfNotPresent": "sample string 8",
+                                  "anchorCaseSensitive": "sample string 9",
+                                  "anchorMatchWholeWord": "sample string 10",
+                                  "anchorHorizontalAlignment": "sample string 11",
+                                  "value": "true",
+                                  "selected": "true",
+                                  "required": "true"
+                                },
+                                {
+                                    "pageNumber": "sample string 1",
+                                    "xPosition": "",
+                                    "yPosition": "",
+                                    "anchorString": "\\sign_RC1Radio\\",
+                                    "anchorXOffset": "",
+                                    "anchorYOffset": "sample string 6",
+                                    "anchorUnits": "sample string 7",
+                                    "anchorIgnoreIfNotPresent": "sample string 8",
+                                    "anchorCaseSensitive": "sample string 9",
+                                    "anchorMatchWholeWord": "sample string 10",
+                                    "anchorHorizontalAlignment": "sample string 11",
+                                    "value": "false",
+                                    "selected": "false",
+                                    "required": "true"
+                                  }                              ],
+                              "shared": "false",
+                              "tooltip": "sample string 11"
+                            }
+                          ]
+                        testemunhastabs.checkboxTabs = {
+
+                        } 
                     }
                     if (el.tipoAss["_text"] == "ICP") {
                         signer.recipientSignatureProviders = [{
@@ -356,7 +401,6 @@ class Docusign {
             console.log(error)
         }
     }
-
 }
 
 export default Docusign

@@ -749,10 +749,10 @@ router.post('/templates',async function(req, res) {
       });
       console.log(param)
       let auth = {
-        userID: process.env.userIDSafra,
+        userID: process.env.userIDDemo,
         integrationKey: process.env.integrationKeySafra,
         dsOauthServer: process.env.dsOauthServerSafra,
-        accountID: process.env.accountIDSafra,
+        accountID: process.env.accountIDDemo,
         privateKey: process.env.privatekeyDemo
     }
     const scope = "signature impersonation spring_read spring_write";
