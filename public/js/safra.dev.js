@@ -90,7 +90,7 @@ const data = {
 			},
 			"Terceiro_Garantidor": {
 				"Tabela_Terceiro_Garantidor_Container": {
-					"Tabela_Terceiro_Garantidor": {
+					"Tabela_Terceiro_Garantidor": [{
 						"Terceiro_Garantidor_Nome_Razao_Social": "teste terceiro",
 						"CPF_CNPJ": "02974733000155",
 						"Terceiro_Garantidor_Endereco": "Rua Júlio Girardi",
@@ -104,6 +104,20 @@ const data = {
 						"_displayName": "",
 						"_displayValue": ""
 					},
+					{
+						"Terceiro_Garantidor_Nome_Razao_Social": "teste terceiro",
+						"CPF_CNPJ": "02974733000155",
+						"Terceiro_Garantidor_Endereco": "Rua Júlio Girardi",
+						"Terceiro_Garantidor_Cidade": "Campinas",
+						"Terceiro_Garantidor_Bairro": "itapetao",
+						"Terceiro_Garantidor_Estado": {
+							"_key": "SP",
+							"__text": "SP"
+						},
+						"Terceiro_Garantidor_CEP": "13060-722",
+						"_displayName": "",
+						"_displayValue": ""
+					}],
 					"_displayName": "Tabela Terceiro Garantidor",
 					"_displayValue": "Tabela Terceiro Garantidor"
 				},

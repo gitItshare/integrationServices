@@ -19,7 +19,8 @@ const dicionario = {
    "Endereco_eletronico_principal": "EMAIL",
    "Nome_Completo_Pessoa_Juridica": "RAZAOSOCIAL",
    "Administrada_por": "ADM",
-   "CPF_Administrador": "CPFADM"
+   "CPF_Administrador": "CPFADM",
+   "Data_Contrato_unformatted":"DTCON"
 }
 const dicionarioInterveniente = {
    "Nome_Professor": "NOME_PARCINT",
@@ -30,26 +31,29 @@ const dicionarioInterveniente = {
    "Cidade__IA": "CODCID_PARCINT",
    "CEP__IA": "CEP_PARCINT",
    "Pais__IA": "CODPAIS_PARCINT",
-   "Endereco_eletronico": "EMAIL_PARCINT"
+   "Endereco_eletronico": "EMAIL_PARCINT",
+   "Data_Contrato_unformatted": "DTCON"
 }
 const cadastro = async(data, token) => {
    try {
-      const cedente = data.Params.Params.TemplateFieldData.CEDENTE
+      const cedente = data.Params.TemplateFieldData.CEDENTE
       let cpfcnpj = cedente["CPF_ou_CNPJ"].replace(/[^a-zA-Z0-9 ]/g, '')
-      let parceiro = await consultar(`this.CGC_CPF = '${cpfcnpj}' AND CLIENTE = 'S'`,token)
+       let parceiro = await consultar(`this.CGC_CPF = '${cpfcnpj}' AND CLIENTE = 'S'`,token)
+         let parceiroAD = await consultarAD(`this.CGC_CPF = '${cpfcnpj}'`,token)
+      // if(!parceiro){
+      //    console.log("CADASTREI....")
+      //    parceiro = await cadastrar(data, token)
+      // }
 
-      if(!parceiro)
-          parceiro = await cadastrar(data, token)
-
-       let clienteAD = await cadastrarAD(data, token, parceiro)
-      return "codParc"
+      //   let clienteAD = await cadastrarAD(data, token, parceiro)
+      return true
    } catch (error) {
       console.log(error)
    }
 }
 const cadastrar = async (data, token) => {
    try {
-      const cedente = data.Params.Params.TemplateFieldData.CEDENTE
+      const cedente = data.Params.TemplateFieldData.CEDENTE
       const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.saveRecord&outputType=json"
       const client = sankhyaClient(token)
       const localFields = {
@@ -117,9 +121,9 @@ const cadastrar = async (data, token) => {
             }
          }
       }
-      let resp = await client.post(url, body)
-      let codParc = resp.responseBody.entities.entity["CODPARC"]["$"]
-      console.log(resp)
+      let {data} = await client.post(url, body)
+      console.log(data)
+      let codParc = data.responseBody.entities.entity["CODPARC"]["$"]
       return codParc
    } catch (error) {
       console.log(error)
@@ -129,10 +133,10 @@ const cadastrar = async (data, token) => {
 const cadastrarAD = async (data, token, codParc) => {
    try {
 
-      const cedente = data.Params.Params.TemplateFieldData.CEDENTE
-      let dataCt = data.Params.Params.TemplateFieldData["Data_Contrato_unformatted"]
-      let tipoCt = data.Params.Params.TemplateFieldData["Tipo_Contrato"]["@key"]
-      const intervenienteAnuente = data.Params.Params.TemplateFieldData["INTERVENIENTE_ANUENTE"]
+      const cedente = data.Params.TemplateFieldData.CEDENTE
+      let dataCt = data.Params.TemplateFieldData["Data_Contrato_unformatted"]
+      let tipoCt = data.Params.TemplateFieldData["Tipo_Contrato"]["@key"]
+      const intervenienteAnuente = data.Params.TemplateFieldData["INTERVENIENTE_ANUENTE"]
       const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.saveRecord&outputType=json"
       const client = sankhyaClient(token)
       const localFields = {
@@ -140,7 +144,7 @@ const cadastrarAD = async (data, token, codParc) => {
             "$": codParc
          },
          "DTCON": {
-            "$": dataCt
+            "$": new Date(dataCt)
          },
          "TIPCON": {
             "$": tipoCt
@@ -164,7 +168,6 @@ const cadastrarAD = async (data, token, codParc) => {
          }
       }
       for (var attributename in intervenienteAnuente) {
-         console.log(intervenienteAnuente[attributename]);
          if (attributename == "Professor_PF_ou_PJ1") {
             fieldsetlist.push(dicionarioInterveniente[attributename])
             localFields[dicionarioInterveniente[attributename]] = {
@@ -192,14 +195,14 @@ const cadastrarAD = async (data, token, codParc) => {
                },
                "entity": {
                   "fieldset": {
-                     "list": fieldsetlist.join(",")
+                     "list": fieldsetlist.join(",")+",DTCON"
                   }
                }
             }
          }
       }
       let resp = await client.post(url, body)
-      console.log(resp.data.responseBody)
+      console.log(resp)
    } catch (error) {
       console.log(error)
    }
@@ -238,6 +241,43 @@ const consultar = async(expression,token) => {
          let codParc = data.responseBody.entities.entity.f2["$"]
          return codParc
       }
+         
+   } catch (error) {
+      throw error
+   }
+}
+const consultarAD = async(expression,token) => {
+   try {
+      const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.loadRecords&outputType=json"
+      const client = sankhyaClient(token)
+      const body = {
+         "serviceName": "CRUDServiceProvider.loadRecords",
+         "requestBody": {
+           "dataSet": {
+             "rootEntity": "AD_TCPASSCON",
+             "includePresentationFields": "N",
+             "offsetPage": "0",
+             "criteria": {
+               "expression": {
+                 "$": expression
+               }
+             },
+             "entity": {
+               "fieldset": {
+                 "list": "CGC_CPF,DTCON,TIPCON"
+               }
+             }
+           }
+         }
+       }
+      let {data} = await client.post(url, body)
+      console.log(data.responseBody.entities.entity)
+      console.log(data.responseBody.entities.metadata.fields)
+
+      let total = data.responseBody.entities.total
+      
+       return true
+      
          
    } catch (error) {
       throw error

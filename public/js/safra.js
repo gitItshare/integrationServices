@@ -86,6 +86,7 @@ let grupoTestemunhas = {}
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
 let testemunhaEmitente = ""
+let nomeTestemunhaEmitente
 let valorContrato = 0
 let hasChange = false
 $.ajax({
@@ -101,7 +102,9 @@ $.ajax({
 
     let data = x2js.xml2json(response);
     console.log(data)
-    testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+    testemunhaEmitente = data.Params.Documents.Document.CreatedBy
+    nomeTestemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+
     valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
     templateField = data.Params.TemplateFieldData
     emitente = data.Params.TemplateFieldData.Emitente
@@ -236,7 +239,8 @@ function preencherRevisao () {
         })
         function preencherState (statesxform){
             let json = JSON.parse(statesxform)
-
+            console.log("SXFORM", statesxform)
+            
             if(workflow[3]){
                 document.getElementById("statusDIV").setAttribute("hidden", true)
                 document.getElementById("tipoCt").removeAttribute("hidden")
@@ -280,6 +284,8 @@ function preencherRevisao () {
                             buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
                         }
                     }
+                    if(el.comentario)
+                        el.hasChange="true"
                     if(el.hasChange.trim() == "false" && workflow[3] != "voltou"){
                         buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
                     }
@@ -296,7 +302,8 @@ function preencherRevisao () {
                     button[index].parentElement.parentElement.children[2].children[1].value = element.status
                     button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
                     button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
-
+                    if(element.comentario)
+                        element.hasChange="true"
                     console.log("STATUS", element.status)
                
                     if(element.hasChange.trim() == "false" && workflow[3] != "voltou"){
@@ -331,7 +338,10 @@ function preencherRevisao () {
                     button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
 
                     console.log("STATUS", element.status)
- 
+
+                    if(element.comentario)
+                        element.hasChange="true"
+
                      if(element.hasChange.trim() == "false" && workflow[3] != "voltou"){
                         button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
                     }
@@ -554,9 +564,12 @@ function maketableCli(array, anchor, ordem) {
         return Math.floor(Math.random() * max);
       }
     let lenghtGrupo = grupoTestemunhas.Nome.length
-
+    
     let randomIndex = getRandomInt(lenghtGrupo)
-    console.log("RANDOM INDEX", randomIndex)
+    if(lenghtGrupo == 1){
+        randomIndex = 0
+    }
+    console.log("RANDOM INDEX", grupoTestemunhas)
     let nomeTest = grupoTestemunhas.Nome[randomIndex]
     let emailTest = grupoTestemunhas.Email[randomIndex]
 
@@ -571,7 +584,7 @@ function maketableCli(array, anchor, ordem) {
     xml += "</signers>"
 
     xml += "<signers>"
-    xml += "<nome> Testemunha Emitente </nome>"
+    xml += "<nome>"+nomeTestemunhaEmitente+"</nome>"
     xml += "<role> Testemunha Emitente </role>"
     xml += "<email>" + testemunhaEmitente + "</email>"
     xml += "<cpf></cpf>"
