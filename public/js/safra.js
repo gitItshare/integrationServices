@@ -178,10 +178,6 @@ $.ajax({
 			preencherRevisao()
 		}
 
-		if((workflow[2] && !workflow[3])) {
-			
-		}
-
 		if(workflow[1] && !workflow[2] && !workflow[3]) fixInputs1()
 		if(workflow[2] && !workflow[3]) fixInputs2()
 		if(workflow[3]) fixInputs3()
@@ -811,6 +807,8 @@ function preencherTabela(templateField) {
 
 	document.getElementById("codigoNomeAgencia").innerText = templateField.Emitente.Emitente_Agencia
 	document.getElementById("nomeCli").innerText = templateField.Emitente.Emitente_Razao_Social
+	document.getElementById("clienteRazaoSocial").innerHTML = "&nbsp; " + templateField.Emitente.Emitente_Razao_Social
+	
 	document.getElementById("valor").innerText = templateField.Valor
 	document.getElementById("numeroDigital").value = ""
 	document.getElementById("numCt").innerText = templateField.Num_Contrato
@@ -967,7 +965,8 @@ function saveState(){
 
 function fixInputs1() {
 	document.getElementById("numCedente").setAttribute("disabled", true)
-	
+
+	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
 
 function checkParameters1() {
@@ -1008,6 +1007,11 @@ function checkParameters1() {
 			})
 		}
 	})
+
+	// Checagem Ação
+	var acaoInput = document.getElementById("acao")
+	if(!acaoInput.value) errors.push("Ação inválida")
+
 	showErrors(errors)
 }
 
@@ -1022,6 +1026,8 @@ function fixInputs2() {
 	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
 
 	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
+	
+	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
@@ -1091,7 +1097,10 @@ function checkParameters2() {
 
 function fixInputs3() {
 	document.getElementById("numCedente").setAttribute("disabled", true)
+
 	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
+
+	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
 
 function checkParameters3() {
@@ -1112,6 +1121,10 @@ function checkParameters3() {
 			errors.push("Comentário Middle Office inválido (#"+(index + 1)+")")
 		}
 	})
+
+	// Checagem Ação
+	var acaoInput = document.getElementById("acao")
+	if(!acaoInput.value) errors.push("Ação inválida")
 
 	// Exibe alerta de erros
 	showErrors(errors)
