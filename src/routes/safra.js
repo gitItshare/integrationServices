@@ -728,7 +728,8 @@ router.post('/representantes',auth, async function(req, res) {
 
     const Params = req.body.Params
    const representantes = await safraServices.integration.consulta({Params}, token)
-   res.json({data: representantes});
+   console.log("TEKE", {data: resp})
+   res.json({data: resp});
 });
 router.post('/templates',async function(req, res) {
     let resp = ""
@@ -748,13 +749,13 @@ router.post('/templates',async function(req, res) {
       });
       console.log(param)
       let auth = {
-        userID: process.env.privatekeySafra,
-        integrationKey: process.env.safraIK,
+        userID: process.env.userIDDemo,
+        integrationKey: process.env.integrationKeySafra,
         dsOauthServer: process.env.dsOauthServerSafra,
-        accountID: process.env.accountIDSafra,
-        privateKey: process.env.privatekeySafra
+        accountID: process.env.accountIDDemo,
+        privateKey: process.env.privatekeyDemo
     }
-    const scope = "signature impersonation";
+    const scope = "signature impersonation spring_read spring_write";
     console.log(auth)
       let docusign = new safraServices.Docusign(auth, scope)
       
