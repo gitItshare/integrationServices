@@ -1,4 +1,3 @@
-
 const buttonCli = document.getElementById("addRepCli")
 const buttonRemoveCli = document.getElementById("removeCli")
 const buttonCliTerceiros = document.getElementById("addRepCli-terceiros")
@@ -179,14 +178,12 @@ $.ajax({
 		}
 
 		if((workflow[2] && !workflow[3])) {
-			const clientGruposElem = document.getElementById("clientGrupos")
-			const terceirosGroupsElem = document.getElementById("terceirosGroups")
-			const avalistasGroupsElem = document.getElementById("avalistasGroups")
-			if(clientGruposElem) clientGruposElem.setAttribute("disabled", true)
-			if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("disabled", true)
-			if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("disabled", true)
+			
 		}
 
+		if(workflow[1] && !workflow[2] && !workflow[3]) fixInputs1()
+		if(workflow[2] && !workflow[3]) fixInputs2()
+		if(workflow[3]) fixInputs3()
 	})
 })
 
@@ -813,6 +810,7 @@ function preencherTabela(templateField) {
 
 	document.getElementById("codigoNomeAgencia").innerText = templateField.Emitente.Emitente_Agencia
 	document.getElementById("nomeCli").innerText = templateField.Emitente.Emitente_Razao_Social
+	document.getElementById("valor").innerText = templateField.Valor
 	document.getElementById("numeroDigital").value = ""
 	document.getElementById("numCt").innerText = templateField.Num_Contrato
 	document.getElementById("numCedente").value = templateField.Formulario_para_upload_Legado_Cedente || ""
@@ -966,6 +964,11 @@ function saveState(){
 	document.getElementById("state").value = JSON.stringify(state)
 }
 
+function fixInputs1() {
+	document.getElementById("numCedente").setAttribute("disabled", true)
+	
+}
+
 function checkParameters1() {
 	var errors = []
 	const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
@@ -1005,6 +1008,26 @@ function checkParameters1() {
 		}
 	})
 	showErrors(errors)
+}
+
+function fixInputs2() {
+	document.getElementById("numDigital").setAttribute("disabled", true)
+
+	document.getElementById("numCedente").setAttribute("disabled", true)
+	document.getElementById("numCedente").setAttribute("placeholder", "")
+
+	document.getElementById("ted").setAttribute("disabled", true)
+
+	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
+
+	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
+
+	const clientGruposElem = document.getElementById("clientGrupos")
+	const terceirosGroupsElem = document.getElementById("terceirosGroups")
+	const avalistasGroupsElem = document.getElementById("avalistasGroups")
+	if(clientGruposElem) clientGruposElem.setAttribute("disabled", true)
+	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("disabled", true)
+	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("disabled", true)
 }
 
 function checkParameters2() {
@@ -1063,6 +1086,11 @@ function checkParameters2() {
 	
 	// Exibe alerta de erros
 	showErrors(errors)
+}
+
+function fixInputs3() {
+	document.getElementById("numCedente").setAttribute("disabled", true)
+	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
 }
 
 function checkParameters3() {
