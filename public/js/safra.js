@@ -479,9 +479,13 @@ let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, c
 document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
 document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
 document.getElementById("tipoAssinatura").addEventListener("change", function () {
-	if (this.value == "manual") {
-		document.getElementById("idDestinatario").removeAttribute("hidden")
+	renderChangesSignatureType()
+})
 
+function renderChangesSignatureType() {
+	var select = document.getElementById("tipoAssinatura")
+	if (select.value == "manual") {
+		document.getElementById("idDestinatario").removeAttribute("hidden")
 		document.querySelectorAll("#gruposDiv").forEach((element) => {
 			document.querySelectorAll(".row").forEach((element) => {
 				element.querySelectorAll(".form-group").forEach((column, index) => {
@@ -495,7 +499,6 @@ document.getElementById("tipoAssinatura").addEventListener("change", function ()
 				})
 			})
 		})
-
 	} else {
 		document.getElementById("idDestinatario").setAttribute("hidden", true)
 
@@ -510,7 +513,7 @@ document.getElementById("tipoAssinatura").addEventListener("change", function ()
 			})
 		})
 	}
-})
+}
 
 function preencherAutomatico() {
 	console.log(this.parentElement.parentElement.parentElement.parentElement)
@@ -1020,6 +1023,12 @@ function checkParameters1() {
 		if(!numDigital || numDigital == "undefined") errors.push("Número digitalização inválido")
 	}
 
+	// Checagem assinatura
+	var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
+	if(isSignatureMode("manual")) {
+		if(!signatureMailElem.value) errors.push("E-mail da assinatura inválido")
+	}
+
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
 		var cpf = el.children[1].children[1].value
@@ -1078,6 +1087,8 @@ function fixInputs2() {
 	if(clientGruposElem) clientGruposElem.setAttribute("disabled", true)
 	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("disabled", true)
 	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("disabled", true)
+
+	renderChangesSignatureType()
 }
 
 function checkParameters2() {
@@ -1142,6 +1153,8 @@ function fixInputs3() {
 	document.getElementById("numCedente").setAttribute("readOnly", true)
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
+
+	renderChangesSignatureType()
 }
 
 function checkParameters3() {
