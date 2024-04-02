@@ -3,7 +3,9 @@ import fs from "fs"
 import path from 'path';
 import jwt from "../jwt.js"
 import querystring from "querystring"
-import { sign } from "crypto";
+import {
+    sign
+} from "crypto";
 
 let dirname = path.resolve(path.dirname(''));
 
@@ -64,7 +66,8 @@ class Docusign {
             console.log(this.authToken)
             let testemunhastabs = {
                 signHereTabs: [],
-                radioGroupTabs: []
+                radioGroupTabs: [],
+                checkboxTabs: []
             }
 
             let template = {
@@ -151,49 +154,54 @@ class Docusign {
                         "templateRequired": "false",
                         "inheritEmailNotificationConfiguration": "false"
                     }
-                    if(el.tag["_text"] == "sign_RC1"){
-                        testemunhastabs.radioGroupTabs = [
-                            {
-                              "radios": [
-                                {
-                                  "pageNumber": "sample string 1",
-                                  "xPosition": "",
-                                  "yPosition": "",
-                                  "anchorString": "\\sign_RC1Radio\\",
-                                  "anchorXOffset": "",
-                                  "anchorYOffset": "sample string 6",
-                                  "anchorUnits": "sample string 7",
-                                  "anchorIgnoreIfNotPresent": "sample string 8",
-                                  "anchorCaseSensitive": "sample string 9",
-                                  "anchorMatchWholeWord": "sample string 10",
-                                  "anchorHorizontalAlignment": "sample string 11",
-                                  "value": "true",
-                                  "selected": "true",
-                                  "required": "true"
+                    if (el.tag["_text"] == "sign_RC1") {
+                        testemunhastabs.radioGroupTabs = [{
+                            "radios": [{
+                                    "pageNumber": "sample string 1",
+                                    "xPosition": "",
+                                    "yPosition": "",
+                                    "anchorString": "\\sign_RC1Radio1\\",
+                                    "anchorXOffset": "",
+                                    "anchorYOffset": "",
+                                    "value": "true",
+                                    "selected": "true",
+                                    "required": "true"
                                 },
                                 {
                                     "pageNumber": "sample string 1",
                                     "xPosition": "",
                                     "yPosition": "",
-                                    "anchorString": "\\sign_RC1Radio\\",
+                                    "anchorString": "\\sign_RC1Radio2\\",
                                     "anchorXOffset": "",
-                                    "anchorYOffset": "sample string 6",
-                                    "anchorUnits": "sample string 7",
-                                    "anchorIgnoreIfNotPresent": "sample string 8",
-                                    "anchorCaseSensitive": "sample string 9",
-                                    "anchorMatchWholeWord": "sample string 10",
-                                    "anchorHorizontalAlignment": "sample string 11",
+                                    "anchorYOffset": "",
                                     "value": "false",
                                     "selected": "false",
                                     "required": "true"
-                                  }                              ],
-                              "shared": "false",
-                              "tooltip": "sample string 11"
+                                }
+                            ],
+                            "shared": "false",
+                            "tooltip": "sample string 11",
+                            "recipientId": recipientId,
+                        }]
+                        testemunhastabs.checkboxTabs = [{
+                                "name": "check1",
+                                "recipientId": recipientId,
+                                "anchorString": "\\sign_RC1Check1\\",
+                                "tabOrder": "1",
+                                "tabGroupLabels": [
+                                    "sample string 1"
+                                ]
+                            },
+                            {
+                                "name": "check2",
+                                "recipientId": recipientId,
+                                "anchorString": "\\sign_RC1Check2\\",
+                                "tabOrder": "2",
+                                "tabGroupLabels": [
+                                    "sample string 1"
+                                ]
                             }
-                          ]
-                        testemunhastabs.checkboxTabs = {
-
-                        } 
+                        ]
                     }
                     if (el.tipoAss["_text"] == "ICP") {
                         signer.recipientSignatureProviders = [{
@@ -276,7 +284,7 @@ class Docusign {
                         "agentCanEditEmail": "false",
                         "agentCanEditName": "false",
                         "name": el.nome["_text"],
-                        "email": "henrique.rodrigues+validador@itshare.com.br",
+                        "email": el.email["_text"],
                         "recipientId": recipientId,
                         "accessCode": "",
                         "requireIdLookup": "false",
@@ -308,22 +316,22 @@ class Docusign {
             uniques.forEach((unique, index) => {
                 let signHereTabs = []
                 signers.forEach(signer => {
-                    if(signer.email == unique.email && signer.tabs.signHereTabs){
-                         console.log("TABS", signer.tabs.signHereTabs[0])
+                    if (signer.email == unique.email && signer.tabs.signHereTabs) {
+                        console.log("TABS", signer.tabs.signHereTabs[0])
                         // // signer.tabs.signHereTabs[0].recipientId = unique.recipientId
                         // uniques[index].tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         signer.tabs.signHereTabs[0].recipientId = unique.recipientId
                         signHereTabs.push(signer.tabs.signHereTabs[0])
                     }
                 })
-                if(unique.tabs.signHereTabs)
+                if (unique.tabs.signHereTabs)
                     unique.tabs.signHereTabs = signHereTabs
-              })
+            })
 
-              template.signers = uniques
+            template.signers = uniques
 
-              testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
-              console.log(uniques)
+            testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
+            console.log(uniques)
             const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -347,7 +355,7 @@ class Docusign {
             for (let tab of testemunhastabs.signHereTabs) {
                 try {
                     console.log(tab)
-                    if(tab){
+                    if (tab) {
                         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab[0].recipientId}/tabs`, {
                             signHereTabs: tab
                         }, {
@@ -357,12 +365,13 @@ class Docusign {
                         });
                         console.log("tab inserida..")
                     }
-         
-                
+
+
                 } catch (error) {
                     console.log("tab nao inserida")
                 }
             }
+
             for (let tab of testemunhastabs.approveTabs) {
                 try {
                     console.log(tab)
@@ -395,7 +404,56 @@ class Docusign {
                     console.log("tab nao inserida")
                 }
             }
+            for (let tab of testemunhastabs.radioGroupTabs) {
+                try {
+                    console.log(tab)
 
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                        radioGroupTabs: [tab]
+                    }, {
+                        headers: {
+                            'Authorization': this.authToken
+                        }
+                    });
+                    console.log("tab inserida..")
+                } catch (error) {
+                    console.log(error)
+
+                    console.log("tab nao inserida")
+                }
+            }
+            for (let tab of testemunhastabs.checkboxTabs) {
+                try {
+                    console.log(tab)
+
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                        checkboxTabs: [tab]
+                    }, {
+                        headers: {
+                            'Authorization': this.authToken
+                        }
+                    });
+                    console.log("tab inserida..")
+                } catch (error) {
+                    console.log(error)
+
+                    console.log("tab nao inserida")
+                }
+            }
+            let custom_fields = {
+                textCustomFields: [{
+                "fieldId": "1",
+                "name": "agencia",
+                "show": "true",
+                "required": "false",
+                "value": "1522"
+            }]}
+            await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/custom_fields`, custom_fields,
+            {
+                headers: {
+                    'Authorization': this.authToken
+                }
+            });
             return "resp"
         } catch (error) {
             console.log(error)
