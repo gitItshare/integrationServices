@@ -763,7 +763,7 @@ router.post('/templates',async function(req, res) {
       
     await docusign.jwt()
     await docusign.authenticate()
-    // resp = await docusign.makeTemplate(param)
+    resp = await docusign.makeTemplate(param, data.recipients)
     res.send('templates');
   });
 export default router

@@ -60,14 +60,12 @@ class Docusign {
             this.jwtToken = ''
         }
     }
-    async makeTemplate(params) {
+    async makeTemplate(params, data) {
 
         try {
             console.log(this.authToken)
             let testemunhastabs = {
-                signHereTabs: [],
-                radioGroupTabs: [],
-                checkboxTabs: []
+                signHereTabs: []
             }
 
             let template = {
@@ -155,53 +153,57 @@ class Docusign {
                         "inheritEmailNotificationConfiguration": "false"
                     }
                     if (el.tag["_text"] == "sign_RC1") {
-                        testemunhastabs.radioGroupTabs = [{
-                            "radios": [{
-                                    "pageNumber": "sample string 1",
-                                    "xPosition": "",
-                                    "yPosition": "",
-                                    "anchorString": "\\sign_RC1Radio1\\",
-                                    "anchorXOffset": "",
-                                    "anchorYOffset": "",
-                                    "value": "true",
-                                    "selected": "true",
-                                    "required": "true"
+
+                        if(data.seguroPrestamista["_text"] == "Sim"){
+                            testemunhastabs.radioGroupTabs = [{
+                                "radios": [{
+                                        "pageNumber": "sample string 1",
+                                        "xPosition": "",
+                                        "yPosition": "",
+                                        "anchorString": "\\sign_RC1Radio1\\",
+                                        "anchorXOffset": "",
+                                        "anchorYOffset": "",
+                                        "value": "true",
+                                        "selected": "true",
+                                        "required": "true"
+                                    },
+                                    {
+                                        "pageNumber": "sample string 1",
+                                        "xPosition": "",
+                                        "yPosition": "",
+                                        "anchorString": "\\sign_RC1Radio2\\",
+                                        "anchorXOffset": "",
+                                        "anchorYOffset": "",
+                                        "value": "false",
+                                        "selected": "false",
+                                        "required": "true"
+                                    }
+                                ],
+                                "shared": "false",
+                                "tooltip": "sample string 11",
+                                "recipientId": recipientId,
+                            }]
+                            testemunhastabs.checkboxTabs = [{
+                                    "name": "check1",
+                                    "recipientId": recipientId,
+                                    "anchorString": "\\sign_RC1Check1\\",
+                                    "tabOrder": "1",
+                                    "tabGroupLabels": [
+                                        "sample string 1"
+                                    ]
                                 },
                                 {
-                                    "pageNumber": "sample string 1",
-                                    "xPosition": "",
-                                    "yPosition": "",
-                                    "anchorString": "\\sign_RC1Radio2\\",
-                                    "anchorXOffset": "",
-                                    "anchorYOffset": "",
-                                    "value": "false",
-                                    "selected": "false",
-                                    "required": "true"
+                                    "name": "check2",
+                                    "recipientId": recipientId,
+                                    "anchorString": "\\sign_RC1Check2\\",
+                                    "tabOrder": "2",
+                                    "tabGroupLabels": [
+                                        "sample string 1"
+                                    ]
                                 }
-                            ],
-                            "shared": "false",
-                            "tooltip": "sample string 11",
-                            "recipientId": recipientId,
-                        }]
-                        testemunhastabs.checkboxTabs = [{
-                                "name": "check1",
-                                "recipientId": recipientId,
-                                "anchorString": "\\sign_RC1Check1\\",
-                                "tabOrder": "1",
-                                "tabGroupLabels": [
-                                    "sample string 1"
-                                ]
-                            },
-                            {
-                                "name": "check2",
-                                "recipientId": recipientId,
-                                "anchorString": "\\sign_RC1Check2\\",
-                                "tabOrder": "2",
-                                "tabGroupLabels": [
-                                    "sample string 1"
-                                ]
-                            }
-                        ]
+                            ]
+                        }
+
                     }
                     if (el.tipoAss["_text"] == "ICP") {
                         signer.recipientSignatureProviders = [{
@@ -404,49 +406,73 @@ class Docusign {
                     console.log("tab nao inserida")
                 }
             }
-            for (let tab of testemunhastabs.radioGroupTabs) {
-                try {
-                    console.log(tab)
-
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
-                        radioGroupTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log(error)
-
-                    console.log("tab nao inserida")
+            if(data.seguroPrestamista["_text"] == "Sim"){
+                for (let tab of testemunhastabs.radioGroupTabs) {
+                    try {
+                        console.log(tab)
+    
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                            radioGroupTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    } catch (error) {
+                        console.log(error)
+    
+                        console.log("tab nao inserida")
+                    }
+                }
+                for (let tab of testemunhastabs.checkboxTabs) {
+                    try {
+                        console.log(tab)
+    
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                            checkboxTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    } catch (error) {
+                        console.log(error)
+    
+                        console.log("tab nao inserida")
+                    }
                 }
             }
-            for (let tab of testemunhastabs.checkboxTabs) {
-                try {
-                    console.log(tab)
 
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
-                        checkboxTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log(error)
-
-                    console.log("tab nao inserida")
-                }
-            }
             let custom_fields = {
                 textCustomFields: [{
                 "fieldId": "1",
-                "name": "agencia",
+                "name": "Agência",
                 "show": "true",
                 "required": "false",
-                "value": "1522"
+                "value": data.agencia["_text"]
+            },
+            {
+                "fieldId": "2",
+                "name": "Nome cliente",
+                "show": "true",
+                "required": "false",
+                "value": data.nomeCli["_text"]
+            },
+            {
+                "fieldId": "3",
+                "name": "CNPJ cliente",
+                "show": "true",
+                "required": "false",
+                "value": data.cnpjCli["_text"]
+            },
+            {
+                "fieldId": "4",
+                "name": "Num contrato",
+                "show": "true",
+                "required": "false",
+                "value": data.numContrato["_text"]
             }]}
             await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/custom_fields`, custom_fields,
             {
