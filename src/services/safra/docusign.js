@@ -110,8 +110,8 @@ class Docusign {
                             "signHereTabs": [{
                                 "stampType": "signature",
                                 "name": "SignHere",
+                                "scaleValue": "0.7",
                                 "tabLabel": "Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
-                                "scaleValue": "1",
                                 "optional": "false",
                                 "documentId": "1",
                                 "recipientId": recipientId,

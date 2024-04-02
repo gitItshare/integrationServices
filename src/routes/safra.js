@@ -729,7 +729,7 @@ router.post('/representantes',auth, async function(req, res) {
     const Params = req.body.Params
    const representantes = await safraServices.integration.consulta({Params}, token)
    console.log("TEKE", {data: resp})
-   res.json({data: resp});
+   res.json({data: representantes});
 });
 router.post('/templates',async function(req, res) {
     let resp = ""
