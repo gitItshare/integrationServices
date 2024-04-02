@@ -165,6 +165,7 @@ $.ajax({
 
 		clientGrupos.addEventListener("change", function () {
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
+			select.options[0].selected = true;
 		})
 		preencherTabela(templateField)
 		preencherLists(representanteCli, clientGrupos)
