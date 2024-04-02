@@ -1025,8 +1025,9 @@ function checkParameters1() {
 
 	// Checagem assinatura
 	var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
-	if(isSignatureMode("manual")) {
-		if(!signatureMailElem.value) errors.push("E-mail da assinatura inválido")
+	var email = signatureMailElem.value
+	if(isSignatureMode("manual") && (!email || email == "undefined" || !validateEmail(email))) {
+		errors.push("E-mail da assinatura inválido")
 	}
 
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
