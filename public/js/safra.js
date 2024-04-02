@@ -261,7 +261,6 @@ function preencherRevisao () {
 			} else {
 				document.getElementById("tipoCt").removeAttribute("hidden")
 			}
-			scrollToTop();
 			if(!json.emitente[0]){
 				buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 			}
@@ -417,8 +416,6 @@ function addClient(event, id, representante = {}, change, noSave) {
 			changes[change].push({metodo:"inseriu", cnpj: clone.children[1].children[1].id, nome: clone.children[0].children[1].id})
 		console.log("CHANGES", changes, change)
 
-		scrollToTop()
-
 		return clone
 
 	} catch (error) {
@@ -445,7 +442,6 @@ buttonCli.addEventListener("click", function (event) {
 	let parentElement = buttonCli.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
 	document.getElementById("tipoCt").removeAttribute("hidden")
 	console.log("test", parentElement)
-	scrollToTop();
 })
 
 let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, change) => {
@@ -580,8 +576,6 @@ function preencherAvalistas(avalistas) {
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
 			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
-
-			scrollToTop();
 		})
 
 
@@ -832,8 +826,6 @@ function preencherTerceiros(array) {
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
 			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
-
-			scrollToTop();
 		})
 
 
@@ -1007,6 +999,9 @@ function saveState(){
 
 function fixInputs1() {
 	document.getElementById("numCedente").setAttribute("readOnly", true)
+	if(!document.getElementById("numCedente").value) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
 
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
@@ -1073,7 +1068,9 @@ function fixInputs2() {
 	document.getElementById("numDigital").setAttribute("readOnly", true)
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
-	document.getElementById("numCedente").setAttribute("placeholder", "")
+	if(!document.getElementById("numCedente")) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
 
 	var tedElem = document.getElementById("ted")
 	tedElem.setAttribute("readOnly", true)
@@ -1151,7 +1148,12 @@ function checkParameters2() {
 }
 
 function fixInputs3() {
+
 	document.getElementById("numCedente").setAttribute("readOnly", true)
+	if(!document.getElementById("numCedente").value) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
+
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 
