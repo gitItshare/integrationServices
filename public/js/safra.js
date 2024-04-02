@@ -481,8 +481,34 @@ document.getElementById("nome-representante-terceiros").addEventListener("blur",
 document.getElementById("tipoAssinatura").addEventListener("change", function () {
 	if (this.value == "manual") {
 		document.getElementById("idDestinatario").removeAttribute("hidden")
+
+		document.querySelectorAll("#gruposDiv").forEach((element) => {
+			document.querySelectorAll(".row").forEach((element) => {
+				element.querySelectorAll(".form-group").forEach((column, index) => {
+					column.classList.remove("d-none")
+					column.classList.remove("col-sm-6")
+					column.classList.remove("col-sm-3")
+					column.classList.add("col-sm-6")
+					if(index == "2" || index == "3") {
+						column.classList.add("d-none")
+					}
+				})
+			})
+		})
+
 	} else {
 		document.getElementById("idDestinatario").setAttribute("hidden", true)
+
+		document.querySelectorAll("#gruposDiv").forEach((element) => {
+			document.querySelectorAll(".row").forEach((element) => {
+				element.querySelectorAll(".form-group").forEach((column, index) => {
+					column.classList.remove("d-none")
+					column.classList.remove("col-sm-6")
+					column.classList.remove("col-sm-3")
+					column.classList.add("col-sm-3")
+				})
+			})
+		})
 	}
 })
 
@@ -982,6 +1008,10 @@ function fixInputs1() {
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
 
+function isSignatureMode(type) {
+	return document.getElementById("tipoAssinatura").value == type
+}
+
 function checkParameters1() {
 	var errors = []
 	const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
@@ -989,12 +1019,13 @@ function checkParameters1() {
 		var numDigital = document.getElementById("numDigital").value
 		if(!numDigital || numDigital == "undefined") errors.push("Número digitalização inválido")
 	}
+
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
-		if(!cpf || cpf == "undefined") errors.push("CPF do cliente inválido (#"+(index + 1)+")")
-		if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
+		if(!cpf || cpf == "undefined") errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
 	var terceiros = Array.from(document.getElementById("terceiros").children)
 	terceiros.forEach((el, index)=> {
@@ -1004,7 +1035,7 @@ function checkParameters1() {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!cpf || cpf == "undefined") errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
-				if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
 		}
 	})
@@ -1016,7 +1047,7 @@ function checkParameters1() {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!cpf || cpf == "undefined") errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
-				if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
 		}
 	})
@@ -1038,8 +1069,8 @@ function fixInputs2() {
 	tedElem.setAttribute("readOnly", true)
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
-	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
-	document.getElementById("fieldset-acao").setAttribute("readOnly", true)
+	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
+	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
