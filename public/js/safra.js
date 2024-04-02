@@ -964,7 +964,7 @@ function saveState(){
 }
 
 function fixInputs1() {
-	document.getElementById("numCedente").setAttribute("disabled", true)
+	document.getElementById("numCedente").setAttribute("readOnly", true)
 
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
@@ -1016,18 +1016,17 @@ function checkParameters1() {
 }
 
 function fixInputs2() {
-	document.getElementById("numDigital").setAttribute("disabled", true)
+	document.getElementById("numDigital").setAttribute("readOnly", true)
 
-	document.getElementById("numCedente").setAttribute("disabled", true)
+	document.getElementById("numCedente").setAttribute("readOnly", true)
 	document.getElementById("numCedente").setAttribute("placeholder", "")
 
-	document.getElementById("ted").setAttribute("disabled", true)
+	var tedElem = document.getElementById("ted")
+	tedElem.setAttribute("readOnly", true)
 
-	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
-
-	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
-	
-	document.getElementById("fieldset-acao").setAttribute("hidden", true)
+	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
+	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
+	document.getElementById("fieldset-acao").setAttribute("readOnly", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
@@ -1096,10 +1095,8 @@ function checkParameters2() {
 }
 
 function fixInputs3() {
-	document.getElementById("numCedente").setAttribute("disabled", true)
-
-	document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
-
+	document.getElementById("numCedente").setAttribute("readOnly", true)
+	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
 
