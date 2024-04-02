@@ -734,8 +734,10 @@ router.post('/representantes',auth, async function(req, res) {
 router.post('/templates',async function(req, res) {
     let resp = ""
       console.log(req.body)
-      let {recipients} = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
-      let param = recipients.signers.map(el => {
+      let data = JSON.parse(xml2json(req.body.Params,  { spaces: 2, compact: true }))
+      console.log(data);
+
+      let param = data.recipients.signers.map(el => {
         console.log(el.testemunhas) 
         return {
           nome: el.nome,
@@ -761,7 +763,7 @@ router.post('/templates',async function(req, res) {
       
     await docusign.jwt()
     await docusign.authenticate()
-    resp = await docusign.makeTemplate(param)
+    // resp = await docusign.makeTemplate(param)
     res.send('templates');
   });
 export default router
