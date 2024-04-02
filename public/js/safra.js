@@ -101,7 +101,9 @@ $.ajax({
 
 	let data = x2js.xml2json(response);
 	console.log(data)
-	testemunhaEmitente = data.Params.Documents.Document.UpdatedBy
+	testemunhaEmitente = data.Params.Documents.Document.CreatedBy
+	testemunhaEmitenteNome = data.Params.Documents.Document.UpdatedBy
+
 	valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
 	templateField = data.Params.TemplateFieldData
 	emitente = data.Params.TemplateFieldData.Emitente
@@ -607,7 +609,7 @@ function maketableCli(array, anchor, ordem) {
 	xml += "</signers>"
 
 	xml += "<signers>"
-	xml += "<nome> Testemunha Emitente </nome>"
+	xml += "<nome>"+ testemunhaEmitenteNome + "</nome>"
 	xml += "<role> Testemunha Emitente </role>"
 	xml += "<email>" + testemunhaEmitente + "</email>"
 	xml += "<cpf></cpf>"
