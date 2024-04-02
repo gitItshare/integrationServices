@@ -165,7 +165,7 @@ $.ajax({
 
 		clientGrupos.addEventListener("change", function () {
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
-			select.options[0].selected = true;
+			clientGrupos.options[0].selected = true;
 		})
 		preencherTabela(templateField)
 		preencherLists(representanteCli, clientGrupos)
@@ -535,6 +535,8 @@ function preencherAvalistas(avalistas) {
 		console.log("AVALISTAS ", avalista)
 		selectGroups.addEventListener("change", function () {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
+
+			selectGroups.options[0].selected = true;
 		})
 		addButton.addEventListener("click", function (event) {
 			console.log(clone)
@@ -785,6 +787,8 @@ function preencherTerceiros(array) {
 		console.log("TERCEiROS ", terceiros)
 		selectGroups.addEventListener("change", function () {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente, "terceiros")
+
+			selectGroups.options[0].selected = true;
 		})
 		addButton.addEventListener("click", function (event) {
 			document.getElementById("tipoCt").removeAttribute("hidden")
