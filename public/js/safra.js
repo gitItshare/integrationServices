@@ -734,8 +734,14 @@ function makeXml() {
 
 		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor")
 		xml += maketable(containerAvalistas, "A", 3, "Avalista")
-
+		
 		xml += "</recipients>"
+		xml+= `<seguroPrestamista>${templateField.Geral_Info.DeclacaoDeSaude}</seguroPrestamista>`
+		xml+= `<agencia>${emitente.Emitente_Agencia}</agencia>`
+		xml+= `<nomeCli>${emitente.Emitente_Razao_Social}</nomeCli>`
+		xml+= `<cnpjCli>${emitente.Emitente_CNPJ}</cnpjCli>`
+		xml+= `<numContrato>${templateField.Num_Contrato}</numContrato>`
+
 		document.getElementById("xml").value = xml
 		let changesXml = saveChanges()
 		document.getElementById("changeXml").value = changesXml
