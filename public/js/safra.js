@@ -258,6 +258,8 @@ function preencherRevisao () {
 				document.getElementById("tipoAssinatura").value = "digital"
 				document.getElementById("idDestinatario").setAttribute("hidden", true)
 			}
+
+			fixInputs2()
 			
 			if(workflow[3]){
 				document.getElementById("statusDIV").setAttribute("hidden", true)
@@ -1087,6 +1089,7 @@ function fixInputs2() {
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
+	document.getElementById("destinatario").setAttribute("disabled", true)
 	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
