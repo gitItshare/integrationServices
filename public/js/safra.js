@@ -261,7 +261,6 @@ function preencherRevisao () {
 			} else {
 				document.getElementById("tipoCt").removeAttribute("hidden")
 			}
-			scrollToTop();
 			if(!json.emitente[0]){
 				buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 			}
@@ -417,8 +416,6 @@ function addClient(event, id, representante = {}, change, noSave) {
 			changes[change].push({metodo:"inseriu", cnpj: clone.children[1].children[1].id, nome: clone.children[0].children[1].id})
 		console.log("CHANGES", changes, change)
 
-		scrollToTop()
-
 		return clone
 
 	} catch (error) {
@@ -445,7 +442,6 @@ buttonCli.addEventListener("click", function (event) {
 	let parentElement = buttonCli.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
 	document.getElementById("tipoCt").removeAttribute("hidden")
 	console.log("test", parentElement)
-	scrollToTop();
 })
 
 let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, change) => {
@@ -479,12 +475,41 @@ let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, c
 document.getElementById("nome-representante").addEventListener("blur", preencherAutomatico)
 document.getElementById("nome-representante-terceiros").addEventListener("blur", preencherAutomatico)
 document.getElementById("tipoAssinatura").addEventListener("change", function () {
-	if (this.value == "manual") {
+	renderChangesSignatureType()
+})
+
+function renderChangesSignatureType() {
+	var select = document.getElementById("tipoAssinatura")
+	if (select.value == "manual") {
 		document.getElementById("idDestinatario").removeAttribute("hidden")
+		document.querySelectorAll("#gruposDiv").forEach((element) => {
+			document.querySelectorAll(".row").forEach((element) => {
+				element.querySelectorAll(".form-group").forEach((column, index) => {
+					column.classList.remove("d-none")
+					column.classList.remove("col-sm-6")
+					column.classList.remove("col-sm-3")
+					column.classList.add("col-sm-6")
+					if(index == "2" || index == "3") {
+						column.classList.add("d-none")
+					}
+				})
+			})
+		})
 	} else {
 		document.getElementById("idDestinatario").setAttribute("hidden", true)
+
+		document.querySelectorAll("#gruposDiv").forEach((element) => {
+			document.querySelectorAll(".row").forEach((element) => {
+				element.querySelectorAll(".form-group").forEach((column, index) => {
+					column.classList.remove("d-none")
+					column.classList.remove("col-sm-6")
+					column.classList.remove("col-sm-3")
+					column.classList.add("col-sm-3")
+				})
+			})
+		})
 	}
-})
+}
 
 function preencherAutomatico() {
 	console.log(this.parentElement.parentElement.parentElement.parentElement)
@@ -551,8 +576,6 @@ function preencherAvalistas(avalistas) {
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
 			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
-
-			scrollToTop();
 		})
 
 
@@ -803,8 +826,6 @@ function preencherTerceiros(array) {
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
 			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
-
-			scrollToTop();
 		})
 
 
@@ -978,8 +999,15 @@ function saveState(){
 
 function fixInputs1() {
 	document.getElementById("numCedente").setAttribute("readOnly", true)
+	if(!document.getElementById("numCedente").value) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
 
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
+}
+
+function isSignatureMode(type) {
+	return document.getElementById("tipoAssinatura").value == type
 }
 
 function checkParameters1() {
@@ -989,12 +1017,20 @@ function checkParameters1() {
 		var numDigital = document.getElementById("numDigital").value
 		if(!numDigital || numDigital == "undefined") errors.push("Número digitalização inválido")
 	}
+
+	// Checagem assinatura
+	var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
+	var email = signatureMailElem.value
+	if(isSignatureMode("manual") && (!email || email == "undefined" || !validateEmail(email))) {
+		errors.push("E-mail da assinatura inválido")
+	}
+
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
-		if(!cpf || cpf == "undefined") errors.push("CPF do cliente inválido (#"+(index + 1)+")")
-		if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
+		if(!cpf || cpf == "undefined") errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
 	var terceiros = Array.from(document.getElementById("terceiros").children)
 	terceiros.forEach((el, index)=> {
@@ -1004,7 +1040,7 @@ function checkParameters1() {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!cpf || cpf == "undefined") errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
-				if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
 		}
 	})
@@ -1016,7 +1052,7 @@ function checkParameters1() {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!cpf || cpf == "undefined") errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
-				if(!email || email == "undefined" || !validateEmail(email)) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
 		}
 	})
@@ -1032,14 +1068,16 @@ function fixInputs2() {
 	document.getElementById("numDigital").setAttribute("readOnly", true)
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
-	document.getElementById("numCedente").setAttribute("placeholder", "")
+	if(!document.getElementById("numCedente")) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
 
 	var tedElem = document.getElementById("ted")
 	tedElem.setAttribute("readOnly", true)
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
-	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
-	document.getElementById("fieldset-acao").setAttribute("readOnly", true)
+	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
+	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
@@ -1047,6 +1085,8 @@ function fixInputs2() {
 	if(clientGruposElem) clientGruposElem.setAttribute("disabled", true)
 	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("disabled", true)
 	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("disabled", true)
+
+	renderChangesSignatureType()
 }
 
 function checkParameters2() {
@@ -1108,9 +1148,16 @@ function checkParameters2() {
 }
 
 function fixInputs3() {
+
 	document.getElementById("numCedente").setAttribute("readOnly", true)
+	if(!document.getElementById("numCedente").value) {
+		document.getElementById("numCedente").setAttribute("placeholder", "")
+	}
+
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
+
+	renderChangesSignatureType()
 }
 
 function checkParameters3() {
