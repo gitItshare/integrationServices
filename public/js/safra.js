@@ -73,6 +73,7 @@ let avalistasTable = [{
 	}
 ]
 let workflow = document.querySelector('.page-header').children[1].innerText.split(": ");
+document.querySelector('.page-header h2').setAttribute("style", "opacity:0;")
 workflow = workflow[1].split("/");
 const HOSTNAME = "https://uatna11.springcm.com";
 const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[0]
@@ -930,16 +931,15 @@ function saveState(){
 	let clientState = []
 	clienteContainer.forEach(el => {
 		clientState.push({
-				nome: el.children[0].children[1].value,
-				cpf: el.children[1].children[1].value,
-				email: el.children[2].children[1].value,
-				tipo: el.children[3].children[0].children[1].children[0].value,
-				hasChange: document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText,
-				status: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value,
-				comentario: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[2].value,
-				comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value
-
-			})
+			nome: el.children[0].children[1].value,
+			cpf: el.children[1].children[1].value,
+			email: el.children[2].children[1].value,
+			tipo: el.children[3].children[0].children[1].children[0].value,
+			hasChange: document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText,
+			status: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value,
+			comentario: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[2].value,
+			comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value
+		})
 	})
 
 	let terceiros = Array.from(document.getElementById("terceiros").children)
