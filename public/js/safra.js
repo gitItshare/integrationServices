@@ -264,7 +264,7 @@ function preencherRevisao () {
 			if(!json.emitente[0]){
 				buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 			}
-			document.getElementById("numeroDigital").value = json.digitalizacao
+			document.getElementById("numDigital").value = json.digitalizacao
 			json.emitente.forEach(el => {
 				
 				if(el){
@@ -844,7 +844,7 @@ function preencherTabela(templateField) {
 	document.getElementById("clienteRazaoSocial").innerHTML = "&nbsp; " + templateField.Emitente.Emitente_Razao_Social
 	
 	document.getElementById("valor").innerText = templateField.Valor
-	document.getElementById("numeroDigital").value = ""
+	document.getElementById("numDigital").value = ""
 	document.getElementById("numCt").innerText = templateField.Num_Contrato
 	document.getElementById("numCedente").value = templateField.Formulario_para_upload_Legado_Cedente || ""
 
