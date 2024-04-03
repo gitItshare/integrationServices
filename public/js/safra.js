@@ -969,7 +969,7 @@ function saveState(){
 	console.log("avalista", avalistaState)
 	console.log("terceiro", terceiroState)
 	console.log("cliente", clientState)
-	state.digitalizacao = document.getElementById("numeroDigital").value
+	state.digitalizacao = document.getElementById("numDigital").value
 	state.avalistas = avalistaState
 	state.terceiros = terceiroState
 	state.emitente = clientState
