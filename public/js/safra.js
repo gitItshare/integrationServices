@@ -1286,7 +1286,7 @@ const checkStatus = () => {
 	const statusElem = document.getElementById("status")
 	var optionsAllOk = ["Analise OK"]
 	var optionsPartialOk = ["Selecione um status", "Timbre Pendencia", "Pendencia de Poderes"]
-	var optionsUnmodified = ["Analise OK", "Selecione um status", "Timbre Pendencia", "Pendencia de Poderes"]
+	var optionsUnmodified = ["Selecione um status", "Analise OK", "Timbre Pendencia", "Pendencia de Poderes"]
 
 	var allOk = true;
 	var allUnmodified = true;
