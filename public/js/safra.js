@@ -994,6 +994,8 @@ function saveState(){
 	state.avalistas = avalistaState
 	state.terceiros = terceiroState
 	state.emitente = clientState
+	state.tipoAssinatura = document.getElementById("tipoAssinatura").value
+	state.destinatario = document.getElementById("destinatario").value
 	document.getElementById("state").value = JSON.stringify(state)
 }
 
