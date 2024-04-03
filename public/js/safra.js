@@ -1281,7 +1281,7 @@ const checkStatus = () => {
 	var allUnmodified = true;
 	statusArr.forEach(element => {
 		if(element.value !== "ok") allOk = false
-		if(element.value !== "") allUnmodified = false
+		if(element.value !== "Status") allUnmodified = false
 		if(element.value === "") element.value = "Status"
 		console.log("checkStatus bool", element.value)
 	})
