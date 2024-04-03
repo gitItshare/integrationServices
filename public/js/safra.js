@@ -1070,9 +1070,7 @@ function fixInputs2() {
 	document.getElementById("numDigital").setAttribute("readOnly", true)
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
-	if(!document.getElementById("numCedente")) {
-		document.getElementById("numCedente").setAttribute("placeholder", "")
-	}
+	document.getElementById("numCedente").setAttribute("placeholder", "")
 
 	var tedElem = document.getElementById("ted")
 	tedElem.setAttribute("readOnly", true)
