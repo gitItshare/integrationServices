@@ -1273,25 +1273,35 @@ const checkStatus = () => {
 	}
 
 	const statusElem = document.getElementById("status")
-	var optionsAll = ["Analise OK"]
-	var optionsPartial = ["Selecione um status", "Timbre Pendencia", "Pendencia de Poderes"]
+	var optionsAllOk = ["Analise OK"]
+	var optionsPartialOk = ["Selecione um status", "Timbre Pendencia", "Pendencia de Poderes"]
+	var optionsUnmodified = ["Analise OK", "Selecione um status", "Timbre Pendencia", "Pendencia de Poderes"]
 
 	var allOk = true;
+	var allUnmodified = true;
 	statusArr.forEach(element => {
 		if(element.value !== "ok") allOk = false
+		if(element.value !== "") allUnmodified = false
 		if(element.value === "") element.value = "Status"
 		console.log("checkStatus bool", element.value)
 	})
 	statusElem.innerHTML = "";
 	if(allOk) {
-		optionsAll.forEach((item, index) => {
+		optionsAllOk.forEach((item, index) => {
+			var option = document.createElement("option")
+			option.innerText = item
+			option.selected = index === 0
+			statusElem.appendChild(option)
+		})
+	} else if(allUnmodified) {
+		optionsUnmodified.forEach((item, index) => {
 			var option = document.createElement("option")
 			option.innerText = item
 			option.selected = index === 0
 			statusElem.appendChild(option)
 		})
 	} else {
-		optionsPartial.forEach((item, index) => {
+		optionsPartialOk.forEach((item, index) => {
 			var option = document.createElement("option")
 			option.innerText = item
 			option.selected = index === 0
