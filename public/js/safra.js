@@ -248,6 +248,16 @@ function preencherRevisao () {
 		function preencherState (statesxform){
 			let json = JSON.parse(statesxform)
 			console.log("SXFORM", statesxform)
+			console.log("SXFORM JSON", json)
+
+			if(json.tipoAssinatura === "manual") {
+				document.getElementById("tipoAssinatura").value = "manual"
+				document.getElementById("destinatario").value = json.destinatario
+				document.getElementById("idDestinatario").removeAttribute("hidden")
+			} else {
+				document.getElementById("tipoAssinatura").value = "digital"
+				document.getElementById("idDestinatario").setAttribute("hidden", true)
+			}
 			
 			if(workflow[3]){
 				document.getElementById("statusDIV").setAttribute("hidden", true)
