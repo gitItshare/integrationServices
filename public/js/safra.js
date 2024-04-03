@@ -1043,7 +1043,7 @@ function checkParameters1() {
 	clienteContainer.forEach((el, index) => {
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
-		if(!cpf || cpf == "undefined") errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
 	var terceiros = Array.from(document.getElementById("terceiros").children)
@@ -1053,7 +1053,7 @@ function checkParameters1() {
 			terceirosContainer.forEach((container, index2) => {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
-				if(!cpf || cpf == "undefined") errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
+				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
 		}
@@ -1065,7 +1065,7 @@ function checkParameters1() {
 			avalistaContainer.forEach((container, index2) => {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
-				if(!cpf || cpf == "undefined") errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
+				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
 		}
@@ -1219,6 +1219,46 @@ const validateEmail = (email) => {
 	return String(email)
 		.toLowerCase()
 		.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+}
+
+const validateCPF = (cpf) => {
+	// Remove todos os caracteres especiais
+	cpf = cpf.replace(/[^\d]/g, '');
+
+	// Verifica se o CPF tem 11 dígitos
+	if (cpf.length !== 11) {
+		return false;
+	}
+
+	// Verifica se todos os dígitos são iguais, o que é um CPF inválido
+	var isAllDigitsEqual = /^(\d)\1*$/.test(cpf);
+	if (isAllDigitsEqual) {
+		return false;
+	}
+
+	// Calcula o primeiro dígito verificador
+	var soma = 0;
+	for (var i = 0; i < 9; i++) {
+		soma += parseInt(cpf.charAt(i)) * (10 - i);
+	}
+	var resto = 11 - (soma % 11);
+	var digitoVerificador1 = resto >= 10 ? 0 : resto;
+
+	// Calcula o segundo dígito verificador
+	soma = 0;
+	for (var i = 0; i < 10; i++) {
+		soma += parseInt(cpf.charAt(i)) * (11 - i);
+	}
+	resto = 11 - (soma % 11);
+	var digitoVerificador2 = resto >= 10 ? 0 : resto;
+
+	// Verifica se os dígitos verificadores calculados são iguais aos informados
+	if (parseInt(cpf.charAt(9)) !== digitoVerificador1 || parseInt(cpf.charAt(10)) !== digitoVerificador2) {
+		return false;
+	}
+
+	// CPF válido
+	return true;
 }
 
 const scrollToTop = () => {
