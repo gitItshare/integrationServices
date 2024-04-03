@@ -72,8 +72,9 @@ let avalistasTable = [{
 		"_displayValue": ""
 	}
 ]
-let workflow = document.querySelector('.page-header').children[1].innerText.split(";");
-workflow = workflow[1].split("|");
+let workflow = document.querySelector('.page-header').children[1].innerText.split(": ");
+document.querySelector('.page-header h2').setAttribute("style", "opacity:0;")
+workflow = workflow[1].split("/");
 const HOSTNAME = "https://uatna11.springcm.com";
 const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[0]
 let representanteCli = []
@@ -137,6 +138,7 @@ $.ajax({
 			if(workflow[1] && !workflow[2] && !workflow[3]) checkParameters1()
 			if(workflow[2] && !workflow[3]) checkParameters2()
 			if(workflow[3]) checkParameters3()
+
 			makeXml()
 			saveState()
 		})
@@ -144,7 +146,6 @@ $.ajax({
 		let {
 			data
 		} = JSON.parse(res)
-		console.log("RESS", res)
 		console.log("DATAA", data)
 		let representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).agrupamentoRepresentantes
 		console.log("REPRESENTNTE", representanteCli)
