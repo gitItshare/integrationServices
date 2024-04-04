@@ -857,7 +857,7 @@ function preencherTerceiros(array) {
 	})
 }
 
-function preencherTabela(templateField) {
+function preencherTabela(templateField, createdDate) {
 
 	document.getElementById("codigoNomeAgencia").innerText = templateField.Emitente.Emitente_Agencia
 	document.getElementById("nomeCli").innerText = templateField.Emitente.Emitente_Razao_Social
