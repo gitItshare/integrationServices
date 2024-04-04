@@ -1191,7 +1191,7 @@ function checkParameters3() {
 	})
 	commentElementsArr.forEach((element, index) => {
 		if(element.value === "" || element.value === "undefined") {
-			errors.push("Comentário Middle Office inválido (#"+(index + 1)+")")
+			errors.push("Comentário Middle Office inválido")
 		}
 	})
 
