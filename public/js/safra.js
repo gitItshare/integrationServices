@@ -1025,6 +1025,7 @@ function isSignatureMode(type) {
 }
 
 function checkParameters1() {
+	console.log("checkParameters1")
 	var errors = []
 	const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
 	if(isVisibleFieldset) {
@@ -1103,6 +1104,8 @@ function fixInputs2() {
 }
 
 function checkParameters2() {
+	console.log("checkParameters2")
+
 	var errors = []
 
 	// Checagem do Número digitalização
@@ -1174,6 +1177,7 @@ function fixInputs3() {
 }
 
 function checkParameters3() {
+	console.log("checkParameters3")
 	var errors = []
 
 	// Checagem de comentários
