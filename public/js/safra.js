@@ -1024,10 +1024,9 @@ function saveState(){
 
 function fixInputs1() {
 	console.log("fixInputs1")
+
 	document.getElementById("numCedente").setAttribute("readOnly", true)
-	if(!document.getElementById("numCedente").value) {
-		document.getElementById("numCedente").setAttribute("placeholder", "")
-	}
+	document.getElementById("numCedente").setAttribute("placeholder", "")
 
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 }
@@ -1183,9 +1182,7 @@ function fixInputs3() {
 	console.log("fixInputs3")
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
-	if(!document.getElementById("numCedente").value) {
-		document.getElementById("numCedente").setAttribute("placeholder", "")
-	}
+	document.getElementById("numCedente").setAttribute("placeholder", "")
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
