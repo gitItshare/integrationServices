@@ -168,8 +168,8 @@ $.ajax({
 		if(!avalistas[0])
 			document.getElementById("avalistas").setAttribute("hidden", true)
 		if(!workflow[2]){
-			document.getElementById("numCedente").setAttribute("disabled", true)
-			document.getElementById("segmentoSolicitante").setAttribute("disabled", true)
+			document.getElementById("numCedente").setAttribute("readOnly", true)
+			document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 		}
 
 		clientGrupos.addEventListener("change", function () {
@@ -275,8 +275,8 @@ function preencherRevisao () {
 				let arrayContainerStatus = Array.from(document.querySelectorAll(".containerStatus"))
 				arrayContainerStatus.forEach(el => {
 					console.log("AQUIIII", el)
-					el.children[1].setAttribute("disabled", true)
-					el.children[2].setAttribute("disabled", true)
+					el.children[1].setAttribute("readOnly", true)
+					el.children[2].setAttribute("readOnly", true)
 				})
 			} else {
 				document.getElementById("tipoCt").removeAttribute("hidden")
@@ -299,14 +299,14 @@ function preencherRevisao () {
 						let container = Array.from(buttonCli.parentElement.parentElement.parentElement.children[1].children)
 						container.forEach(el => {
 							console.log("EL", el)
-							el.children[0].children[1].setAttribute("disabled", true)
-							el.children[1].children[1].setAttribute("disabled", true)
-							el.children[2].children[1].setAttribute("disabled", true)
-							el.children[3].children[0].children[1].children[0].setAttribute("disabled", true)
+							el.children[0].children[1].setAttribute("readOnly", true)
+							el.children[1].children[1].setAttribute("readOnly", true)
+							el.children[2].children[1].setAttribute("readOnly", true)
+							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 						})
 						buttonCli.setAttribute("hidden", true)
-						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("disabled", true)
+						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
 						if(el.status == "Ok"){
 							buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
@@ -339,14 +339,14 @@ function preencherRevisao () {
 					if(!workflow[3]){
 						let container = Array.from(button[index].parentElement.parentElement.parentElement.children[1].children)
 						container.forEach(el => {
-							el.children[0].children[1].setAttribute("disabled", true)
-							el.children[1].children[1].setAttribute("disabled", true)
-							el.children[2].children[1].setAttribute("disabled", true)
-							el.children[3].children[0].children[1].children[0].setAttribute("disabled", true)
+							el.children[0].children[1].setAttribute("readOnly", true)
+							el.children[1].children[1].setAttribute("readOnly", true)
+							el.children[2].children[1].setAttribute("readOnly", true)
+							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 						})
 						button[index].setAttribute("hidden", true)
-						button[index].parentElement.parentElement.children[2].children[4].setAttribute("disabled", true)
+						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
 						if(el.status == "Ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
@@ -375,15 +375,15 @@ function preencherRevisao () {
 					if(!workflow[3]){
 						let container = Array.from(button[index].parentElement.parentElement.parentElement.children[1].children)
 						container.forEach(el => {
-							el.children[0].children[1].setAttribute("disabled", true)
-							el.children[1].children[1].setAttribute("disabled", true)
-							el.children[2].children[1].setAttribute("disabled", true)
-							el.children[3].children[0].children[1].children[0].setAttribute("disabled", true)
+							el.children[0].children[1].setAttribute("readOnly", true)
+							el.children[1].children[1].setAttribute("readOnly", true)
+							el.children[2].children[1].setAttribute("readOnly", true)
+							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 						})
 
 						button[index].setAttribute("hidden", true)
-						button[index].parentElement.parentElement.children[2].children[4].setAttribute("disabled", true)
+						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
 						if(el.status == "Ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
@@ -429,8 +429,8 @@ function addClient(event, id, representante = {}, change, noSave) {
 		console.log("adcioonando", clone)
 		 clone.children[1].children[1].id = new Date().getTime() + change + "cnpj"
 		if(noSave){
-			clone.children[0].children[1].setAttribute("disabled", true)
-			clone.children[1].children[1].setAttribute("disabled", true)
+			clone.children[0].children[1].setAttribute("readOnly", true)
+			clone.children[1].children[1].setAttribute("readOnly", true)
 		}
 		if(change && !noSave)
 			changes[change].push({metodo:"inseriu", cnpj: clone.children[1].children[1].id, nome: clone.children[0].children[1].id})
@@ -1099,18 +1099,18 @@ function fixInputs2() {
 	tedElem.setAttribute("readOnly", true)
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
-	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
-	document.getElementById("destinatario").setAttribute("disabled", true)
+	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
+	document.getElementById("destinatario").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
-	document.getElementById("ted").setAttribute("disabled", true)
+	document.getElementById("ted").setAttribute("readOnly", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
 	const avalistasGroupsElem = document.getElementById("avalistasGroups")
-	if(clientGruposElem) clientGruposElem.setAttribute("disabled", true)
-	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("disabled", true)
-	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("disabled", true)
+	if(clientGruposElem) clientGruposElem.setAttribute("readOnly", true)
+	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("readOnly", true)
+	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("readOnly", true)
 
 	renderChangesSignatureType()
 }
