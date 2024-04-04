@@ -261,7 +261,8 @@ function preencherRevisao () {
 				document.getElementById("idDestinatario").setAttribute("hidden", true)
 			}
 
-			fixInputs2()
+			if(workflow[2] && !workflow[3]) fixInputs2()
+			if(workflow[3]) fixInputs3()
 			
 			if(workflow[3]){
 				document.getElementById("statusDIV").setAttribute("hidden", true)
@@ -1014,6 +1015,7 @@ function saveState(){
 }
 
 function fixInputs1() {
+	console.log("fixInputs1")
 	document.getElementById("numCedente").setAttribute("readOnly", true)
 	if(!document.getElementById("numCedente").value) {
 		document.getElementById("numCedente").setAttribute("placeholder", "")
@@ -1082,6 +1084,8 @@ function checkParameters1() {
 }
 
 function fixInputs2() {
+	console.log("fixInputs2")
+
 	document.getElementById("numDigital").setAttribute("readOnly", true)
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
@@ -1166,6 +1170,7 @@ function checkParameters2() {
 }
 
 function fixInputs3() {
+	console.log("fixInputs3")
 
 	document.getElementById("numCedente").setAttribute("readOnly", true)
 	if(!document.getElementById("numCedente").value) {
