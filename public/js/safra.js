@@ -176,7 +176,7 @@ $.ajax({
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
 			clientGrupos.options[0].selected = true;
 		})
-		preencherTabela(templateField)
+		preencherTabela(templateField, createdDate)
 		preencherLists(representanteCli, clientGrupos)
 		preencherAvalistas(avalistas)
 		preencherTerceiros(terceiros)
