@@ -21,6 +21,13 @@
 		display: flex;
 		flex-direction: column;
 	}
+	select[readonly],
+	input[readonly],
+	select[readonly] {
+		background: #eee;
+		pointer-events: none;
+		touch-action: none;
+	}
 </style>
 
 <body>
