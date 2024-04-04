@@ -46,7 +46,6 @@ let representantesAvalista = []
 let templateField = {}
 let avalistaDIV = document.getElementById("avalistas")
 let terceirosDIV = document.getElementById("terceiros")
-let grupoTestemunhas = {}
 const clientesDiv = document.getElementById("clienteContainer").parentElement
 let contadorRepCli = 1
 let testemunhaEmitente = ""
@@ -64,20 +63,18 @@ $.ajax({
 	console.log("response", response)
 	const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[1]
 
-	let data = x2js.xml2json(response);
-	console.log(data)
-	let testemunhaEmitente = data.Params.Documents.Document.CreatedBy
-	let testemunhaEmitenteNome = data.Params.Documents.Document.UpdatedBy
+	let params = x2js.xml2json(response);
+	console.log(params)
 
-	let valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
-	let templateField = data.Params.TemplateFieldData
-	let emitente = data.Params.TemplateFieldData.Emitente
-	let	terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
-	let grupoTestemunhas = data.Params.TemplateFieldData.Documents.Document.Cadastro
-	let createdDate = data.Params.Documents.Document.CreatedDate
+
+	let valorContrato = parseInt(params.Params.TemplateFieldData.Valor_unformatted)
+	let templateField = params.Params.TemplateFieldData
+	let emitente = params.Params.TemplateFieldData.Emitente
+	let	terceiroGarantidor = params.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+	let createdDate = params.Params.Documents.Document.CreatedDate
 	if (terceiroGarantidor.element)
 		terceiroGarantidor = terceiroGarantidor.element
-	avalistasTable = data.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
+	avalistasTable = params.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
 	if (avalistasTable.element)
 		avalistasTable = avalistasTable.element
 
@@ -101,7 +98,7 @@ $.ajax({
 			if(workflow[1] && !workflow[2] && !workflow[3]) checkParameters1()
 			if(workflow[2] && !workflow[3]) checkParameters2()
 			if(workflow[3]) checkParameters3()
-			makeXml()
+			makeXml(params)
 			saveState()
 		})
 
@@ -164,9 +161,9 @@ function preencherRevisao () {
 		},
 		dataType: 'text'
 	}).done(res => {
-		let data = JSON.parse(res)
-		console.log("DATAA", data)
-		data.forEach(el => {
+		let sxform = JSON.parse(res)
+		console.log("DATAA", sxform)
+		sxform.forEach(el => {
 			if(el.HtmlId ==  "clientGrupos"){
 				let clientGroups = document.getElementById(el.HtmlId)
 				clientGroups.value = el.HtmlValue
@@ -565,8 +562,13 @@ function preencherAvalistas(avalistas, avalistasTable) {
 	})
 }
 
-function maketableCli(array, anchor, ordem) {
+function maketableCli(array, anchor, ordem, params) {
 	let xml = ""
+	console.log("AAAAAAAAAAAAAAAAAA", params)
+	let testemunhaEmitente = params.Params.Documents.Document.CreatedBy
+	let testemunhaEmitenteNome = params.Params.Documents.Document.UpdatedBy
+	let grupoTestemunhas = params.Params.TemplateFieldData.Documents.Document.Cadastro
+
 	array.forEach((el, index) => {
 		xml += "<signers>"
 		let nome = el.children[0].children[1].value
@@ -581,7 +583,7 @@ function maketableCli(array, anchor, ordem) {
 		xml += "<cpf>" + cpf + "</cpf>"
 		xml += "<tag>" + tag + "</tag>"
 		xml += "<tipoASs>" + tipoASs + "</tipoASs>",
-			xml += "<ordem>" + 2 + "</ordem>"
+		xml += "<ordem>" + 2 + "</ordem>"
 
 		console.log(el)
 		xml += "</signers>"
@@ -727,15 +729,16 @@ function maketable(array, anchor, ordem, role) {
 
 const buttonSave = document.querySelector("#ctl00_MainContent_buttonGroup_btnDone")
 
-function makeXml() {
+function makeXml(params) {
 	try {
 		let containerCli = Array.from(document.querySelectorAll("#nome-representante")[0].parentElement.parentElement.parentElement.children)
 		let containerAvalistas = Array.from(document.getElementById("avalistas").children)
 		let containerTerceiros = Array.from(document.getElementById("terceiros").children)
+		let templateField = params.Params.templateField
 
 		console.log("CONTAINER", containerCli)
 		let xml = "<recipients>"
-		xml += maketableCli(containerCli, "sign_RC", 1)
+		xml += maketableCli(containerCli, "sign_RC", 1,params)
 		xml += makeTableBanco(valorContrato, 1)
 
 		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor")
