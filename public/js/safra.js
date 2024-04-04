@@ -734,7 +734,7 @@ function makeXml(params) {
 		let containerCli = Array.from(document.querySelectorAll("#nome-representante")[0].parentElement.parentElement.parentElement.children)
 		let containerAvalistas = Array.from(document.getElementById("avalistas").children)
 		let containerTerceiros = Array.from(document.getElementById("terceiros").children)
-		let templateField = params.Params.templateField
+		let template = params.Params.TemplateFieldData
 
 		console.log("CONTAINER", containerCli)
 		let xml = "<recipients>"
@@ -743,11 +743,11 @@ function makeXml(params) {
 
 		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor")
 		xml += maketable(containerAvalistas, "A", 3, "Avalista")
-		xml+= `<seguroPrestamista>${templateField.Geral_Info.DeclacaoDeSaude}</seguroPrestamista>`
+		xml+= `<seguroPrestamista>${template.Geral_Info.DeclacaoDeSaude}</seguroPrestamista>`
 		xml+= `<agencia>${emitente.Emitente_Agencia}</agencia>`
 		xml+= `<nomeCli>${emitente.Emitente_Razao_Social}</nomeCli>`
 		xml+= `<cnpjCli>${emitente.Emitente_CNPJ}</cnpjCli>`
-		xml+= `<numContrato>${templateField.Num_Contrato}</numContrato>`
+		xml+= `<numContrato>${template.Num_Contrato}</numContrato>`
 		xml += "</recipients>"
 	
 
