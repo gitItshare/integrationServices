@@ -34,26 +34,33 @@ const dicionarioInterveniente = {
    "Endereco_eletronico": "EMAIL_PARCINT",
    "Data_Contrato_unformatted": "DTCON"
 }
+
 const cadastro = async (data, token) => {
    try {
-      const cedente = data.Params.TemplateFieldData.CEDENTE
+      let cedente
+      if(data.Params.TemplateFieldData.CEDENTE)
+         cedente = data.Params.TemplateFieldData.CEDENTE
+      if(data.Params.TemplateFieldData.PRESTADOR)
+         cedente = data.Params.TemplateFieldData.PRESTADOR
+      if(data.Params.TemplateFieldData.DADOS_CONTRATADA )
+         cedente = data.Params.TemplateFieldData.DADOS_CONTRATADA 
+
       let cpfcnpj = cedente["CPF_ou_CNPJ"].replace(/[^a-zA-Z0-9 ]/g, '')
       let parceiro = await consultar(`this.CGC_CPF = '${cpfcnpj}' AND CLIENTE = 'S'`, token)
       let parceiroAD = await consultarAD(`this.CGC_CPF = '${cpfcnpj}'`, token)
       if (!parceiro) {
          console.log("CADASTREI....")
-         parceiro = await cadastrar(data, token)
+         parceiro = await cadastrar(data, token,cedente)
       }
 
-      let clienteAD = await cadastrarAD(data, token, parceiro)
+      let clienteAD = await cadastrarAD(data, token, parceiro,cedente)
       return true
    } catch (error) {
       console.log(error)
    }
 }
-const cadastrar = async (data, token) => {
+const cadastrar = async (data, token,cedente) => {
    try {
-      const cedente = data.Params.TemplateFieldData.CEDENTE
       const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.saveRecord&outputType=json"
       const client = sankhyaClient(token)
       const localFields = {
@@ -132,10 +139,9 @@ const cadastrar = async (data, token) => {
    }
 }
 
-const cadastrarAD = async (data, token, codParc) => {
+const cadastrarAD = async (data, token, codParc,cedente) => {
    try {
 
-      const cedente = data.Params.TemplateFieldData.CEDENTE
       let dataCt = data.Params.TemplateFieldData["Data_Contrato_unformatted"]
       let tipoCt = data.Params.TemplateFieldData["Tipo_Contrato"]["@key"]
       const intervenienteAnuente = data.Params.TemplateFieldData["INTERVENIENTE_ANUENTE"]
