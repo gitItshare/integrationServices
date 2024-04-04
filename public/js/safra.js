@@ -1185,6 +1185,13 @@ function checkParameters3() {
 		}
 	})
 
+	// Checagem assinatura
+	var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
+	var email = signatureMailElem.value
+	if(isSignatureMode("manual") && (!email || email == "undefined" || !validateEmail(email))) {
+		errors.push("E-mail da assinatura inválido")
+	}
+
 	// Checagem Ação
 	var acaoInput = document.getElementById("acao")
 	if(!acaoInput.value) errors.push("Ação inválida")
