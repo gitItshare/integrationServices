@@ -29,49 +29,7 @@ let emitente = {
 	"Emitente_Razao_Social": "yuji itadori",
 	"Emitente_CNPJ": "02974733000152",
 }
-let terceiroGarantidor = {
-	"Terceiro_Garantidor_Nome_Razao_Social": "teste terceiro",
-	"CPF_CNPJ": "02974733000155",
-	"Terceiro_Garantidor_Endereco": "Rua Júlio Girardi",
-	"Terceiro_Garantidor_Cidade": "Campinas",
-	"Terceiro_Garantidor_Bairro": "itapetao",
-	"Terceiro_Garantidor_Estado": {
-		"_key": "SP",
-		"__text": "SP"
-	},
-	"Terceiro_Garantidor_CEP": "13060-722",
-	"_displayName": "",
-	"_displayValue": ""
-}
-let avalistasTable = [{
-		"Avalistas_Nome_Razao_Social": "teste 1",
-		"Avalistas_CPF_CNPJ": "02974733000153",
-		"Avalistas_Endereco": "Rua Júlio Girardi",
-		"Avalistas_Cidade": "Campinas",
-		"Avalistas_Bairro": "vila",
-		"Avalistas_Estado": {
-			"_key": "SP",
-			"__text": "SP"
-		},
-		"Avalistas_CEP": "13060-729",
-		"_displayName": "",
-		"_displayValue": ""
-	},
-	{
-		"Avalistas_Nome_Razao_Social": "teste 2",
-		"Avalistas_CPF_CNPJ": "02974733000153",
-		"Avalistas_Endereco": "teste end",
-		"Avalistas_Cidade": "sao paulo",
-		"Avalistas_Bairro": "pq industrial",
-		"Avalistas_Estado": {
-			"_key": "SP",
-			"__text": "SP"
-		},
-		"Avalistas_CEP": "13060-728",
-		"_displayName": "",
-		"_displayValue": ""
-	}
-]
+
 let workflow = document.querySelector('.page-header').children[1].innerText.split(";");
 console.log("wf1", workflow)
 workflow = workflow[1].split("|");
@@ -564,7 +522,7 @@ function preencherLists(array, listName, listEmail, listCpf) {
 	})
 }
 
-function preencherAvalistas(avalistas) {
+function preencherAvalistas(avalistas, avalistasTable) {
 	avalistas.forEach((el, index) => {
 		const clone = document.getElementById("avalistas0").cloneNode(true)
 		clone.removeAttribute("hidden")
@@ -802,7 +760,7 @@ function makeXml() {
 
 window.make = makeXml
 
-function preencherTerceiros(array) {
+function preencherTerceiros(array,terceiroGarantidor) {
 	array.forEach((el, index) => {
 		const clone = document.getElementById("avalistas0").cloneNode(true)
 		clone.removeAttribute("hidden")
