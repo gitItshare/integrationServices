@@ -73,7 +73,9 @@ let avalistasTable = [{
 	}
 ]
 let workflow = document.querySelector('.page-header').children[1].innerText.split(";");
+console.log("wf1", workflow)
 workflow = workflow[1].split("|");
+console.log("wf2", workflow)
 document.querySelector('.page-header h2').setAttribute("style", "opacity:0;")
 const HOSTNAME = "https://uatna11.springcm.com";
 const url = HOSTNAME + '/atlas/Documents/get.ashx/' + workflow[0]
