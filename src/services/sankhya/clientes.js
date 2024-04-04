@@ -101,7 +101,7 @@ const cadastrar = async (data, token,cedente) => {
                         "$": cedente["Professor_PF_ou_PJ"]['@key'].replace("P", "")
                      },
                      "NOMEPARC": {
-                        "$": cedente["Nome_Completo_Pessoa_Juridica"]
+                        "$": cedente["Nome_Completo_Pessoa_Juridica"] || cedente["Nome_Completo"]
                      },
                      "CODCID": {
                         "$": "10"
