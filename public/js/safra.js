@@ -1171,13 +1171,23 @@ function checkParameters3() {
 
 	// Checagem de comentários
 	const commentElementsArr = []
-	statusComentcliElem = document.querySelectorAll("#statusComentcliMO")
-	statusComentcliElem.forEach(element => {
-		if(!element.parentElement.hasAttribute("hidden")) commentElementsArr.push(element)
+	statusComentcliElem = document.querySelectorAll("#statusComentcli")
+	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
+	statusComentcliMOElem.forEach((element, index) => {
+		if(!element.parentElement.hasAttribute("hidden")) {
+			if(statusComentcliElem[index].value) {
+				commentElementsArr.push(element)
+			}
+		}
 	})
-	statusComentAvaElem = document.querySelectorAll("#statusComentAvaMO")
-	statusComentAvaElem.forEach(element => {
-		if(!element.parentElement.hasAttribute("hidden")) commentElementsArr.push(element)
+	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
+	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
+	statusComentAvaMOElem.forEach(element => {
+		if(!element.parentElement.hasAttribute("hidden")) {
+			if(statusComentAvaElem[index].value) {
+				commentElementsArr.push(element)
+			}
+		}
 	})
 	commentElementsArr.forEach((element, index) => {
 		if(element.value === "" || element.value === "undefined") {
