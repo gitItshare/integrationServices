@@ -128,7 +128,6 @@ $.ajax({
 
 	if (!Array.isArray(terceiroGarantidor))
 		terceiroGarantidor = [terceiroGarantidor]
-	valorContrato
 
 	$.ajax({
 		url: url,
@@ -176,10 +175,11 @@ $.ajax({
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
 			clientGrupos.options[0].selected = true;
 		})
+		console.log(terceiros)
 		preencherTabela(templateField, createdDate)
 		preencherLists(representanteCli, clientGrupos)
-		preencherAvalistas(avalistas)
-		preencherTerceiros(terceiros)
+		preencherAvalistas(avalistas,avalistasTable)
+		preencherTerceiros(terceiros,terceiroGarantidor)
 
 		if(workflow[2] && !workflow[3]){
 			preencherRevisao()
@@ -815,6 +815,10 @@ function preencherTerceiros(array) {
 		status.id= "statusTerc"
 		status.setAttribute("name", "__sxformcustom_statusTerc_sxformcustom__")
 		console.log(el)
+
+		
+		console.log("TERCEIRO TEST", terceiroGarantidor)
+
 		const terceiros = terceiroGarantidor.find(terceiro => terceiro.CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
 		console.log("NOMWE", terceiros)
 		let nome = terceiros.Terceiro_Garantidor_Nome_Razao_Social
