@@ -463,9 +463,14 @@ function renderChangesSignatureType() {
 					column.classList.remove("d-none")
 					column.classList.remove("col-sm-6")
 					column.classList.remove("col-sm-3")
-					column.classList.add("col-sm-6")
-					if(index == "2" || index == "3") {
+					column.classList.add("col-sm-4")
+					if(index == "2") {
 						column.classList.add("d-none")
+					}
+					if(index == "3"){
+						column.children[0].children[0].classList.add("d-none")
+						column.children[0].children[1].classList.add("d-none")
+						column.children[0].children[2].style = "margin-top: 45px"
 					}
 				})
 			})
@@ -477,9 +482,15 @@ function renderChangesSignatureType() {
 			document.querySelectorAll(".row").forEach((element) => {
 				element.querySelectorAll(".form-group").forEach((column, index) => {
 					column.classList.remove("d-none")
-					column.classList.remove("col-sm-6")
+					column.classList.remove("col-sm-4")
 					column.classList.remove("col-sm-3")
+					column.classList.remove("col-sm-6")
 					column.classList.add("col-sm-3")
+					if(index == "3"){
+						column.children[0].children[0].classList.remove("d-none")
+						column.children[0].children[1].classList.remove("d-none")
+						column.children[0].children[2].style = "margin-top: 0px"
+					}
 				})
 			})
 		})
@@ -494,20 +505,23 @@ function preencherAutomatico() {
 	let label = this.parentElement.parentElement.children[0].children[0]
 	console.log("LABEELL", label)
 	const options = Array.from(clientList.options).find(el => el.value == value)
-	let condEespecial = options.getAttribute("condEespecial")
-	if (condEespecial == "true")
-		label.innerHTML = '<p style="color:tomato">Representantes Condicao Especial</p>'
-	else
-		label.innerHTML = '<p>Representantes</p>'
-
-	if (!value) {
-		email.value = ""
-		cpf.value = ""
-		label.innerHTML = '<p>Representantes</p>'
-	} else {
-		email.value = options.getAttribute("email")
-		cpf.value = options.getAttribute("cpf")
+	if(options){
+		let condEespecial = options.getAttribute("condEespecial")
+		if (condEespecial == "true")
+			label.innerHTML = '<p style="color:tomato">Representantes Condicao Especial</p>'
+		else
+			label.innerHTML = '<p>Representantes</p>'
+	
+		if (!value) {
+			email.value = ""
+			cpf.value = ""
+			label.innerHTML = '<p>Representantes</p>'
+		} else {
+			email.value = options.getAttribute("email")
+			cpf.value = options.getAttribute("cpf")
+		}
 	}
+
 }
 
 function preencherLists(array, listName, listEmail, listCpf) {
