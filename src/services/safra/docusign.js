@@ -218,7 +218,7 @@ class Docusign {
 
                     if (el.tipoAss["_text"] == "BIOMETRIA") {
                         signer.clientUserId = el.cpf["_text"]
-                        signer.embeddedRecipientStartURL = `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=0f153270-9036-4381-ba6f-9de77e00f5d0&recipientId=${recipientId}`
+                        signer.embeddedRecipientStartURL = `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=c4a45577-a84b-4f39-a62d-9ad88be41ace&recipientId=${recipientId}`
                     }
                     signers.push(signer)
                     // testemunhastabs.signHereTabs.push(signer.tabs.signHereTabs[0])
@@ -334,7 +334,7 @@ class Docusign {
 
             testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
             console.log(uniques)
-            const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
+            const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients`, {
                 headers: {
                     'Authorization': this.authToken
                 }
@@ -342,13 +342,13 @@ class Docusign {
             const recipient = templateSigners.data
             console.log("OPOORA", testemunhastabs)
             if (templateSigners.data.signers.length > 0)
-                await axios.delete(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
+                await axios.delete(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients`, {
                     headers: {
                         'Authorization': this.authToken
                     },
                     data: recipient
                 });
-            const resp = await axios.put(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, template, {
+            const resp = await axios.put(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients`, template, {
                 headers: {
                     'Authorization': this.authToken
                 }
@@ -358,7 +358,7 @@ class Docusign {
                 try {
                     console.log(tab)
                     if (tab) {
-                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab[0].recipientId}/tabs`, {
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab[0].recipientId}/tabs`, {
                             signHereTabs: tab
                         }, {
                             headers: {
@@ -378,7 +378,7 @@ class Docusign {
                 try {
                     console.log(tab)
 
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                         approveTabs: [tab]
                     }, {
                         headers: {
@@ -394,7 +394,7 @@ class Docusign {
                 try {
                     console.log(tab)
 
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                         declineTabs: [tab]
                     }, {
                         headers: {
@@ -411,7 +411,7 @@ class Docusign {
                     try {
                         console.log(tab)
     
-                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                             radioGroupTabs: [tab]
                         }, {
                             headers: {
@@ -429,7 +429,7 @@ class Docusign {
                     try {
                         console.log(tab)
     
-                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                             checkboxTabs: [tab]
                         }, {
                             headers: {
@@ -474,7 +474,7 @@ class Docusign {
                 "required": "false",
                 "value": data.numContrato["_text"]
             }]}
-            await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/custom_fields`, custom_fields,
+            await axios.post(`https://demo.docusign.net/restapi/v2/accounts/106469/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/custom_fields`, custom_fields,
             {
                 headers: {
                     'Authorization': this.authToken
