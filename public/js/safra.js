@@ -1182,7 +1182,7 @@ function checkParameters3() {
 	})
 	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
-	statusComentAvaMOElem.forEach(element => {
+	statusComentAvaMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			if(statusComentAvaElem[index].value) {
 				commentElementsArr.push(element)
