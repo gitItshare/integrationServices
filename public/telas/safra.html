@@ -21,6 +21,16 @@
 		display: flex;
 		flex-direction: column;
 	}
+	select[readonly],
+	input[readonly],
+	textarea[readonly],
+	select[disabled],
+	input[disabled],
+	textarea[disabled] {
+		background: #eee;
+		pointer-events: none;
+		touch-action: none;
+	}
 </style>
 
 <body>
