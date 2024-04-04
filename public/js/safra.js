@@ -75,6 +75,10 @@ let avalistasTable = [{
 let workflow = document.querySelector('.page-header').children[1].innerText.split(";");
 console.log("wf1", workflow)
 workflow = workflow[1].split("|");
+// Remoção espaços
+workflow.forEach((item, index) => {
+	workflow[index] = item.trim()
+});
 console.log("wf2", workflow)
 document.querySelector('.page-header h2').setAttribute("style", "opacity:0;")
 const HOSTNAME = "https://uatna11.springcm.com";
@@ -1098,6 +1102,8 @@ function fixInputs2() {
 	document.getElementById("tipoAssinatura").setAttribute("disabled", true)
 	document.getElementById("destinatario").setAttribute("disabled", true)
 	document.getElementById("fieldset-acao").setAttribute("hidden", true)
+
+	document.getElementById("ted").setAttribute("disabled", true)
 
 	const clientGruposElem = document.getElementById("clientGrupos")
 	const terceirosGroupsElem = document.getElementById("terceirosGroups")
