@@ -20,7 +20,7 @@ const dicionario = {
    "Nome_Completo_Pessoa_Juridica": "RAZAOSOCIAL",
    "Administrada_por": "ADM",
    "CPF_Administrador": "CPFADM",
-   "Data_Contrato_unformatted":"DTCON"
+   "Data_Contrato_unformatted": "DTCON"
 }
 const dicionarioInterveniente = {
    "Nome_Professor": "NOME_PARCINT",
@@ -34,18 +34,18 @@ const dicionarioInterveniente = {
    "Endereco_eletronico": "EMAIL_PARCINT",
    "Data_Contrato_unformatted": "DTCON"
 }
-const cadastro = async(data, token) => {
+const cadastro = async (data, token) => {
    try {
       const cedente = data.Params.TemplateFieldData.CEDENTE
       let cpfcnpj = cedente["CPF_ou_CNPJ"].replace(/[^a-zA-Z0-9 ]/g, '')
-       let parceiro = await consultar(`this.CGC_CPF = '${cpfcnpj}' AND CLIENTE = 'S'`,token)
-         let parceiroAD = await consultarAD(`this.CGC_CPF = '${cpfcnpj}'`,token)
-      // if(!parceiro){
-      //    console.log("CADASTREI....")
-      //    parceiro = await cadastrar(data, token)
-      // }
+      let parceiro = await consultar(`this.CGC_CPF = '${cpfcnpj}' AND CLIENTE = 'S'`, token)
+      let parceiroAD = await consultarAD(`this.CGC_CPF = '${cpfcnpj}'`, token)
+      if (!parceiro) {
+         console.log("CADASTREI....")
+         parceiro = await cadastrar(data, token)
+      }
 
-      //   let clienteAD = await cadastrarAD(data, token, parceiro)
+      let clienteAD = await cadastrarAD(data, token, parceiro)
       return true
    } catch (error) {
       console.log(error)
@@ -121,7 +121,9 @@ const cadastrar = async (data, token) => {
             }
          }
       }
-      let {data} = await client.post(url, body)
+      let {
+         data
+      } = await client.post(url, body)
       console.log(data)
       let codParc = data.responseBody.entities.entity["CODPARC"]["$"]
       return codParc
@@ -195,7 +197,7 @@ const cadastrarAD = async (data, token, codParc) => {
                },
                "entity": {
                   "fieldset": {
-                     "list": fieldsetlist.join(",")+",DTCON"
+                     "list": fieldsetlist.join(",") + ",DTCON"
                   }
                }
             }
@@ -207,78 +209,82 @@ const cadastrarAD = async (data, token, codParc) => {
       console.log(error)
    }
 }
-const consultar = async(expression,token) => {
+const consultar = async (expression, token) => {
    try {
       const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.loadRecords&outputType=json"
       const client = sankhyaClient(token)
       const body = {
          "serviceName": "CRUDServiceProvider.loadRecords",
          "requestBody": {
-           "dataSet": {
-             "rootEntity": "Parceiro",
-             "includePresentationFields": "N",
-             "offsetPage": "0",
-             "criteria": {
-               "expression": {
-                 "$": expression
+            "dataSet": {
+               "rootEntity": "Parceiro",
+               "includePresentationFields": "N",
+               "offsetPage": "0",
+               "criteria": {
+                  "expression": {
+                     "$": expression
+                  }
+               },
+               "entity": {
+                  "fieldset": {
+                     "list": "CGC_CPF,CLIENTE"
+                  }
                }
-             },
-             "entity": {
-               "fieldset": {
-                 "list": "CGC_CPF,CLIENTE"
-               }
-             }
-           }
+            }
          }
-       }
-      let {data} = await client.post(url, body)
+      }
+      let {
+         data
+      } = await client.post(url, body)
       console.log(data.responseBody.entities)
       let total = data.responseBody.entities.total
-      
-      if(total == 0)
-       return undefined
+
+      if (total == 0)
+         return undefined
       else {
          let codParc = data.responseBody.entities.entity.f2["$"]
          return codParc
       }
-         
+
    } catch (error) {
       throw error
    }
 }
-const consultarAD = async(expression,token) => {
+const consultarAD = async (expression, token) => {
    try {
       const url = "https://api.sankhya.com.br/gateway/v1/mge/service.sbr?serviceName=CRUDServiceProvider.loadRecords&outputType=json"
       const client = sankhyaClient(token)
       const body = {
          "serviceName": "CRUDServiceProvider.loadRecords",
          "requestBody": {
-           "dataSet": {
-             "rootEntity": "AD_TCPASSCON",
-             "includePresentationFields": "N",
-             "offsetPage": "0",
-             "criteria": {
-               "expression": {
-                 "$": expression
+            "dataSet": {
+               "rootEntity": "AD_TCPASSCON",
+               "includePresentationFields": "N",
+               "offsetPage": "0",
+               "criteria": {
+                  "expression": {
+                     "$": expression
+                  }
+               },
+               "entity": {
+                  "fieldset": {
+                     "list": "CGC_CPF,DTCON,TIPCON"
+                  }
                }
-             },
-             "entity": {
-               "fieldset": {
-                 "list": "CGC_CPF,DTCON,TIPCON"
-               }
-             }
-           }
+            }
          }
-       }
-      let {data} = await client.post(url, body)
+      }
+      let {
+         data
+      } = await client.post(url, body)
       console.log(data.responseBody.entities.entity)
       console.log(data.responseBody.entities.metadata.fields)
 
       let total = data.responseBody.entities.total
-      
-       return true
-      
-         
+
+      return true
+
+
    } catch (error) {
       throw error
    }
