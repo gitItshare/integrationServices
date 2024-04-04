@@ -108,15 +108,15 @@ $.ajax({
 
 	let data = x2js.xml2json(response);
 	console.log(data)
-	testemunhaEmitente = data.Params.Documents.Document.CreatedBy
-	testemunhaEmitenteNome = data.Params.Documents.Document.UpdatedBy
+	let testemunhaEmitente = data.Params.Documents.Document.CreatedBy
+	let testemunhaEmitenteNome = data.Params.Documents.Document.UpdatedBy
 
-	valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
-	templateField = data.Params.TemplateFieldData
-	emitente = data.Params.TemplateFieldData.Emitente
-	terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
-	grupoTestemunhas = data.Params.TemplateFieldData.Documents.Document.Cadastro
-
+	let valorContrato = parseInt(data.Params.TemplateFieldData.Valor_unformatted)
+	let templateField = data.Params.TemplateFieldData
+	let emitente = data.Params.TemplateFieldData.Emitente
+	let	terceiroGarantidor = data.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
+	let grupoTestemunhas = data.Params.TemplateFieldData.Documents.Document.Cadastro
+	let createdDate = data.Params.Documents.Document.CreatedDate
 	if (terceiroGarantidor.element)
 		terceiroGarantidor = terceiroGarantidor.element
 	avalistasTable = data.Params.TemplateFieldData.Avalistas.Tabela_Avalistas_Container.Tabela_Avalistas
@@ -873,7 +873,7 @@ function preencherTabela(templateField) {
 
 	let geralInfo = templateField.Geral_Info
 	let dataEmissao = new Date(templateField["Data_da_emissao_unformatted"])
-	let hoje = new Date()
+	let hoje = new Date(createdDate)
 	let dolarizada = ["6307", "6308"]
 	let cessao = ["3336", "33333", "33332", "3313", "2542"]
 	let header = document.querySelector("#ctl00_MainContent_ContentHeader").children[0].innerText
