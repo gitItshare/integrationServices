@@ -249,13 +249,13 @@ function preencherRevisao () {
 
 					if(!workflow[3]){
 						let container = Array.from(buttonCli.parentElement.parentElement.parentElement.children[1].children)
-						container.forEach(el => {
-							console.log("EL", el)
-							el.children[0].children[1].setAttribute("readOnly", true)
-							el.children[1].children[1].setAttribute("readOnly", true)
-							el.children[2].children[1].setAttribute("readOnly", true)
-							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
-							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
+						container.forEach(element => {
+							console.log("EL", element)
+							element.children[0].children[1].setAttribute("readOnly", true)
+							element.children[1].children[1].setAttribute("readOnly", true)
+							element.children[2].children[1].setAttribute("readOnly", true)
+							element.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
+							element.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 						})
 						buttonCli.setAttribute("hidden", true)
 						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
@@ -299,7 +299,7 @@ function preencherRevisao () {
 						})
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
-						if(el.status == "ok"){
+						if(element.status == "ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
 					}
@@ -336,7 +336,7 @@ function preencherRevisao () {
 
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
-						if(el.status == "ok"){
+						if(element.status == "ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
 					}
