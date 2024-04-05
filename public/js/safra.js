@@ -1185,13 +1185,15 @@ function checkParameters3() {
 
 	// Checagem de comentários
 	const commentElementsArr = []
-	statusCliElem = document.querySelectorAll("#statusCli")
 	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
-	statusCliElem.forEach((element, index) => {
+	statusComentcliMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusCliElem[index].value == "nao") {
+
+			statusComentTercElem = element.parentElement.querySelectorAll("#statusCli")
+
+			if(statusComentTercElem.value === "nao") {
 				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("#clienteRazaoSocial").innerText
 				name = name.trim()
 				commentElementsArr.push({
@@ -1211,7 +1213,8 @@ function checkParameters3() {
 			statusAvaElem = element.parentElement.querySelector("#statusAva")
 
 			if(statusComentTercElem) {
-				if(statusComentTercElem.value == "nao") {
+				console.log("statusComentTercElem", statusComentTercElem.value)
+				if(statusComentTercElem.value === "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
@@ -1220,7 +1223,8 @@ function checkParameters3() {
 				}
 			}
 			if(statusAvaElem) {
-				if(statusAvaElem.value == "nao") {
+				console.log("statusAvaElem", statusAvaElem.value)
+				if(statusAvaElem.value === "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
