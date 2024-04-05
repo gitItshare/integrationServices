@@ -1191,7 +1191,7 @@ function checkParameters3() {
 		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
 			if(statusComentcliElem[index].value) {
-				var name = element.parent.parent.parent.parent.querySelector("#clienteRazaoSocial").innerText
+				var name = ""
 				commentElementsArr.push({
 					element, name
 				})
@@ -1204,7 +1204,7 @@ function checkParameters3() {
 		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
 			if(statusComentAvaElem[index].value) {
-				var name = element.parent.parent.parent.parent.querySelector("legend.w-auto").innerText
+				var name = ""
 				commentElementsArr.push({
 					element, name
 				})
