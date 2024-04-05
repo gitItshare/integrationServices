@@ -1112,7 +1112,7 @@ function fixInputs2() {
 	document.getElementById("numCedente").setAttribute("placeholder", "")
 
 	var tedElem = document.getElementById("ted")
-	tedElem.setAttribute("disabled", true)
+	tedElem.setAttribute("readOnly", true)
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
