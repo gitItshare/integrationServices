@@ -1182,13 +1182,15 @@ function checkParameters3() {
 
 	// Checagem de comentários
 	const commentElementsArr = []
-	statusCliElem = document.querySelectorAll("#statusCli")
 	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
-	statusCliElem.forEach((element, index) => {
+	statusComentcliMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusCliElem[index].value == "Status" || statusCliElem[index].value == "nao") {
+
+			statusComentTercElem = element.parentElement.querySelectorAll("#statusCli")
+
+			if(statusComentTercElem.value === "nao") {
 				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("#clienteRazaoSocial").innerText
 				name = name.trim()
 				commentElementsArr.push({
@@ -1197,28 +1199,37 @@ function checkParameters3() {
 			}
 		}
 	})
-	statusComentTercElem = document.querySelectorAll("#statusComentTerc")
-	statusAvaElem = document.querySelectorAll("#statusAva")
-	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
+	
 	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
 	statusComentAvaMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusComentTercElem[index].value == "Status" || statusComentTercElem[index].value == "nao") {
-				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
-				name = name.trim()
-				commentElementsArr.push({
-					element, name
-				})
+
+			statusComentTercElem = element.parentElement.querySelector("#statusComentTerc")
+			statusAvaElem = element.parentElement.querySelector("#statusAva")
+
+			if(statusComentTercElem) {
+				console.log("statusComentTercElem", statusComentTercElem.value)
+				if(statusComentTercElem.value === "nao") {
+					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
+					name = name.trim()
+					commentElementsArr.push({
+						element, name
+					})
+				}
 			}
-			if(statusAvaElem[index].value == "Status" || statusAvaElem[index].value == "nao") {
-				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
-				name = name.trim()
-				commentElementsArr.push({
-					element, name
-				})
+			if(statusAvaElem) {
+				console.log("statusAvaElem", statusAvaElem.value)
+				if(statusAvaElem.value === "nao") {
+					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
+					name = name.trim()
+					commentElementsArr.push({
+						element, name
+					})
+				}
 			}
+			
 		}
 	})
 	commentElementsArr.forEach((item, index) => {
