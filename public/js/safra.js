@@ -1039,7 +1039,8 @@ function checkParameters1() {
 		errors.push("E-mail da assinatura inválido")
 	}
 
-	// Checagem CPF e e-mail
+	// Checagem se tem algum grupo em Clientes
+	let countPeople = 0
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
 		var cpf = el.children[1].children[1].value
@@ -1047,10 +1048,18 @@ function checkParameters1() {
 		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
+	countPeople = clienteContainer.length
+	if(countPeople === 0) {
+		errors.push("É necessário inserir algum representante em Clientes")
+	}
+
+	// Checagem se tem algum grupo em Terceiros
+	countPeople = 0;
 	var terceiros = Array.from(document.getElementById("terceiros").children)
 	terceiros.forEach((el, index)=> {
 		if(index > 0) {
-			let terceirosContainer = Array.from(el.children[1].children[1].children)            
+			let terceirosContainer = Array.from(el.children[1].children[1].children)
+			countPeople = terceirosContainer.length
 			terceirosContainer.forEach((container, index2) => {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
@@ -1059,10 +1068,17 @@ function checkParameters1() {
 			})
 		}
 	})
+	if(countPeople === 0) {
+		errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+	}
+
+	// Checagem se tem algum grupo em Avalistas
+	countPeople = 0;
 	var avalistas = Array.from(document.getElementById("avalistas").children)
 	avalistas.forEach((el, index)=> {
 		if(index > 0) {
 			let avalistaContainer = Array.from(el.children[1].children[1].children)
+			countPeople = avalistaContainer.length
 			avalistaContainer.forEach((container, index2) => {
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
@@ -1071,36 +1087,8 @@ function checkParameters1() {
 			})
 		}
 	})
-
-	// Checagem se tem algum grupo em Clientes
-	let countPeople = 0;
-	countPeople += Array.from(document.getElementById("gruposDiv").children).length
-	if(countPeople === 0) {
-		errors.push("É necessário inserir algum representante em Clientes")
-	}
-
-	// Checagem se tem algum grupo em Avalistas
-	countPeople = 0;
-	Array.from(document.getElementById("avalistas").children).forEach((el, index)=> {
-		if(index > 0) {
-			let avalistaContainer = Array.from(el.children[1].children[1].children)
-			countPeople += avalistaContainer.length
-		}
-	})
 	if(countPeople === 0) {
 		errors.push("É necessário inserir algum representante em Avalistas")
-	}
-
-	// Checagem se tem algum grupo em Terceiros
-	countPeople = 0;
-	Array.from(document.getElementById("terceiros").children).forEach((el, index)=> {
-		if(index > 0) {
-			let terceirosContainer = Array.from(el.children[1].children[1].children)
-			countPeople += terceirosContainer.length
-		}
-	})
-	if(countPeople === 0) {
-		errors.push("É necessário inserir algum representante em Terceiro Garantidor")
 	}
 
 	// Checagem Ação
