@@ -1188,24 +1188,32 @@ function checkParameters3() {
 	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
 	statusComentcliMOElem.forEach((element, index) => {
+		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
 			if(statusComentcliElem[index].value) {
-				commentElementsArr.push(element)
+				var name = element.parent.parent.parent.parent.querySelector("#clienteRazaoSocial").innerText
+				commentElementsArr.push({
+					element, name
+				})
 			}
 		}
 	})
 	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
 	statusComentAvaMOElem.forEach((element, index) => {
+		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
 			if(statusComentAvaElem[index].value) {
-				commentElementsArr.push(element)
+				var name = element.parent.parent.parent.parent.querySelector("legend.w-auto").innerText
+				commentElementsArr.push({
+					element, name
+				})
 			}
 		}
 	})
-	commentElementsArr.forEach((element, index) => {
-		if(element.value === "" || element.value === "undefined") {
-			errors.push("Comentário Middle Office inválido")
+	commentElementsArr.forEach((item, index) => {
+		if(item.element.value === "" || item.element.value === "undefined") {
+			errors.push("Comentário Middle Office inválido (" + item.name + ")")
 		}
 	})
 
@@ -1223,7 +1231,6 @@ function checkParameters3() {
 	// Exibe alerta de erros
 	showErrors(errors)
 }
-
 const showErrors = (errors) => {
 	if(errors.length > 0) {
 		let message = ""
