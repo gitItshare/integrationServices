@@ -1203,6 +1203,10 @@ function checkParameters3() {
 	console.log("checkParameters3")
 	var errors = []
 
+	// Checagem Ação
+	var acaoInput = document.getElementById("acao")
+	if(!acaoInput.value) errors.push("Ação inválida")
+
 	// Checagem de comentários
 	const commentElementsArr = []
 	
@@ -1270,9 +1274,58 @@ function checkParameters3() {
 		errors.push("E-mail da assinatura inválido")
 	}
 
-	// Checagem Ação
-	var acaoInput = document.getElementById("acao")
-	if(!acaoInput.value) errors.push("Ação inválida")
+	// Checagem se tem algum grupo em Clientes
+	let countPeople = 0
+	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
+	clienteContainer.forEach((el, index) => {
+		var cpf = el.children[1].children[1].value
+		var email = el.children[2].children[1].value
+		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
+	})
+	countPeople = clienteContainer.length
+	if(countPeople === 0 && acaoInput.value !== "voltar") {
+		errors.push("É necessário inserir algum representante em Clientes")
+	}
+
+	// Checagem se tem algum grupo em Terceiros
+	var terceiros = Array.from(document.getElementById("terceiros").children)
+	terceiros.forEach((el, index)=> {
+		if(index > 0) {
+			countPeople = 0;
+			let terceirosContainer = Array.from(el.children[1].children[1].children)
+			terceirosContainer.forEach((container, index2) => {
+				countPeople++;
+				var cpf = container.children[1].children[1].value
+				var email = container.children[2].children[1].value
+				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
+			})
+			if(countPeople === 0 && acaoInput.value !== "voltar") {
+				errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+			}
+		}
+	})
+	
+
+	// Checagem se tem algum grupo em Avalistas
+	var avalistas = Array.from(document.getElementById("avalistas").children)
+	avalistas.forEach((el, index)=> {
+		if(index > 0) {
+			countPeople = 0;
+			let avalistaContainer = Array.from(el.children[1].children[1].children)
+			avalistaContainer.forEach((container, index2) => {
+				countPeople++;
+				var cpf = container.children[1].children[1].value
+				var email = container.children[2].children[1].value
+				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
+				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
+			})
+			if(countPeople === 0 && acaoInput.value !== "voltar") {
+				errors.push("É necessário inserir algum representante em Avalistas")
+			}
+		}
+	})
 
 	// Exibe alerta de erros
 	showErrors(errors)
