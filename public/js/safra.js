@@ -126,6 +126,8 @@ $.ajax({
 		clientGrupos.addEventListener("change", function () {
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
 			clientGrupos.options[0].selected = true;
+			// to do
+			removeStatusAndComments(clientGrupos)
 		})
 		console.log(terceiros)
 		preencherTabela(templateField, createdDate)
@@ -550,6 +552,9 @@ function preencherAvalistas(avalistas, avalistasTable) {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
 
 			selectGroups.options[0].selected = true;
+
+			// to do
+			removeStatusAndComments(selectGroups)
 		})
 		addButton.addEventListener("click", function (event) {
 			console.log(clone)
@@ -810,6 +815,9 @@ function preencherTerceiros(array,terceiroGarantidor) {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente, "terceiros")
 
 			selectGroups.options[0].selected = true;
+
+			// to do
+			removeStatusAndComments(selectGroups)
 		})
 		addButton.addEventListener("click", function (event) {
 			document.getElementById("tipoCt").removeAttribute("hidden")
@@ -1500,6 +1508,21 @@ const checkStatus = () => {
 			option.innerText = item
 			option.selected = index === 0
 			statusElem.appendChild(option)
+		})
+	}
+}
+
+function removeStatusAndComments(select) {
+	console.log("removeStatusAndComments")
+	if(workflow[3]) {
+		var comments = select.parentElement.parentElement.parentElement.querySelector(".containerStatus")
+		console.log("removeStatusAndComments", select, comments)
+		comments.hidden = true
+		comments.querySelectorAll("textarea").forEach(element => {
+			element.value = ""
+		})
+		comments.querySelectorAll("select").forEach(element => {
+			element.value = "Status"
 		})
 	}
 }
