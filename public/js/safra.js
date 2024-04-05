@@ -1025,6 +1025,10 @@ function checkParameters1() {
 	console.log("checkParameters1")
 	var errors = []
 
+	// Checagem Ação
+	var acaoInput = document.getElementById("acao")
+	if(!acaoInput.value) errors.push("Ação inválida")
+
 	// Checagem Número Digitalização
 	const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
 	if(isVisibleFieldset) {
@@ -1049,51 +1053,48 @@ function checkParameters1() {
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
 	countPeople = clienteContainer.length
-	if(countPeople === 0) {
+	if(countPeople === 0 && acaoInput.value !== "voltar") {
 		errors.push("É necessário inserir algum representante em Clientes")
 	}
 
 	// Checagem se tem algum grupo em Terceiros
-	countPeople = 0;
 	var terceiros = Array.from(document.getElementById("terceiros").children)
 	terceiros.forEach((el, index)=> {
 		if(index > 0) {
+			countPeople = 0;
 			let terceirosContainer = Array.from(el.children[1].children[1].children)
-			countPeople = terceirosContainer.length
 			terceirosContainer.forEach((container, index2) => {
+				countPeople++;
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
+			if(countPeople === 0 && acaoInput.value !== "voltar") {
+				errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+			}
 		}
 	})
-	if(countPeople === 0) {
-		errors.push("É necessário inserir algum representante em Terceiro Garantidor")
-	}
+	
 
 	// Checagem se tem algum grupo em Avalistas
-	countPeople = 0;
 	var avalistas = Array.from(document.getElementById("avalistas").children)
 	avalistas.forEach((el, index)=> {
 		if(index > 0) {
+			countPeople = 0;
 			let avalistaContainer = Array.from(el.children[1].children[1].children)
-			countPeople = avalistaContainer.length
 			avalistaContainer.forEach((container, index2) => {
+				countPeople++;
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
+			if(countPeople === 0 && acaoInput.value !== "voltar") {
+				errors.push("É necessário inserir algum representante em Avalistas")
+			}
 		}
 	})
-	if(countPeople === 0) {
-		errors.push("É necessário inserir algum representante em Avalistas")
-	}
-
-	// Checagem Ação
-	var acaoInput = document.getElementById("acao")
-	if(!acaoInput.value) errors.push("Ação inválida")
 
 	showErrors(errors)
 }
