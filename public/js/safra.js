@@ -1204,7 +1204,7 @@ function checkParameters3() {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
 			if(statusComentAvaElem[index].value) {
-				var name = ""
+				var name = element.parent.parent.parent.parent.querySelector("legend.w-auto").innerText
 				commentElementsArr.push({
 					element, name
 				})
