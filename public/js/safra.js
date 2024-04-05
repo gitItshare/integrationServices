@@ -927,6 +927,10 @@ function saveChanges() {
 function saveState(){       
 	let clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	let clientState = []
+	console.log("ALTEREI POHA", document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText)
+	if( document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value == "nao" && document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText.trim() == "false"){
+		document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
+	}
 	clienteContainer.forEach(el => {
 		clientState.push({
 			nome: el.children[0].children[1].value,
@@ -938,6 +942,7 @@ function saveState(){
 			comentario: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[2].value,
 			comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value
 		})
+
 	})
 
 	let terceiros = Array.from(document.getElementById("terceiros").children)
@@ -946,7 +951,11 @@ function saveState(){
 		if(index > 0){
 			let terceirosContainer = Array.from(el.children[1].children[1].children)            
 			let mapped = []
+			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "false"){
+				document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
+			}
 			terceirosContainer.forEach(container => {
+
 					mapped.push({
 						nome: container.children[0].children[1].value,
 						cpf: container.children[1].children[1].value,
@@ -958,6 +967,7 @@ function saveState(){
 						comentarioMO: el.children[1].children[2].children[2].children[4].value
 
 					})
+		
 			})
 			terceiroState.push(mapped)
 		}
@@ -965,7 +975,11 @@ function saveState(){
 	let avalistas = Array.from(document.getElementById("avalistas").children)
 	let avalistaState = []
 	avalistas.forEach((el, index)=> {
+
 		if(index > 0){
+			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "false"){
+				el.children[1].children[1].parentElement.children[2].children[1].innerText = "true"
+			}
 			let avalistaContainer = Array.from(el.children[1].children[1].children)
 			let mapped = []
 
