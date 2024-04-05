@@ -1188,10 +1188,10 @@ function checkParameters3() {
 	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
 	statusComentcliMOElem.forEach((element, index) => {
-		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
+			console.log(element, index)
 			if(statusComentcliElem[index].value) {
-				var name = element.parent.parent.parent.parent.querySelector("#clienteRazaoSocial").innerText
+				var name = ""
 				commentElementsArr.push({
 					element, name
 				})
@@ -1201,8 +1201,8 @@ function checkParameters3() {
 	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
 	statusComentAvaMOElem.forEach((element, index) => {
-		console.log(element, index)
 		if(!element.parentElement.hasAttribute("hidden")) {
+			console.log(element, index)
 			if(statusComentAvaElem[index].value) {
 				var name = element.parent.parent.parent.parent.querySelector("legend.w-auto").innerText
 				commentElementsArr.push({
