@@ -1072,10 +1072,6 @@ function checkParameters1() {
 		}
 	})
 
-	// Checagem Ação
-	var acaoInput = document.getElementById("acao")
-	if(!acaoInput.value) errors.push("Ação inválida")
-
 	// Checagem se tem algum grupo
 	let countPeople = 0;
 	Array.from(document.getElementById("terceiros").children).forEach((el, index)=> {
@@ -1093,6 +1089,10 @@ function checkParameters1() {
 	if(countPeople === 0) {
 		errors.push("É necessário inserir algum representante")
 	}
+
+	// Checagem Ação
+	var acaoInput = document.getElementById("acao")
+	if(!acaoInput.value) errors.push("Ação inválida")
 
 	showErrors(errors)
 }
