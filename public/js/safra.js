@@ -1211,7 +1211,7 @@ function checkParameters3() {
 			statusAvaElem = element.parentElement.querySelector("#statusAva")
 
 			if(statusComentTercElem) {
-				if(statusComentTercElem[index].value == "Status" || statusComentTercElem[index].value == "nao") {
+				if(statusComentTercElem.value == "Status" || statusComentTercElem.value == "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
@@ -1220,7 +1220,7 @@ function checkParameters3() {
 				}
 			}
 			if(statusAvaElem) {
-				if(statusAvaElem[index].value == "Status" || statusAvaElem[index].value == "nao") {
+				if(statusAvaElem.value == "Status" || statusAvaElem.value == "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
