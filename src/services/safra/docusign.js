@@ -474,7 +474,7 @@ class Docusign {
                 "required": "false",
                 "value": data.numContrato["_text"]
             }]}
-            await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/custom_fields`, custom_fields,
+            await axios.put(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/custom_fields`, custom_fields,
             {
                 headers: {
                     'Authorization': this.authToken

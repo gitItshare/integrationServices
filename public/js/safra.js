@@ -746,7 +746,7 @@ function makeXml(params) {
 		let containerAvalistas = Array.from(document.getElementById("avalistas").children)
 		let containerTerceiros = Array.from(document.getElementById("terceiros").children)
 		let template = params.Params.TemplateFieldData
-
+		let emitente = params.Params.TemplateFieldData.Emitente
 		console.log("CONTAINER", containerCli)
 		let xml = "<recipients>"
 		xml += maketableCli(containerCli, "sign_RC", 1,params)
