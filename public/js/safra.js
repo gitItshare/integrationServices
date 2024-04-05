@@ -25,10 +25,7 @@ let state = {
 	emitente: [],
 	digitalizacao:""
 }
-let emitente = {
-	"Emitente_Razao_Social": "yuji itadori",
-	"Emitente_CNPJ": "02974733000152",
-}
+
 
 let workflow = document.querySelector('.page-header').children[1].innerText.split(";");
 console.log("wf1", workflow)
