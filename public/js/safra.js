@@ -1200,12 +1200,22 @@ function checkParameters3() {
 			}
 		}
 	})
+	statusComentTercElem = document.querySelectorAll("#statusComentTerc")
+	statusAvaElem = document.querySelectorAll("#statusAva")
+	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaElem = document.querySelectorAll("#statusComentAva")
 	statusComentAvaMOElem = document.querySelectorAll("#statusComentAvaMO")
 	statusComentAvaMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusComentAvaElem[index].value) {
+			if(statusComentTercElem[index].value == "Status" || statusComentTercElem[index].value == "nao") {
+				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
+				name = name.trim()
+				commentElementsArr.push({
+					element, name
+				})
+			}
+			if(statusAvaElem[index].value == "Status" || statusAvaElem[index].value == "nao") {
 				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 				name = name.trim()
 				commentElementsArr.push({
