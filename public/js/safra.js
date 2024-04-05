@@ -259,7 +259,7 @@ function preencherRevisao () {
 						})
 						buttonCli.setAttribute("hidden", true)
 						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
-						if(el.status == "Ok"){
+						if(el.status == "ok"){
 							buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
 					}
@@ -299,7 +299,7 @@ function preencherRevisao () {
 						})
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
-						if(el.status == "Ok"){
+						if(el.status == "ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
 					}
@@ -336,7 +336,7 @@ function preencherRevisao () {
 
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
-						if(el.status == "Ok"){
+						if(el.status == "ok"){
 							button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 						}
 					}
@@ -1119,10 +1119,10 @@ function fixInputs2() {
 	document.getElementById("destinatario").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
+	// Desabilita adição
 	const clientGruposElem = document.querySelectorAll("#clientGrupos")
 	const terceirosGroupsElem = document.querySelectorAll("#terceirosGroups")
 	const avalistasGroupsElem = document.querySelectorAll("#avalistasGroups")
-
 	clientGruposElem.forEach(element => {
 		element.setAttribute("readOnly", true)
 	})
@@ -1132,6 +1132,10 @@ function fixInputs2() {
 	avalistasGroupsElem.forEach(element => {
 		element.setAttribute("readOnly", true)
 	})
+	
+	// Ocultar avais ok
+
+
 
 	renderChangesSignatureType()
 }
