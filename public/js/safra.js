@@ -1191,7 +1191,7 @@ function checkParameters3() {
 	statusCliElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusCliElem[index].value == "Status" || statusCliElem[index].value == "nao") {
+			if(statusCliElem[index].value == "nao") {
 				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("#clienteRazaoSocial").innerText
 				name = name.trim()
 				commentElementsArr.push({
@@ -1211,7 +1211,7 @@ function checkParameters3() {
 			statusAvaElem = element.parentElement.querySelector("#statusAva")
 
 			if(statusComentTercElem) {
-				if(statusComentTercElem.value == "Status" || statusComentTercElem.value == "nao") {
+				if(statusComentTercElem.value == "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
@@ -1220,7 +1220,7 @@ function checkParameters3() {
 				}
 			}
 			if(statusAvaElem) {
-				if(statusAvaElem.value == "Status" || statusAvaElem.value == "nao") {
+				if(statusAvaElem.value == "nao") {
 					var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
 					name = name.trim()
 					commentElementsArr.push({
