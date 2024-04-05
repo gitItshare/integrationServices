@@ -1207,8 +1207,8 @@ function checkParameters3() {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
 
-			statusComentTercElem = statusComentAvaMOElem.parentElement.querySelectorAll("#statusComentTerc")
-			statusAvaElem = statusComentAvaMOElem.parentElement.querySelectorAll("#statusAva")
+			statusComentTercElem = statusComentAvaMOElem.parentElement.querySelector("#statusComentTerc")
+			statusAvaElem = statusComentAvaMOElem.parentElement.querySelector("#statusAva")
 
 			if(statusComentTercElem) {
 				if(statusComentTercElem[index].value == "Status" || statusComentTercElem[index].value == "nao") {
