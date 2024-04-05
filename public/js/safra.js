@@ -1185,13 +1185,15 @@ function checkParameters3() {
 
 	// Checagem de comentários
 	const commentElementsArr = []
+	statusCliElem = document.querySelectorAll("#statusCli")
 	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
-	statusComentcliMOElem.forEach((element, index) => {
+	statusCliElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
-			if(statusComentcliElem[index].value) {
-				var name = ""
+			if(statusCliElem[index].value == "Status" || statusCliElem[index].value == "nao") {
+				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("#clienteRazaoSocial").innerText
+				name = name.trim()
 				commentElementsArr.push({
 					element, name
 				})
@@ -1204,7 +1206,8 @@ function checkParameters3() {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
 			if(statusComentAvaElem[index].value) {
-				var name = ""
+				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("legend.w-auto").innerText
+				name = name.trim()
 				commentElementsArr.push({
 					element, name
 				})
