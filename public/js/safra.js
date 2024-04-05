@@ -1185,15 +1185,16 @@ function checkParameters3() {
 
 	// Checagem de comentários
 	const commentElementsArr = []
-	statusComentcliElem = document.querySelectorAll("#statusComentcli")
 	statusComentcliMOElem = document.querySelectorAll("#statusComentcliMO")
 	statusComentcliMOElem.forEach((element, index) => {
 		if(!element.parentElement.hasAttribute("hidden")) {
 			console.log(element, index)
 
-			statusComentTercElem = element.parentElement.querySelectorAll("#statusCli")
+			statusComentcliElem = element.parentElement.querySelector("#statusCli")
 
-			if(statusComentTercElem.value === "nao") {
+			console.log("statusComentcliElem", statusComentcliElem.value)
+
+			if(statusComentcliElem.value === "nao") {
 				var name = element.parentElement.parentElement.parentElement.parentElement.querySelector("#clienteRazaoSocial").innerText
 				name = name.trim()
 				commentElementsArr.push({
