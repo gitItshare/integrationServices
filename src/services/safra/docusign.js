@@ -447,28 +447,28 @@ class Docusign {
 
             let custom_fields = {
                 textCustomFields: [{
-                "fieldId": "1",
+                "fieldId": "11052406930",
                 "name": "Agência",
                 "show": "true",
                 "required": "false",
                 "value": data.agencia["_text"]
             },
             {
-                "fieldId": "2",
+                "fieldId": "11052406931",
                 "name": "Nome cliente",
                 "show": "true",
                 "required": "false",
                 "value": data.nomeCli["_text"]
             },
             {
-                "fieldId": "3",
+                "fieldId": "11052406932",
                 "name": "CNPJ cliente",
                 "show": "true",
                 "required": "false",
                 "value": data.cnpjCli["_text"]
             },
             {
-                "fieldId": "4",
+                "fieldId": "11052406933",
                 "name": "Num contrato",
                 "show": "true",
                 "required": "false",
