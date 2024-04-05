@@ -1078,15 +1078,13 @@ function checkParameters1() {
 
 	// Checagem se tem algum grupo
 	let countPeople = 0;
-	let terceiros = Array.from(document.getElementById("terceiros").children)
-	terceiros.forEach((el, index)=> {
+	Array.from(document.getElementById("terceiros").children).forEach((el, index)=> {
 		if(index > 0){
 			let terceirosContainer = Array.from(el.children[1].children[1].children)            
 			countPeople += terceirosContainer.length
 		}
 	})
-	let avalistas = Array.from(document.getElementById("avalistas").children)
-	avalistas.forEach((el, index)=> {
+	Array.from(document.getElementById("avalistas").children).forEach((el, index)=> {
 		if(index > 0){
 			let avalistaContainer = Array.from(el.children[1].children[1].children)
 			countPeople += avalistaContainer.length
