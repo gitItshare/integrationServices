@@ -1029,18 +1029,22 @@ function checkParameters1() {
 	var acaoInput = document.getElementById("acao")
 	if(!acaoInput.value) errors.push("Ação inválida")
 
-	// Checagem Número Digitalização
-	const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
-	if(isVisibleFieldset) {
-		var numDigital = document.getElementById("numDigital").value
-		if(!numDigital || numDigital == "undefined") errors.push("Número digitalização inválido")
-	}
+	if(acaoInput.value !== "voltar") {
 
-	// Checagem assinatura
-	var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
-	var email = signatureMailElem.value
-	if(isSignatureMode("manual") && (!email || email == "undefined" || !validateEmail(email))) {
-		errors.push("E-mail da assinatura inválido")
+		// Checagem Número Digitalização
+		const isVisibleFieldset = !document.querySelector("#tipoCt").hasAttribute("hidden")
+		if(isVisibleFieldset) {
+			var numDigital = document.getElementById("numDigital").value
+			if((!numDigital || numDigital == "undefined")) errors.push("Número digitalização inválido")
+		}
+
+		// Checagem assinatura
+		var signatureMailElem = document.querySelector("#idDestinatario #destinatario")
+		var email = signatureMailElem.value
+		if(isSignatureMode("manual") && (!email || email == "undefined" || !validateEmail(email))) {
+			errors.push("E-mail da assinatura inválido")
+		}
+
 	}
 
 	// Checagem se tem algum grupo em Clientes
