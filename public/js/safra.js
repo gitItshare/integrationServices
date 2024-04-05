@@ -928,7 +928,7 @@ function saveState(){
 	let clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	let clientState = []
 	console.log("ALTEREI POHA", document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText)
-	if( document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value == "nao" && document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText.trim() == "false"){
+	if( document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value == "nao" && document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText.trim() == "inicial"){
 		document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 	}
 	clienteContainer.forEach(el => {
@@ -951,7 +951,7 @@ function saveState(){
 		if(index > 0){
 			let terceirosContainer = Array.from(el.children[1].children[1].children)            
 			let mapped = []
-			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "false"){
+			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "inicial"){
 				document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 			}
 			terceirosContainer.forEach(container => {
@@ -977,7 +977,7 @@ function saveState(){
 	avalistas.forEach((el, index)=> {
 
 		if(index > 0){
-			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "false"){
+			if( el.children[1].children[2].children[2].children[1].value == "nao" && el.children[1].children[1].parentElement.children[2].children[1].innerText.trim() == "inicial"){
 				el.children[1].children[1].parentElement.children[2].children[1].innerText = "true"
 			}
 			let avalistaContainer = Array.from(el.children[1].children[1].children)
