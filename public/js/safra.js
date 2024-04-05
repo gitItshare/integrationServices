@@ -268,7 +268,7 @@ function preencherRevisao () {
 					}
 					if(el.comentario)
 						el.hasChange="true"
-					if(el.hasChange.trim() == "false" && workflow[3] != "voltou"){
+					if((el.hasChange.trim() != "true") && workflow[3] != "voltou"){
 						buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 					}
 				} else {
@@ -288,7 +288,7 @@ function preencherRevisao () {
 						element.hasChange="true"
 					console.log("STATUS", element.status)
 			   
-					if(element.hasChange.trim() == "false" && workflow[3] != "voltou"){
+					if(element.hasChange.trim() != "true" && workflow[3] != "voltou"){
 						button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 					}
 					if(!workflow[3]){
@@ -324,7 +324,7 @@ function preencherRevisao () {
 					if(element.comentario)
 						element.hasChange="true"
 
-					 if(element.hasChange.trim() == "false" && workflow[3] != "voltou"){
+					 if(element.hasChange.trim() != "true" && workflow[3] != "voltou"){
 						button[index].parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 					}
 					if(!workflow[3]){
