@@ -1112,21 +1112,26 @@ function fixInputs2() {
 	document.getElementById("numCedente").setAttribute("placeholder", "")
 
 	var tedElem = document.getElementById("ted")
-	tedElem.setAttribute("readOnly", true)
+	tedElem.setAttribute("disabled", true)
 
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
 	document.getElementById("tipoAssinatura").setAttribute("readOnly", true)
 	document.getElementById("destinatario").setAttribute("readOnly", true)
 	document.getElementById("fieldset-acao").setAttribute("hidden", true)
 
-	document.getElementById("ted").setAttribute("readOnly", true)
+	const clientGruposElem = document.querySelectorAll("#clientGrupos")
+	const terceirosGroupsElem = document.querySelectorAll("#terceirosGroups")
+	const avalistasGroupsElem = document.querySelectorAll("#avalistasGroups")
 
-	const clientGruposElem = document.getElementById("clientGrupos")
-	const terceirosGroupsElem = document.getElementById("terceirosGroups")
-	const avalistasGroupsElem = document.getElementById("avalistasGroups")
-	if(clientGruposElem) clientGruposElem.setAttribute("readOnly", true)
-	if(terceirosGroupsElem) terceirosGroupsElem.setAttribute("readOnly", true)
-	if(avalistasGroupsElem) avalistasGroupsElem.setAttribute("readOnly", true)
+	clientGruposElem.forEach(element => {
+		element.setAttribute("readOnly", true)
+	})
+	terceirosGroupsElem.forEach(element => {
+		element.setAttribute("readOnly", true)
+	})
+	avalistasGroupsElem.forEach(element => {
+		element.setAttribute("readOnly", true)
+	})
 
 	renderChangesSignatureType()
 }
