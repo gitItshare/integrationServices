@@ -23,7 +23,7 @@ let state = {
 	terceiros: [],
 	avalistas: [],
 	emitente: [],
-	digitalizacao:""
+	digitalizacao:"",
 }
 
 
@@ -109,10 +109,10 @@ $.ajax({
 
 		console.log(avalistasTable)
 		let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
-		let avalistas = data.filter(el => (avalistasCNPJ.includes(el.documentoCliente) && el.funcao == "AVALISTA"))
+		let avalistas = data.filter((el,i) => (avalistasCNPJ.includes(el.documentoCliente) && el.funcao.includes("AVALISTA")))
 		let terceirosCNPJ = terceiroGarantidor.map(el => el.CPF_CNPJ.replace(/[^\w\s]/gi, ''))
-		let terceiros = data.filter(el => (terceirosCNPJ.includes(el.documentoCliente)) && el.funcao == "TERCEIRO")
-		console.log("AQUIII", representanteCli)
+		let terceiros = data.filter((el,i) => (terceirosCNPJ.includes(el.documentoCliente)) && el.funcao.includes( "TERCEIRO"))
+		console.log("AQUIII", terceiros,avalistas,representanteCli)
 
 		if(!terceiros[0].documentoCliente)
 			document.getElementById("terceiros").setAttribute("hidden", true)
@@ -429,10 +429,17 @@ let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, c
 	let value = self.value
 	let condEespecial = self.options[self.selectedIndex].getAttribute("condeespecial")
 	let label = self.parentElement.children[0]
-	if (condEespecial == "true")
+	if (condEespecial == "true"){
 		label.innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
-	else
+		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
+		document.getElementById("tipoCt").removeAttribute("hidden")
+
+	}
+	else{
+		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = false
 		label.innerHTML = '<p>Grupos</p>'
+		document.getElementById("tipoCt").setAttribute("hidden", true)
+	}
 
 	console.log("ARRAYY", representantesArray)
 	let representantes = representantesArray.find(el => el.nomeAgrupamento == self.value).representantes
@@ -585,7 +592,7 @@ function maketableCli(array, anchor, ordem, params) {
 	let testemunhaEmitente = params.Params.Documents.Document.CreatedBy
 	let testemunhaEmitenteNome = params.Params.Documents.Document.UpdatedBy
 	let grupoTestemunhas = params.Params.TemplateFieldData.Documents.Document.Cadastro
-
+	let razao = params.Params.TemplateFieldData.Emitente.Emitente_Razao_Social
 	array.forEach((el, index) => {
 		xml += "<signers>"
 		let nome = el.children[0].children[1].value
@@ -595,7 +602,7 @@ function maketableCli(array, anchor, ordem, params) {
 		let tag = anchor + (index + 1)
 		xml += "<role>Emitente" + (index + 1) + "</role>"
 		xml += "<nome>" + nome + "</nome>"
-
+		xml += "<razaoSocial>" + razao + "</razaoSocial>"
 		xml += "<email>" + email + "</email>"
 		xml += "<cpf>" + cpf + "</cpf>"
 		xml += "<tag>" + tag + "</tag>"
@@ -715,13 +722,15 @@ function makeTableBanco(valor, ordem) {
 function maketable(array, anchor, ordem, role) {
 	let xml = ""
 	let indexFull = 1
-
+	
 	array.forEach((element, index) => {
 		if (index > 0) {
 			let representantes = Array.from(element.children[1].children[1].children)
 			console.log("TESTEE", representantes)
 
 			representantes.forEach((el, i) => {
+				let razao = el.parentElement.parentElement.parentElement.id
+				console.log(el)
 				xml += "<signers>"
 				let nome = el.children[0].children[1].value
 				let cpf = el.children[1].children[1].value
@@ -730,6 +739,7 @@ function maketable(array, anchor, ordem, role) {
 				let tag = "sign_R"+ (i+1) + anchor + (index)
 				xml += "<role>" + role + (i+1) + "</role>"
 				xml += "<nome>" + nome + "</nome>"
+				xml += "<razaoSocial>" + razao + "</razaoSocial>"
 				xml += "<email>" + email + "</email>"
 				xml += "<cpf>" + cpf + "</cpf>"
 				xml += "<tag>" + tag + "</tag>"
@@ -758,8 +768,8 @@ function makeXml(params) {
 		xml += maketableCli(containerCli, "sign_RC", 1,params)
 		xml += makeTableBanco(valorContrato, 1)
 
-		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor")
-		xml += maketable(containerAvalistas, "A", 3, "Avalista")
+		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor", params)
+		xml += maketable(containerAvalistas, "A", 3, "Avalista", params)
 		xml+= `<seguroPrestamista>${template.Geral_Info.DeclacaoDeSaude}</seguroPrestamista>`
 		xml+= `<agencia>${emitente.Emitente_Agencia}</agencia>`
 		xml+= `<nomeCli>${emitente.Emitente_Razao_Social}</nomeCli>`
