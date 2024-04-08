@@ -793,7 +793,6 @@ function preencherTerceiros(array,terceiroGarantidor) {
 		status.setAttribute("name", "__sxformcustom_statusTerc_sxformcustom__")
 		console.log(el)
 
-		
 		console.log("TERCEIRO TEST", terceiroGarantidor)
 
 		const terceiros = terceiroGarantidor.find(terceiro => terceiro.CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
@@ -1211,12 +1210,57 @@ function checkParameters2() {
 function fixInputs3() {
 	console.log("fixInputs3")
 
+	// Número do Cedente não editável e sem placeholder
 	document.getElementById("numCedente").setAttribute("readOnly", true)
 	document.getElementById("numCedente").setAttribute("placeholder", "")
 
+	// Solicitante não editável
 	document.getElementById("segmentoSolicitante").setAttribute("readOnly", true)
+	
+	// Habilita ação
 	document.getElementById("fieldset-acao").removeAttribute("hidden")
 
+	// Oculta status e comentários de FPO em branco
+	const containerStatus = document.querySelectorAll(".containerStatus")
+	containerStatus.forEach(containerStatusElem => {
+		const titleElems = containerStatusElem.querySelectorAll("h3")
+		
+		// Se for Cliente
+		const statusCliElem = containerStatusElem.querySelector("#statusCli")
+		const statusComentCliElem = containerStatusElem.querySelector("#statusComentcli")
+		if(statusCliElem) {
+			if(statusCliElem.value === "Status" && statusComentCliElem.value === "") {
+				titleElems[0].setAttribute("hidden", true)
+				statusCliElem.setAttribute("hidden", true)
+				statusComentCliElem.setAttribute("hidden", true)
+			}
+		}
+
+		// Comentário de Terceiro Garantidor e Avalista
+		const statusComentAvaElem = containerStatusElem.querySelector("#statusComentAva")
+
+		// Se for Terceiro Garantidor
+		const statusComentTercElem = containerStatusElem.querySelector("#statusComentTerc")
+		if(statusComentTercElem) {
+			if(statusComentTercElem.value === "Status" && statusComentAvaElem.value === "") {
+				titleElems[0].setAttribute("hidden", true)
+				statusComentTercElem.setAttribute("hidden", true)
+				statusComentAvaElem.setAttribute("hidden", true)
+			}
+		}
+
+		// Se for Avalistas
+		const statusAvaElem = containerStatusElem.querySelector("#statusAva")
+		if(statusAvaElem) {
+			if(statusAvaElem.value === "Status" && statusComentAvaElem.value === "") {
+				titleElems[0].setAttribute("hidden", true)
+				statusAvaElem.setAttribute("hidden", true)
+				statusComentAvaElem.setAttribute("hidden", true)
+			}
+		}
+	})
+
+	// Alterações tipo de assinatura
 	renderChangesSignatureType()
 }
 
