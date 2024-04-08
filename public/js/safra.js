@@ -220,7 +220,6 @@ function preencherRevisao () {
 			}
 
 			if(workflow[2] && !workflow[3]) fixInputs2()
-			if(workflow[3]) fixInputs3()
 			
 			if(workflow[3]){
 				document.getElementById("statusDIV").setAttribute("hidden", true)
@@ -345,6 +344,8 @@ function preencherRevisao () {
 				})
 	  
 			})
+
+			if(workflow[3]) fixInputs3()
 		}
 	})
 }
@@ -1262,6 +1263,8 @@ function fixInputs3() {
 			statusComentAvaElem.removeAttribute("hidden")
 
 			if(statusAvaElem.value === "Status" && statusComentAvaElem.value === "") {
+				console.log("fixInputs3", "ocultar")
+
 				titleElems[0].setAttribute("hidden", true)
 				statusAvaElem.setAttribute("hidden", true)
 				statusComentAvaElem.setAttribute("hidden", true)
