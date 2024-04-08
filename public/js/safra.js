@@ -1224,11 +1224,19 @@ function fixInputs3() {
 	const containerStatus = document.querySelectorAll(".containerStatus")
 	containerStatus.forEach(containerStatusElem => {
 		const titleElems = containerStatusElem.querySelectorAll("h3")
-		
-		// Se for Cliente
 		const statusCliElem = containerStatusElem.querySelector("#statusCli")
 		const statusComentCliElem = containerStatusElem.querySelector("#statusComentcli")
+		const statusComentAvaElem = containerStatusElem.querySelector("#statusComentAva")
+		const statusComentTercElem = containerStatusElem.querySelector("#statusComentTerc")
+		const statusAvaElem = containerStatusElem.querySelector("#statusAva")
+
+		titleElems[0].removeAttribute("hidden")
+		
+		// Se for Cliente
 		if(statusCliElem) {
+			statusCliElem.removeAttribute("hidden")
+			statusComentCliElem.removeAttribute("hidden")
+
 			if(statusCliElem.value === "Status" && statusComentCliElem.value === "") {
 				titleElems[0].setAttribute("hidden", true)
 				statusCliElem.setAttribute("hidden", true)
@@ -1236,12 +1244,11 @@ function fixInputs3() {
 			}
 		}
 
-		// Comentário de Terceiro Garantidor e Avalista
-		const statusComentAvaElem = containerStatusElem.querySelector("#statusComentAva")
-
 		// Se for Terceiro Garantidor
-		const statusComentTercElem = containerStatusElem.querySelector("#statusComentTerc")
 		if(statusComentTercElem) {
+			statusComentTercElem.removeAttribute("hidden")
+			statusComentAvaElem.removeAttribute("hidden")
+
 			if(statusComentTercElem.value === "Status" && statusComentAvaElem.value === "") {
 				titleElems[0].setAttribute("hidden", true)
 				statusComentTercElem.setAttribute("hidden", true)
@@ -1250,8 +1257,10 @@ function fixInputs3() {
 		}
 
 		// Se for Avalistas
-		const statusAvaElem = containerStatusElem.querySelector("#statusAva")
 		if(statusAvaElem) {
+			statusAvaElem.removeAttribute("hidden")
+			statusComentAvaElem.removeAttribute("hidden")
+
 			if(statusAvaElem.value === "Status" && statusComentAvaElem.value === "") {
 				titleElems[0].setAttribute("hidden", true)
 				statusAvaElem.setAttribute("hidden", true)
