@@ -104,19 +104,19 @@ $.ajax({
 		} = JSON.parse(res)
 		console.log("RESS", res)
 		console.log("DATAA", data)
-		let representanteCli = data.find(el => el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')).agrupamentoRepresentantes
+		let representanteCli = data.find(el => ((el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')) && el.funcao == "CLIENTE")).agrupamentoRepresentantes
 		console.log("REPRESENTNTE", representanteCli)
 
 		console.log(avalistasTable)
 		let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
-		let avalistas = data.filter(el => avalistasCNPJ.includes(el.documentoCliente))
+		let avalistas = data.filter(el => (avalistasCNPJ.includes(el.documentoCliente) && el.funcao == "AVALISTA"))
 		let terceirosCNPJ = terceiroGarantidor.map(el => el.CPF_CNPJ.replace(/[^\w\s]/gi, ''))
-		let terceiros = data.filter(el => terceirosCNPJ.includes(el.documentoCliente))
+		let terceiros = data.filter(el => (terceirosCNPJ.includes(el.documentoCliente)) && el.funcao == "TERCEIRO")
 		console.log("AQUIII", representanteCli)
 
-		if(!terceiros[0])
+		if(!terceiros[0].documentoCliente)
 			document.getElementById("terceiros").setAttribute("hidden", true)
-		if(!avalistas[0])
+		if(!avalistas[0].documentoCliente)
 			document.getElementById("avalistas").setAttribute("hidden", true)
 		if(!workflow[2]){
 			document.getElementById("numCedente").setAttribute("readOnly", true)
