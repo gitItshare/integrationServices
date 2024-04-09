@@ -1084,58 +1084,68 @@ function checkParameters1() {
 
 	}
 
+	var isVisible = false
+
 	// Checagem se tem algum grupo em Clientes
 	let countPeople = 0
-	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
-	clienteContainer.forEach((el, index) => {
-		var cpf = el.children[1].children[1].value
-		var email = el.children[2].children[1].value
-		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
-		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
-	})
-	countPeople = clienteContainer.length
-	if(countPeople === 0 && acaoInput.value !== "voltar") {
-		errors.push("É necessário inserir algum representante em Clientes")
+	isVisible = !document.getElementById("gruposDiv").getAttribute("hidden")
+	if(isVisible) {
+		var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
+		clienteContainer.forEach((el, index) => {
+			var cpf = el.children[1].children[1].value
+			var email = el.children[2].children[1].value
+			if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+			if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
+		})
+		countPeople = clienteContainer.length
+		if(countPeople === 0 && acaoInput.value !== "voltar") {
+			errors.push("É necessário inserir algum representante em Clientes")
+		}
 	}
 
 	// Checagem se tem algum grupo em Terceiros
-	var terceiros = Array.from(document.getElementById("terceiros").children)
-	terceiros.forEach((el, index)=> {
-		if(index > 0) {
-			countPeople = 0;
-			let terceirosContainer = Array.from(el.children[1].children[1].children)
-			terceirosContainer.forEach((container, index2) => {
-				countPeople++;
-				var cpf = container.children[1].children[1].value
-				var email = container.children[2].children[1].value
-				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
-				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
-			})
-			if(countPeople === 0 && acaoInput.value !== "voltar") {
-				errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+	isVisible = !document.getElementById("terceiros").getAttribute("hidden")
+	if(isVisible) {
+		var terceiros = Array.from(document.getElementById("terceiros").children)
+		terceiros.forEach((el, index)=> {
+			if(index > 0) {
+				countPeople = 0;
+				let terceirosContainer = Array.from(el.children[1].children[1].children)
+				terceirosContainer.forEach((container, index2) => {
+					countPeople++;
+					var cpf = container.children[1].children[1].value
+					var email = container.children[2].children[1].value
+					if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
+					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
+				})
+				if(countPeople === 0 && acaoInput.value !== "voltar") {
+					errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+				}
 			}
-		}
-	})
-	
+		})
+	}	
 
 	// Checagem se tem algum grupo em Avalistas
-	var avalistas = Array.from(document.getElementById("avalistas").children)
-	avalistas.forEach((el, index)=> {
-		if(index > 0) {
-			countPeople = 0;
-			let avalistaContainer = Array.from(el.children[1].children[1].children)
-			avalistaContainer.forEach((container, index2) => {
-				countPeople++;
-				var cpf = container.children[1].children[1].value
-				var email = container.children[2].children[1].value
-				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
-				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
-			})
-			if(countPeople === 0 && acaoInput.value !== "voltar") {
-				errors.push("É necessário inserir algum representante em Avalistas")
+	isVisible = !document.getElementById("avalistas").getAttribute("hidden")
+	if(isVisible) {
+		var avalistas = Array.from(document.getElementById("avalistas").children)
+		avalistas.forEach((el, index)=> {
+			if(index > 0) {
+				countPeople = 0;
+				let avalistaContainer = Array.from(el.children[1].children[1].children)
+				avalistaContainer.forEach((container, index2) => {
+					countPeople++;
+					var cpf = container.children[1].children[1].value
+					var email = container.children[2].children[1].value
+					if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
+					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
+				})
+				if(countPeople === 0 && acaoInput.value !== "voltar") {
+					errors.push("É necessário inserir algum representante em Avalistas")
+				}
 			}
-		}
-	})
+		})
+	}
 
 	showErrors(errors)
 }
@@ -1260,17 +1270,14 @@ function fixInputs3() {
 		const statusComentTercElem = containerStatusElem.querySelector("#statusComentTerc")
 		const statusAvaElem = containerStatusElem.querySelector("#statusAva")
 
-		titleElems[0].removeAttribute("hidden")
+		containerStatusElem.removeAttribute("hidden")
 		
 		// Se for Cliente
 		if(statusCliElem) {
 			statusCliElem.removeAttribute("hidden")
 			statusComentCliElem.removeAttribute("hidden")
-
 			if(statusCliElem.value === "Status" && statusComentCliElem.value === "") {
-				titleElems[0].setAttribute("hidden", true)
-				statusCliElem.setAttribute("hidden", true)
-				statusComentCliElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 
@@ -1278,11 +1285,8 @@ function fixInputs3() {
 		if(statusComentTercElem) {
 			statusComentTercElem.removeAttribute("hidden")
 			statusComentAvaElem.removeAttribute("hidden")
-
 			if(statusComentTercElem.value === "Status" && statusComentAvaElem.value === "") {
-				titleElems[0].setAttribute("hidden", true)
-				statusComentTercElem.setAttribute("hidden", true)
-				statusComentAvaElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 
@@ -1290,13 +1294,8 @@ function fixInputs3() {
 		if(statusAvaElem) {
 			statusAvaElem.removeAttribute("hidden")
 			statusComentAvaElem.removeAttribute("hidden")
-
 			if(statusAvaElem.value === "Status" && statusComentAvaElem.value === "") {
-				console.log("fixInputs3", "ocultar")
-
-				titleElems[0].setAttribute("hidden", true)
-				statusAvaElem.setAttribute("hidden", true)
-				statusComentAvaElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 	})
