@@ -1256,17 +1256,14 @@ function fixInputs3() {
 		const statusComentTercElem = containerStatusElem.querySelector("#statusComentTerc")
 		const statusAvaElem = containerStatusElem.querySelector("#statusAva")
 
-		titleElems[0].removeAttribute("hidden")
+		containerStatusElem.removeAttribute("hidden")
 		
 		// Se for Cliente
 		if(statusCliElem) {
 			statusCliElem.removeAttribute("hidden")
 			statusComentCliElem.removeAttribute("hidden")
-
 			if(statusCliElem.value === "Status" && statusComentCliElem.value === "") {
-				titleElems[0].setAttribute("hidden", true)
-				statusCliElem.setAttribute("hidden", true)
-				statusComentCliElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 
@@ -1274,11 +1271,8 @@ function fixInputs3() {
 		if(statusComentTercElem) {
 			statusComentTercElem.removeAttribute("hidden")
 			statusComentAvaElem.removeAttribute("hidden")
-
 			if(statusComentTercElem.value === "Status" && statusComentAvaElem.value === "") {
-				titleElems[0].setAttribute("hidden", true)
-				statusComentTercElem.setAttribute("hidden", true)
-				statusComentAvaElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 
@@ -1286,13 +1280,8 @@ function fixInputs3() {
 		if(statusAvaElem) {
 			statusAvaElem.removeAttribute("hidden")
 			statusComentAvaElem.removeAttribute("hidden")
-
 			if(statusAvaElem.value === "Status" && statusComentAvaElem.value === "") {
-				console.log("fixInputs3", "ocultar")
-
-				titleElems[0].setAttribute("hidden", true)
-				statusAvaElem.setAttribute("hidden", true)
-				statusComentAvaElem.setAttribute("hidden", true)
+				containerStatusElem.setAttribute("hidden", true)
 			}
 		}
 	})
