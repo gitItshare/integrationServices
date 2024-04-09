@@ -239,10 +239,10 @@ function preencherRevisao () {
 				buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 			}
 			document.getElementById("numDigital").value = json.digitalizacao
-			json.emitente.forEach(el => {
-				
+			json.emitente.forEach(el => {			
 				if(el){
 					const clone = addClient(null, "clienteContainer0", el, "emitente")
+					console.log("CLONE", clone, buttonCli)
 					buttonCli.parentElement.parentElement.parentElement.children[1].appendChild(clone)
 					buttonCli.parentElement.parentElement.children[2].removeAttribute("hidden")
 					buttonCli.parentElement.parentElement.children[2].children[1].value = el.status
@@ -258,10 +258,6 @@ function preencherRevisao () {
 							element.children[2].children[1].setAttribute("readOnly", true)
 							element.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							element.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
-					
-							let objeto = document.getElementById("hasChangeCli").parentElement.children[3].innerText
-							element.parentElement.parentElement.parentElement.children[2].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
-
 						})
 						buttonCli.setAttribute("hidden", true)
 						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
@@ -275,13 +271,17 @@ function preencherRevisao () {
 						buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 					}
 				} else {
-					buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
+					 buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 				}
 			})
+			let objeto = document.getElementById("hasChangeCli").parentElement.children[3].innerText
+			buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
+
 			json.avalistas.forEach((el, index) => {
+				const button= document.querySelectorAll("#addRepCli-avalista")
 				el.forEach(element => {
 					const clone = addClient(null, "tericeiroContainer0", element, "avalistas")
-					let button= document.querySelectorAll("#addRepCli-avalista")
+					console.log("BUTTON INDEX AVAL", button[index])
 					button[index].parentElement.parentElement.parentElement.children[1].appendChild(clone)
 					button[index].parentElement.parentElement.children[2].removeAttribute("hidden")
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
@@ -303,9 +303,8 @@ function preencherRevisao () {
 							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 							console.log("ELLLL",el.parentElement.parentElement.parentElement.children[1])
-							let objeto = el.parentElement.parentElement.parentElement.children[1].children[2].children[3].innerHTML
-							el.parentElement.parentElement.parentElement.children[1].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
 						})
+
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
 						if(element.status == "ok"){
@@ -313,12 +312,17 @@ function preencherRevisao () {
 						}
 					}
 				})
-
+				if(!workflow[3]){
+					let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
+					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
+				}
 			})
 			json.terceiros.forEach((el, index) => {
+				const button= document.querySelectorAll("#addRepCli-terceiros")
+
 				el.forEach(element => {
 					const clone = addClient(null, "tericeiroContainer0", element, "terceiros")
-					let button= document.querySelectorAll("#addRepCli-terceiros")
+					console.log("BUTTON INDEX TERC", button[index])
 					button[index].parentElement.parentElement.parentElement.children[1].appendChild(clone)
 					button[index].parentElement.parentElement.children[2].removeAttribute("hidden")
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
@@ -342,11 +346,7 @@ function preencherRevisao () {
 							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
 							console.log("ELLLL",el)
-							let objeto = el.parentElement.parentElement.parentElement.children[1].children[2].children[3].innerHTML
-							el.parentElement.parentElement.parentElement.children[1].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
-
 						})
-
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
 						if(element.status == "ok"){
@@ -354,7 +354,11 @@ function preencherRevisao () {
 						}
 					}
 				})
-	  
+				if(!workflow[3]){
+					let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
+					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
+				}
+
 			})
 
 			if(workflow[3]) fixInputs3()
@@ -555,7 +559,7 @@ function preencherAvalistas(avalistas, avalistasTable) {
 	avalistas.forEach((el, index) => {
 		const clone = document.getElementById("avalistas0").cloneNode(true)
 		clone.removeAttribute("hidden")
-		let addButton = clone.children[1].children[2].children[0].children[0]
+		const addButton = clone.children[1].children[2].children[0].children[0]
 		console.log(el)
 		const avalista = avalistasTable.find(avalista => avalista.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, '') == el.documentoCliente)
 		console.log("NOMWE", avalista)
@@ -808,7 +812,7 @@ function preencherTerceiros(array,terceiroGarantidor) {
 	array.forEach((el, index) => {
 		const clone = document.getElementById("avalistas0").cloneNode(true)
 		clone.removeAttribute("hidden")
-		let addButton = clone.children[1].children[2].children[0].children[0]
+		const addButton = clone.children[1].children[2].children[0].children[0]
 		addButton.id = "addRepCli-terceiros"
 		let comentarios = addButton.parentElement.parentElement.children[2].children[1]
 		comentarios.id = "statusComentTerc"
