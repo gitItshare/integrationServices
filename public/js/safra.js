@@ -104,9 +104,10 @@ $.ajax({
 		} = JSON.parse(res)
 		console.log("RESS", res)
 		console.log("DATAA", data)
-		let representanteCli = data.find(el => ((el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')) && el.funcao == "CLIENTE")).agrupamentoRepresentantes
+		let representanteCli = data.find(el => ((el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')) && el.funcao == "CLIENTE"))
 		console.log("REPRESENTNTE", representanteCli)
-
+		document.getElementById("hasChangeCli").parentElement.children[2].insertAdjacentHTML("afterEnd", `<a hidden>${representanteCli.objetoConsultado}</a>`)
+		representanteCli = representanteCli.agrupamentoRepresentantes
 		console.log(avalistasTable)
 		let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
 		let avalistas = data.filter((el,i) => (avalistasCNPJ.includes(el.documentoCliente) && el.funcao.includes("AVALISTA")))
@@ -257,6 +258,10 @@ function preencherRevisao () {
 							element.children[2].children[1].setAttribute("readOnly", true)
 							element.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							element.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
+					
+							let objeto = document.getElementById("hasChangeCli").parentElement.children[3].innerText
+							element.parentElement.parentElement.parentElement.children[2].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
+
 						})
 						buttonCli.setAttribute("hidden", true)
 						buttonCli.parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
@@ -297,6 +302,9 @@ function preencherRevisao () {
 							el.children[2].children[1].setAttribute("readOnly", true)
 							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
+							console.log("ELLLL",el.parentElement.parentElement.parentElement.children[1])
+							let objeto = el.parentElement.parentElement.parentElement.children[1].children[2].children[3].innerHTML
+							el.parentElement.parentElement.parentElement.children[1].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
 						})
 						button[index].setAttribute("hidden", true)
 						button[index].parentElement.parentElement.children[2].children[4].setAttribute("readOnly", true)
@@ -333,6 +341,10 @@ function preencherRevisao () {
 							el.children[2].children[1].setAttribute("readOnly", true)
 							el.children[3].children[0].children[1].children[0].setAttribute("readOnly", true)
 							el.children[3].children[0].children[2].children[0].setAttribute("hidden", true)
+							console.log("ELLLL",el)
+							let objeto = el.parentElement.parentElement.parentElement.children[1].children[2].children[3].innerHTML
+							el.parentElement.parentElement.parentElement.children[1].insertAdjacentHTML("afterbegin", `<div style:"float: right"><b>Objeto consultado:</b> ${objeto}</div>`)
+
 						})
 
 						button[index].setAttribute("hidden", true)
@@ -433,7 +445,6 @@ let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, c
 		label.innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
 		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
 		document.getElementById("tipoCt").removeAttribute("hidden")
-
 	}
 	else{
 		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = false
@@ -556,6 +567,8 @@ function preencherAvalistas(avalistas, avalistasTable) {
 		let selectGroups = clone.children[1].children[0].children[0].children[1]
 		avalistaDiv = clone.children[1].children[1].id = "gruposAvalistaDiv" + el.documentoCliente
 		console.log("AVALISTAS ", avalista)
+		addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[2].insertAdjacentHTML("afterEnd", `<a hidden>${el.objetoConsultado}</a>`)
+
 		selectGroups.addEventListener("change", function () {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
 
@@ -564,6 +577,7 @@ function preencherAvalistas(avalistas, avalistasTable) {
 			// to do
 			removeStatusAndComments(selectGroups)
 		})
+
 		addButton.addEventListener("click", function (event) {
 			console.log(clone)
 			document.getElementById("tipoCt").removeAttribute("hidden")
@@ -813,9 +827,10 @@ function preencherTerceiros(array,terceiroGarantidor) {
 		clone.id = nome
 		clone.children[0].innerText = nome
 		const inputNameList = clone.children[1].children[0].children[0].children[1]
+		addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[2].insertAdjacentHTML("afterEnd", `<a hidden>${el.objetoConsultado}</a>`)
 
 		terceirosDIV.appendChild(clone)
-		
+
 		let selectGroups = clone.children[1].children[0].children[0].children[1]
 		selectGroups.id = "terceirosGroups"
 		selectGroups.setAttribute("name", "__sxformcustom_terceirosGroups_sxformcustom__")
