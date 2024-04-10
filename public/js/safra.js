@@ -64,7 +64,6 @@ $.ajax({
 	console.log(params)
 
 
-	let valorContrato = parseInt(params.Params.TemplateFieldData.Valor_unformatted)
 	let templateField = params.Params.TemplateFieldData
 	let emitente = params.Params.TemplateFieldData.Emitente
 	let	terceiroGarantidor = params.Params.TemplateFieldData.Terceiro_Garantidor.Tabela_Terceiro_Garantidor_Container.Tabela_Terceiro_Garantidor
@@ -132,10 +131,10 @@ $.ajax({
 			// to do
 			removeStatusAndComments(clientGrupos)
 		})
-		clientGrupos.addEventListener("blur", () => {
-			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
-			removeStatusAndComments(selectGroups)
-		})
+		// clientGrupos.addEventListener("blur", function () {
+		// 	changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
+		// 	removeStatusAndComments(clientGrupos)
+		// })
 		console.log(terceiros)
 		preencherTabela(templateField, createdDate)
 		preencherLists(representanteCli, clientGrupos)
@@ -295,6 +294,7 @@ function preencherRevisao () {
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
 					button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
 					button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
+					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0]
 					if(element.condEespecial == "true"){
 						button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
 					}
@@ -402,6 +402,7 @@ function addClient(event, id, representante = {}, change, noSave) {
 		let buttomremove = clone.children[3].children[0].children[2].children[0]
 		buttomremove.addEventListener("click", (event) => {
 			console.log("REMOVENDO", change)
+			clone.parentElement.parentElement.children[0].children[0].children[1].options[0].selected = true;
 			remove(event, change)
 		})
 		clone.children[0].children[1].addEventListener("blur", preencherAutomatico)
@@ -592,10 +593,10 @@ function preencherAvalistas(avalistas, avalistasTable) {
 			// to do
 			removeStatusAndComments(selectGroups)
 		})
-		selectGroups.addEventListener("blur", () => {
-			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
-			removeStatusAndComments(selectGroups)
-		})
+		// selectGroups.addEventListener("blur",function () {
+		// 	changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
+		// 	removeStatusAndComments(selectGroups)
+		// })
 		addButton.addEventListener("click", function (event) {
 			console.log(clone)
 			document.getElementById("tipoCt").removeAttribute("hidden")
@@ -699,28 +700,28 @@ function makeTableBanco(valor, ordem) {
 	let nome2 = ""
 	let xml = ""
 	valor = parseFloat(valor)
-	if (valor <= 15000) {
+	if (valor <= 15000000) {
 		emailBanco = "vanessa.menezes@safra.com.br"
 		cpfBanco = "26749486800"
 		nome1 = "Vanessa Menezes"
 		emailBanco2 = "roberto.capel@safra.com.br"
 		cpfBanco2 = "16651816802"
 		nome2 = "Roberto Capel"
-	} else if (valor <= 50000 && valor > 15000) {
+	} else if (valor <= 50000000 && valor > 15000000) {
 		emailBanco = "ciro.silva@safra.com.br"
 		cpfBanco = "21839585889"
 		nome1 = "Ciro Silva"
 		emailBanco2 = "jose.galvao@safra.com.br"
 		cpfBanco2 = "3584638828"
 		nome2 = "Jose Galvao"
-	} else if (valor <= 200000 && valor > 50000) {
+	} else if (valor <= 200000000 && valor > 50000000) {
 		emailBanco = "ciro.silva@safra.com.br"
 		cpfBanco = "21839585889"
 		nome1 = "Ciro Silva"
 		emailBanco2 = "marcio.nobrega@safra.com.br"
 		cpfBanco2 = "08594753870"
 		nome2 = "Marcio Nobrega"
-	} else if (valor > 200000) {
+	} else if (valor > 200000000) {
 		emailBanco = "agostinho.stefanelli@safra.com.br"
 		cpfBanco = "05782565845"
 		nome1 = "Agostinho Stefanelli"
@@ -770,7 +771,7 @@ function maketable(array, anchor, ordem, role) {
 				let email = el.children[2].children[1].value
 				let tipoASs = el.children[3].children[0].children[1].children[0].value
 				let tag = "sign_R"+ (i+1) + anchor + (index)
-				xml += "<role>" + role + (index+1) + "</role>"
+				xml += "<role>" + role + (index) + "</role>"
 				xml += "<nome>" + nome + "</nome>"
 				xml += "<razaoSocial>" + razao + "</razaoSocial>"
 				xml += "<email>" + email + "</email>"
@@ -796,6 +797,7 @@ function makeXml(params) {
 		let containerTerceiros = Array.from(document.getElementById("terceiros").children)
 		let template = params.Params.TemplateFieldData
 		let emitente = params.Params.TemplateFieldData.Emitente
+		var valorContrato = params.Params.TemplateFieldData.Valor_unformatted
 		console.log("CONTAINER", containerCli)
 		let xml = "<recipients>"
 		xml += maketableCli(containerCli, "sign_RC", 1,params)
@@ -864,10 +866,10 @@ function preencherTerceiros(array,terceiroGarantidor) {
 			// to do
 			removeStatusAndComments(selectGroups)
 		})
-		selectGroups.addEventListener("blur", () => {
-			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
-			removeStatusAndComments(selectGroups)
-		})
+		// selectGroups.addEventListener("blur", function () {
+		// 	changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente, "terceiros")
+		// 	removeStatusAndComments(selectGroups)
+		// })
 		addButton.addEventListener("click", function (event) {
 			document.getElementById("tipoCt").removeAttribute("hidden")
 
@@ -1011,7 +1013,7 @@ function saveState(){
 				document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 			}
 			terceirosContainer.forEach(container => {
-				var selectedIndex = container.parentElement.parentElement.children[0].children[0].children[1].options.getAttribute("condeespecial")
+				var selectedIndex = container.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
 
 					mapped.push({
 						nome: container.children[0].children[1].value,
