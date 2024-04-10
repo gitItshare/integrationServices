@@ -1279,6 +1279,8 @@ function checkParameters2() {
 }
 
 function fixInputs3() {
+	var acaoInput = document.getElementById("acao")
+
 	console.log("fixInputs3")
 
 	// Número do Cedente não editável e sem placeholder
