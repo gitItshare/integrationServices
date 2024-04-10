@@ -1117,9 +1117,11 @@ function checkParameters1() {
 	if(isVisible) {
 		var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 		clienteContainer.forEach((el, index) => {
+			var nome = container.children[0].children[1].value
 			var cpf = el.children[1].children[1].value
 			var email = el.children[2].children[1].value
-			if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
+			if(!nome) errors.push("Nome do cliente inválido (#"+(index + 1)+")")
+			if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")
 			if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 		})
 		countPeople = clienteContainer.length
@@ -1138,8 +1140,10 @@ function checkParameters1() {
 				let terceirosContainer = Array.from(el.children[1].children[1].children)
 				terceirosContainer.forEach((container, index2) => {
 					countPeople++;
+					var nome = container.children[0].children[1].value
 					var cpf = container.children[1].children[1].value
 					var email = container.children[2].children[1].value
+					if(!nome) errors.push("Nome do terceiro inválido (#"+(index2 + 1)+")")
 					if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
 					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 				})
@@ -1160,8 +1164,10 @@ function checkParameters1() {
 				let avalistaContainer = Array.from(el.children[1].children[1].children)
 				avalistaContainer.forEach((container, index2) => {
 					countPeople++;
+					var nome = container.children[0].children[1].value
 					var cpf = container.children[1].children[1].value
 					var email = container.children[2].children[1].value
+					if(!nome) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
 					if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
 					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 				})
@@ -1324,6 +1330,54 @@ function fixInputs3() {
 			}
 		}
 	})
+
+	// Checagem se tem algum grupo em Terceiros
+	isVisible = !document.getElementById("terceiros").getAttribute("hidden")
+	if(isVisible) {
+		var terceiros = Array.from(document.getElementById("terceiros").children)
+		terceiros.forEach((el, index)=> {
+			if(index > 0) {
+				countPeople = 0;
+				let terceirosContainer = Array.from(el.children[1].children[1].children)
+				terceirosContainer.forEach((container, index2) => {
+					countPeople++;
+					var nome = container.children[0].children[1].value
+					var cpf = container.children[1].children[1].value
+					var email = container.children[2].children[1].value
+					if(!nome) errors.push("Nome do terceiro inválido (#"+(index2 + 1)+")")
+					if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
+					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
+				})
+				if(countPeople === 0 && acaoInput.value !== "voltar") {
+					errors.push("É necessário inserir algum representante em Terceiro Garantidor")
+				}
+			}
+		})
+	}	
+
+	// Checagem se tem algum grupo em Avalistas
+	isVisible = !document.getElementById("avalistas").getAttribute("hidden")
+	if(isVisible) {
+		var avalistas = Array.from(document.getElementById("avalistas").children)
+		avalistas.forEach((el, index)=> {
+			if(index > 0) {
+				countPeople = 0;
+				let avalistaContainer = Array.from(el.children[1].children[1].children)
+				avalistaContainer.forEach((container, index2) => {
+					countPeople++;
+					var nome = container.children[0].children[1].value
+					var cpf = container.children[1].children[1].value
+					var email = container.children[2].children[1].value
+					if(!nome) errors.push("Nome do terceiro inválido (#"+(index2 + 1)+")")
+					if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
+					if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
+				})
+				if(countPeople === 0 && acaoInput.value !== "voltar") {
+					errors.push("É necessário inserir algum representante em Avalistas")
+				}
+			}
+		})
+	}
 
 	// Alterações tipo de assinatura
 	renderChangesSignatureType()
