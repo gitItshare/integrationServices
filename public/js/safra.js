@@ -107,6 +107,8 @@ $.ajax({
 		let representanteCli = data.find(el => ((el.documentoCliente == emitente.Emitente_CNPJ.replace(/[^\w\s]/gi, '')) && el.funcao == "CLIENTE"))
 		console.log("REPRESENTNTE", representanteCli)
 		document.getElementById("hasChangeCli").parentElement.children[2].insertAdjacentHTML("afterEnd", `<a hidden>${representanteCli.objetoConsultado}</a>`)
+		buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${representanteCli.objetoConsultado}</div>`)
+
 		representanteCli = representanteCli.agrupamentoRepresentantes
 		console.log(avalistasTable)
 		let avalistasCNPJ = avalistasTable.map(el => el.Avalistas_CPF_CNPJ.replace(/[^\w\s]/gi, ''))
@@ -126,9 +128,13 @@ $.ajax({
 
 		clientGrupos.addEventListener("change", function () {
 			changeGroups(this, representanteCli, buttonCli, "clienteContainer0", "gruposDiv", "emitente")
-			clientGrupos.options[0].selected = true;
+			// clientGrupos.options[0].selected = true;
 			// to do
 			removeStatusAndComments(clientGrupos)
+		})
+		clientGrupos.addEventListener("blur", () => {
+			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
+			removeStatusAndComments(selectGroups)
 		})
 		console.log(terceiros)
 		preencherTabela(templateField, createdDate)
@@ -248,7 +254,9 @@ function preencherRevisao () {
 					buttonCli.parentElement.parentElement.children[2].children[1].value = el.status
 					buttonCli.parentElement.parentElement.children[2].children[2].value = el.comentario
 					buttonCli.parentElement.parentElement.children[2].children[4].value = el.comentarioMO
-
+					if(el.condEespecial == "true"){
+						buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
+					}
 					if(!workflow[3]){
 						let container = Array.from(buttonCli.parentElement.parentElement.parentElement.children[1].children)
 						container.forEach(element => {
@@ -274,8 +282,8 @@ function preencherRevisao () {
 					 buttonCli.parentElement.parentElement.parentElement.parentElement.setAttribute("hidden", true)
 				}
 			})
-			let objeto = document.getElementById("hasChangeCli").parentElement.children[3].innerText
-			buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
+			// let objeto = document.getElementById("hasChangeCli").parentElement.children[3].innerText
+			// buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
 
 			json.avalistas.forEach((el, index) => {
 				const button= document.querySelectorAll("#addRepCli-avalista")
@@ -287,6 +295,9 @@ function preencherRevisao () {
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
 					button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
 					button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
+					if(element.condEespecial == "true"){
+						button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
+					}
 					if(element.comentario)
 						element.hasChange="true"
 					console.log("STATUS", element.status)
@@ -312,10 +323,9 @@ function preencherRevisao () {
 						}
 					}
 				})
-				if(!workflow[3]){
-					let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
-					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
-				}
+					// let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
+					// button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
+				
 			})
 			json.terceiros.forEach((el, index) => {
 				const button= document.querySelectorAll("#addRepCli-terceiros")
@@ -328,7 +338,9 @@ function preencherRevisao () {
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
 					button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
 					button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
-
+					if(element.condEespecial == "true"){
+						button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
+					}
 					console.log("STATUS", element.status)
 
 					if(element.comentario)
@@ -354,10 +366,8 @@ function preencherRevisao () {
 						}
 					}
 				})
-				if(!workflow[3]){
-					let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
-					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
-				}
+					// let objeto = button[index].parentElement.parentElement.parentElement.children[2].children[3].innerHTML
+					// button[index].parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${objeto}</div>`)
 
 			})
 
@@ -572,16 +582,20 @@ function preencherAvalistas(avalistas, avalistasTable) {
 		avalistaDiv = clone.children[1].children[1].id = "gruposAvalistaDiv" + el.documentoCliente
 		console.log("AVALISTAS ", avalista)
 		addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[2].insertAdjacentHTML("afterEnd", `<a hidden>${el.objetoConsultado}</a>`)
+		addButton.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${el.objetoConsultado}</div>`)
 
 		selectGroups.addEventListener("change", function () {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
 
-			selectGroups.options[0].selected = true;
+			// selectGroups.options[0].selected = true;
 
 			// to do
 			removeStatusAndComments(selectGroups)
 		})
-
+		selectGroups.addEventListener("blur", () => {
+			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
+			removeStatusAndComments(selectGroups)
+		})
 		addButton.addEventListener("click", function (event) {
 			console.log(clone)
 			document.getElementById("tipoCt").removeAttribute("hidden")
@@ -684,6 +698,7 @@ function makeTableBanco(valor, ordem) {
 	let nome1 = ""
 	let nome2 = ""
 	let xml = ""
+	valor = parseFloat(valor)
 	if (valor <= 15000) {
 		emailBanco = "vanessa.menezes@safra.com.br"
 		cpfBanco = "26749486800"
@@ -755,7 +770,7 @@ function maketable(array, anchor, ordem, role) {
 				let email = el.children[2].children[1].value
 				let tipoASs = el.children[3].children[0].children[1].children[0].value
 				let tag = "sign_R"+ (i+1) + anchor + (index)
-				xml += "<role>" + role + (i+1) + "</role>"
+				xml += "<role>" + role + (index+1) + "</role>"
 				xml += "<nome>" + nome + "</nome>"
 				xml += "<razaoSocial>" + razao + "</razaoSocial>"
 				xml += "<email>" + email + "</email>"
@@ -792,7 +807,7 @@ function makeXml(params) {
 		xml+= `<agencia>${emitente.Emitente_Agencia}</agencia>`
 		xml+= `<nomeCli>${emitente.Emitente_Razao_Social}</nomeCli>`
 		xml+= `<cnpjCli>${emitente.Emitente_CNPJ}</cnpjCli>`
-		xml+= `<numContrato>${template.Num_Contrato}</numContrato>`
+		xml+= `<numContrato>${template.Num_Contrato}/${params.Params.TemplateFieldData.Formulario_para_upload_Legado_Cedente}</numContrato>`
 		xml += "</recipients>"
 	
 
@@ -832,6 +847,7 @@ function preencherTerceiros(array,terceiroGarantidor) {
 		clone.children[0].innerText = nome
 		const inputNameList = clone.children[1].children[0].children[0].children[1]
 		addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[2].insertAdjacentHTML("afterEnd", `<a hidden>${el.objetoConsultado}</a>`)
+		addButton.parentElement.parentElement.parentElement.children[0].children[0].children[1].insertAdjacentHTML("afterend", `<div><br><b>Objeto consultado:</b> ${el.objetoConsultado}</div>`)
 
 		terceirosDIV.appendChild(clone)
 
@@ -843,9 +859,13 @@ function preencherTerceiros(array,terceiroGarantidor) {
 		selectGroups.addEventListener("change", function () {
 			changeGroups(this, el.agrupamentoRepresentantes, addButton, "tericeiroContainer0", "gruposTerceirosDiv" + el.documentoCliente, "terceiros")
 
-			selectGroups.options[0].selected = true;
+			// selectGroups.options[0].selected = true;
 
 			// to do
+			removeStatusAndComments(selectGroups)
+		})
+		selectGroups.addEventListener("blur", () => {
+			changeGroups(this, el.agrupamentoRepresentantes, addButton, "avalistaContainer0", "gruposAvalistaDiv" + el.documentoCliente, "avalistas")
 			removeStatusAndComments(selectGroups)
 		})
 		addButton.addEventListener("click", function (event) {
@@ -966,6 +986,7 @@ function saveState(){
 		document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 	}
 	clienteContainer.forEach(el => {
+		var selectedIndex = document.getElementById("gruposDiv").parentElement.children[0].children[0].children[1].options.selectedIndex
 		clientState.push({
 			nome: el.children[0].children[1].value,
 			cpf: el.children[1].children[1].value,
@@ -974,9 +995,9 @@ function saveState(){
 			hasChange: document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText,
 			status: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value,
 			comentario: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[2].value,
-			comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value
+			comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value,
+			condEespecial:document.getElementById("gruposDiv").parentElement.children[0].children[0].children[1].options[selectedIndex].value
 		})
-
 	})
 
 	let terceiros = Array.from(document.getElementById("terceiros").children)
@@ -989,6 +1010,7 @@ function saveState(){
 				document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 			}
 			terceirosContainer.forEach(container => {
+				var selectedIndex = el.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
 
 					mapped.push({
 						nome: container.children[0].children[1].value,
@@ -998,7 +1020,8 @@ function saveState(){
 						hasChange: el.children[1].children[1].parentElement.children[2].children[1].innerText,
 						status: el.children[1].children[2].children[2].children[1].value,
 						comentario: el.children[1].children[2].children[2].children[2].value,
-						comentarioMO: el.children[1].children[2].children[2].children[4].value
+						comentarioMO: el.children[1].children[2].children[2].children[4].value,
+						condEespecial:el.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].value
 
 					})
 		
@@ -1018,6 +1041,8 @@ function saveState(){
 			let mapped = []
 
 			avalistaContainer.forEach(container => {
+				var selectedIndex = el.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
+
 					mapped.push({
 						nome: container.children[0].children[1].value,
 						cpf: container.children[1].children[1].value,
@@ -1026,8 +1051,8 @@ function saveState(){
 						hasChange: el.children[1].children[1].parentElement.children[2].children[1].innerText,
 						status: el.children[1].children[2].children[2].children[1].value,
 						comentario: el.children[1].children[2].children[2].children[2].value,
-						comentarioMO: el.children[1].children[2].children[2].children[4].value
-
+						comentarioMO: el.children[1].children[2].children[2].children[4].value,
+						condEespecial:el.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].value
 					})
 			})
 			avalistaState.push(mapped)
@@ -1383,8 +1408,10 @@ function checkParameters3() {
 	let countPeople = 0
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
+		var nome = container.children[0].children[1].value
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
+		if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
 		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
@@ -1401,9 +1428,12 @@ function checkParameters3() {
 			let terceirosContainer = Array.from(el.children[1].children[1].children)
 			terceirosContainer.forEach((container, index2) => {
 				countPeople++;
+				var nome = container.children[0].children[1].value
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
 				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
+				if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
+
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
 			if(countPeople === 0 && acaoInput.value !== "voltar") {
@@ -1422,8 +1452,12 @@ function checkParameters3() {
 			avalistaContainer.forEach((container, index2) => {
 				countPeople++;
 				var cpf = container.children[1].children[1].value
+				var nome = container.children[0].children[1].value
+
 				var email = container.children[2].children[1].value
 				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
+				if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
+
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
 			if(countPeople === 0 && acaoInput.value !== "voltar") {
