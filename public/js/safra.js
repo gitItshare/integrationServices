@@ -996,7 +996,8 @@ function saveState(){
 			status: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[1].value,
 			comentario: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[2].value,
 			comentarioMO: document.getElementById("gruposDiv").parentElement.children[2].children[2].children[4].value,
-			condEespecial:document.getElementById("gruposDiv").parentElement.children[0].children[0].children[1].options[selectedIndex].value
+			condEespecial:document.getElementById("gruposDiv").parentElement.children[0].children[0].children[1].options[selectedIndex].getAttribute("condeespecial"),
+			grupo: document.getElementById("gruposDiv").parentElement.children[0].children[0].children[1].value
 		})
 	})
 
@@ -1010,7 +1011,7 @@ function saveState(){
 				document.getElementById("gruposDiv").parentElement.children[2].children[1].innerText = "true"
 			}
 			terceirosContainer.forEach(container => {
-				var selectedIndex = el.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
+				var selectedIndex = container.parentElement.parentElement.children[0].children[0].children[1].options.getAttribute("condeespecial")
 
 					mapped.push({
 						nome: container.children[0].children[1].value,
@@ -1021,8 +1022,8 @@ function saveState(){
 						status: el.children[1].children[2].children[2].children[1].value,
 						comentario: el.children[1].children[2].children[2].children[2].value,
 						comentarioMO: el.children[1].children[2].children[2].children[4].value,
-						condEespecial:el.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].value
-
+						condEespecial:container.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].getAttribute("condeespecial"),
+						grupo:container.parentElement.parentElement.children[0].children[0].children[1].value
 					})
 		
 			})
@@ -1041,7 +1042,7 @@ function saveState(){
 			let mapped = []
 
 			avalistaContainer.forEach(container => {
-				var selectedIndex = el.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
+				var selectedIndex = container.parentElement.parentElement.children[0].children[0].children[1].options.selectedIndex
 
 					mapped.push({
 						nome: container.children[0].children[1].value,
@@ -1052,7 +1053,8 @@ function saveState(){
 						status: el.children[1].children[2].children[2].children[1].value,
 						comentario: el.children[1].children[2].children[2].children[2].value,
 						comentarioMO: el.children[1].children[2].children[2].children[4].value,
-						condEespecial:el.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].value
+						condEespecial:container.parentElement.parentElement.children[0].children[0].children[1].options[selectedIndex].getAttribute("condeespecial"),
+						grupo:container.parentElement.parentElement.children[0].children[0].children[1].value
 					})
 			})
 			avalistaState.push(mapped)
