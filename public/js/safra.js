@@ -1117,7 +1117,7 @@ function checkParameters1() {
 	if(isVisible) {
 		var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 		clienteContainer.forEach((el, index) => {
-			var nome = container.children[0].children[1].value
+			var nome = el.children[0].children[1].value
 			var cpf = el.children[1].children[1].value
 			var email = el.children[2].children[1].value
 			if(!nome) errors.push("Nome do cliente inválido (#"+(index + 1)+")")
@@ -1462,7 +1462,7 @@ function checkParameters3() {
 	let countPeople = 0
 	var clienteContainer = Array.from(document.getElementById("gruposDiv").children)
 	clienteContainer.forEach((el, index) => {
-		var nome = container.children[0].children[1].value
+		var nome = el.children[0].children[1].value
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
 		if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
