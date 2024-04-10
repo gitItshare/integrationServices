@@ -1467,7 +1467,7 @@ function checkParameters3() {
 		var nome = el.children[0].children[1].value
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
-		if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
+		if(!nome || nome == "undefined" ) errors.push("Nome do cliente inválido (#"+(index2 + 1)+")")
 		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
@@ -1487,9 +1487,8 @@ function checkParameters3() {
 				var nome = container.children[0].children[1].value
 				var cpf = container.children[1].children[1].value
 				var email = container.children[2].children[1].value
+				if(!nome || nome == "undefined" ) errors.push("Nome do terceiro inválido (#"+(index2 + 1)+")")
 				if(!validateCPF(cpf)) errors.push("CPF do terceiro inválido (#"+(index2 + 1)+")")
-				if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
-
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do terceiro inválido (#"+(index2 + 1)+")")
 			})
 			if(countPeople === 0 && acaoInput.value !== "voltar") {
@@ -1511,9 +1510,8 @@ function checkParameters3() {
 				var nome = container.children[0].children[1].value
 
 				var email = container.children[2].children[1].value
-				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
 				if(!nome || nome == "undefined" ) errors.push("Nome do avalista inválido (#"+(index2 + 1)+")")
-
+				if(!validateCPF(cpf)) errors.push("CPF do avalista inválido (#"+(index2 + 1)+")")
 				if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do avalista inválido (#"+(index2 + 1)+")")
 			})
 			if(countPeople === 0 && acaoInput.value !== "voltar") {
