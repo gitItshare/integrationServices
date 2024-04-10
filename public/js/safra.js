@@ -1467,7 +1467,7 @@ function checkParameters3() {
 		var nome = el.children[0].children[1].value
 		var cpf = el.children[1].children[1].value
 		var email = el.children[2].children[1].value
-		if(!nome || nome == "undefined" ) errors.push("Nome do cliente inválido (#"+(index2 + 1)+")")
+		if(!nome || nome == "undefined" ) errors.push("Nome do cliente inválido (#"+(index + 1)+")")
 		if(!validateCPF(cpf)) errors.push("CPF do cliente inválido (#"+(index + 1)+")")	
 		if(isSignatureMode("digital") && (!email || email == "undefined" || !validateEmail(email))) errors.push("E-mail do cliente inválido (#"+(index + 1)+")")
 	})
