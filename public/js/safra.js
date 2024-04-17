@@ -255,6 +255,7 @@ function preencherRevisao() {
 					buttonCli.parentElement.parentElement.children[2].children[1].value = el.status
 					buttonCli.parentElement.parentElement.children[2].children[2].value = el.comentario
 					buttonCli.parentElement.parentElement.children[2].children[4].value = el.comentarioMO
+					buttonCli.parentElement.parentElement.children[1].innerText = el.hasChange
 					if (el.condEespecial == "true") {
 						buttonCli.parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
 					}
@@ -297,6 +298,7 @@ function preencherRevisao() {
 					button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
 					button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
 					button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0]
+					button[index].parentElement.parentElement.children[1].innerText = element.hasChange
 					if (element.condEespecial == "true") {
 						button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
 					}
@@ -340,6 +342,8 @@ function preencherRevisao() {
 					button[index].parentElement.parentElement.children[2].children[1].value = element.status
 					button[index].parentElement.parentElement.children[2].children[2].value = element.comentario
 					button[index].parentElement.parentElement.children[2].children[4].value = element.comentarioMO
+					button[index].parentElement.parentElement.children[1].innerText = element.hasChange
+
 					if (element.condEespecial == "true") {
 						button[index].parentElement.parentElement.parentElement.children[0].children[0].children[0].innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
 					}
@@ -450,12 +454,19 @@ buttonCli.addEventListener("click", function (event) {
 function verifyChanges () {
 	let stillChanged = false
 	let arrayHaschange = Array.from(document.querySelectorAll("#hasChange"))
+
+	if(document.getElementById("hasChangeCli").innerText === "true")
+		stillChanged = true	
+	else 
+		stillChanged = false
+	
 	for(let hasChange of arrayHaschange){
 		console.log("akii", hasChange.innerText, hasChange)
-		if(hasChange.innerText.trim() == "true")
+		if(hasChange.innerText.trim() === "true")
 			stillChanged = true
 	}
 
+		
 	console.log("STILL??", stillChanged)
 	if(!stillChanged)
 		document.getElementById("tipoCt").setAttribute("hidden", true)
@@ -465,21 +476,22 @@ let changeGroups = (self, representantesArray, button, idContainer, gruposDiv, c
 	if (button.parentElement.parentElement.parentElement.children.length >= 3) {
 		button.parentElement.parentElement.parentElement.children[1].innerHTML = ""
 	}
-	button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = false
+	button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = "false"
 
 	let value = self.value
 	let condEespecial = self.options[self.selectedIndex].getAttribute("condeespecial")
 	let label = self.parentElement.children[0]
 	if (condEespecial == "true") {
 		label.innerHTML = '<p style="color:tomato">Grupos Condicao Especial</p>'
-		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
+		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = "true"
 		document.getElementById("tipoCt").removeAttribute("hidden")
 	}
 	else {
-		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = false
+		button.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = "false"
 		label.innerHTML = '<p>Grupos</p>'
 	}
 	verifyChanges()
+
 	console.log("ARRAYY", representantesArray)
 	let representantes = representantesArray.find(el => el.nomeAgrupamento == self.value).representantes
 
@@ -620,7 +632,7 @@ function preencherAvalistas(avalistas, avalistasTable) {
 			cloneCli.setAttribute("style", "margin-bottom: 20px")
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
-			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
+			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = "true"
 		})
 
 
@@ -870,7 +882,7 @@ function preencherTerceiros(array, terceiroGarantidor) {
 			cloneCli.setAttribute("style", "margin-bottom: 20px")
 
 			addButton.parentElement.parentElement.parentElement.children[1].appendChild(cloneCli)
-			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = true
+			addButton.parentElement.parentElement.parentElement.children[1].parentElement.children[2].children[1].innerText = "true"
 		})
 
 
