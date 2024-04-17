@@ -254,9 +254,8 @@ class ExtracaoMassiva {
     async uploadLotes(){
         try {
             let docusign = await this.authentication()
-            let file = fs.createReadStream(global.appRoot +"/uploads/2272024/00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf")
-             await docusign.updateDocumentCLM({pathToFile: global.appRoot +"/uploads/2272024/00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf", name:"00a2d4d7-d19a-43f9-b483-4f79ede80c26.pdf"}, "31561", "b5b26a41-2cd6-ee11-b829-48df37a6f7d0")
-            // await docusign.getEnvelopeDocuments("00a2d4d7-d19a-43f9-b483-4f79ede80c26", "Errorlog")
+            let file = fs.createReadStream(global.appRoot +"/uploads/teste.csv")
+             await docusign.updateDocumentCLM({pathToFile: global.appRoot +"/uploads/teste.csv", name:"teste.csv"}, "61487f0d-b57f-421b-b2f7-7b4a97429e40", "b5b26a41-2cd6-ee11-b829-48df37a6f7d0")
         } catch (error) {
             console.log(error.response.data)
         }

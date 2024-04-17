@@ -72,6 +72,7 @@ class Docusign {
                 grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 assertion: this.jwtToken,
             });
+            console.log(`TESTETEEE https://account.docusign.com/oauth/token?${queryData}`)
             const resp = await fetch(`https://account.docusign.com/oauth/token?${queryData}`, {
                 method: 'post',
                 agent: this.agent,
@@ -225,15 +226,16 @@ class Docusign {
     async updateDocumentCLM(data,ds_account_id,folder_id) {
         const form = new FormData();
         form.append(data.name, fs.createReadStream(data.pathToFile));
-        const response = await axios({
-            method: 'post',
-            url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
-            data: form,
-            headers: {
-                'Content-Type': `multipart/form-data`,
-                'Authorization': this.authToken
-            }
-        });
+        console.log(form)
+        // const response = await axios({
+        //     method: 'post',
+        //     url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
+        //     data: form,
+        //     headers: {
+        //         'Content-Type': `multipart/form-data`,
+        //         'Authorization': this.authToken
+        //     }
+        // });
     }
 }
 export default Docusign
