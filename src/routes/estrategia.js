@@ -1,6 +1,6 @@
 import express from 'express';
 import estrategiaServices from "../services/estrategia/index.js";
-import fs from "fs"
+import fs, { readFileSync } from "fs"
 const router = express.Router();
 router.get('/csv', async function(req, res) {
     let periodo = {
@@ -41,4 +41,27 @@ router.get('/upload', async function(req, res) {
     await estrategiaServices.baixaMassiva.uploadLotes()
    res.send("ok");
 });
+router.get('/deleteFiles', async function(req, res) {
+
+    const filesUploaded = await readFileSync(`C:/Users/kevin/Documents/projects/integrationServices/uploads/baixados.csv`).toString()
+    let arrFiles = filesUploaded.split("\n")
+    console.log(arrFiles)
+     for(let file of arrFiles){
+        try {
+            let aUniqueNameHere = "aUniqueNameHere.pdf"
+            let namefile = `C:/Users/kevin/Documents/projects/2272024/` + file.replace(".pdf", "")
+            // await fs.unlinkSync(`C:/Users/kevin/Documents/projects/2272024/` + file.replace(".pdf", ""))
+            if(fs.existsSync(namefile))
+                await fs.renameSync(namefile, aUniqueNameHere);
+            if(fs.existsSync(`C:/Users/kevin/Documents/projects/2272024/${aUniqueNameHere}`))
+                await fs.unlinkSync(`C:/Users/kevin/Documents/projects/2272024/${aUniqueNameHere}`);
+            console.log("removi ", file)
+        } catch (error) {
+            console.log("nao removi", error)
+        }   
+
+     }
+    res.send("ok");
+});
+
 export default router

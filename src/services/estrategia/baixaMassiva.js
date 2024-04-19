@@ -251,13 +251,50 @@ class ExtracaoMassiva {
             console.log(error)
         }
     }
+    
     async uploadLotes(){
         try {
             let docusign = await this.authentication()
-            let file = fs.createReadStream(global.appRoot +"/uploads/teste.csv")
-             await docusign.updateDocumentCLM({pathToFile: global.appRoot +"/uploads/teste.csv", name:"teste.csv"}, "61487f0d-b57f-421b-b2f7-7b4a97429e40", "b5b26a41-2cd6-ee11-b829-48df37a6f7d0")
+            const dirFiles = await fs.readdirSync(`C:/Users/kevin/Documents/projects/2272024`)
+            console.log(dirFiles)
+            let index = 0
+            let pathToFile = "C:/Users/kevin/Documents/projects/2272024/"
+
+            let failsString = ""
+            let arrayPromises=[]
+            let arrayPromisesUnlink=[]
+
+            let indexArrPromise = 0
+            for(let file of dirFiles){
+                if(index == 0)
+                    arrayPromises[indexArrPromise] = []
+
+                index++
+                if(index > 20){
+                    index = 0
+                    indexArrPromise++
+                    arrayPromises[indexArrPromise] = []
+                }
+
+
+                arrayPromises[indexArrPromise].push(()=>docusign.updateDocumentCLM({pathToFile: pathToFile + file, name:file}, "61487f0d-b57f-421b-b2f7-7b4a97429e40", "5d641272-c6fd-ee11-b82a-48df37a6f7d0"))
+
+            }        
+            index = 0
+            console.log("posicoes", dirFiles.length)
+            arrayPromises.forEach(el => {
+                console.log(el.length)
+            })
+            setInterval(()=>{
+                Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
+                    index++
+                    console.log("finalizei o lote")
+                }).catch(err => {
+                    console.log("erro")
+                })
+            }, 30000)
         } catch (error) {
-            console.log(error.response.data)
+            console.log(error)
         }
     }
 }

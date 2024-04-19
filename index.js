@@ -6,7 +6,7 @@ import path from 'path';
 import estrategiaServices from "./src/services/estrategia/index.js";
 
 const app = express()
-const port = 3000
+const port = 3020
 dotenv.config()
 let rootPath = process.env.rootPath
 global.appRoot = path.resolve(rootPath)

@@ -2,6 +2,7 @@ import jwt from "../jwt.js"
 import fs from 'fs'
 import querystring from 'querystring';
 import axios from "axios";
+import { openAsBlob } from 'node:fs'
 import fetch, {
     Headers
 } from 'node-fetch'
@@ -224,18 +225,37 @@ class Docusign {
         }
     }
     async updateDocumentCLM(data,ds_account_id,folder_id) {
-        const form = new FormData();
-        form.append(data.name, fs.createReadStream(data.pathToFile));
-        console.log(form)
-        // const response = await axios({
-        //     method: 'post',
-        //     url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
-        //     data: form,
-        //     headers: {
-        //         'Content-Type': `multipart/form-data`,
-        //         'Authorization': this.authToken
-        //     }
-        // });
+        return new Promise(async(resolve, reject) => {
+            try {
+                const form = new FormData();
+                let file = await openAsBlob(data.pathToFile)
+                form.set("file", file, data.name);
+                console.log("uploaded...", data.name)
+                let baixados = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/baixados.csv`, {
+                    flags: 'a' // 'a' means appending (old data will be preserved)
+                })
+                await axios({
+                    method: 'post',
+                    url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
+                    data: form,
+                    headers: {
+                        'Content-Type': `multipart/form-data`,
+                        'Authorization': this.authToken
+                    }
+                })
+                baixados.write(data.name+"\n")
+                baixados.end()
+                resolve(true)
+            } catch (error) {
+                let fails = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/errosUpload.csv`, {
+                    flags: 'a' // 'a' means appending (old data will be preserved)
+                })
+                fails.write(data.name+"\n")
+                fails.end()
+                reject("err")
+            }
+        })
+
     }
 }
 export default Docusign

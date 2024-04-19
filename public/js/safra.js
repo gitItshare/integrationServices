@@ -771,7 +771,7 @@ function maketable(array, anchor, ordem, role) {
 				let email = el.children[2].children[1].value
 				let tipoASs = el.children[3].children[0].children[1].children[0].value
 				let tag = "sign_R" + (i + 1) + anchor + (index)
-				xml += "<role>" + role + (index) + "</role>"
+				xml += "<role>" + role + (index) + "-" + (i+1) + "</role>"
 				xml += "<nome>" + nome + "</nome>"
 				xml += "<razaoSocial>" + razao + "</razaoSocial>"
 				xml += "<email>" + email + "</email>"
