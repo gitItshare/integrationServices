@@ -118,7 +118,7 @@ class Bnym {
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
-                                        "anchorString": "\\car" + sign.ancora["_text"].trim() + "\\",
+                                        "anchorString": "\\car" + sign.ancora["_text"].trim() == "distribuidoraai"? "aai"+(i+1) : sign.ancora["_text"].trim() + "\\",
                                         "anchorXOffset": "0",
                                         "anchorYOffset": "0",
                                         "anchorUnits": "pixels",
