@@ -118,7 +118,7 @@ class Bnym {
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
-                                        "anchorString": "\\car" + sign.ancora["_text"].trim() == "distribuidoraai"? "aai"+(i+1) : sign.ancora["_text"].trim() + "\\",
+                                        "anchorString": "\\car" + (sign.ancora["_text"].trim().includes("distribuidoraai")? "aai"+(i+1) : sign.ancora["_text"].trim()) + "\\",
                                         "anchorXOffset": "0",
                                         "anchorYOffset": "0",
                                         "anchorUnits": "pixels",
@@ -143,7 +143,7 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": indexAgent,
+                            "routingOrder": el.order["_text"],
                             "note": "",
                             "roleName": sign.nome["_text"],
                             "deliveryMethod": "email",
@@ -236,7 +236,7 @@ class Bnym {
                                 "inputOptions": [],
                                 "workflowLabel": ""
                             },
-                            "routingOrder": indexAgent,
+                            "routingOrder": el.order["_text"],
                             "note": "",
                             "roleName": testemunha.nome["_text"],
                             "deliveryMethod": "email",
@@ -267,19 +267,13 @@ class Bnym {
                     recipientId: "6640"+index,
                     "accessCode": "",
                     "requireIdLookup": "false",
-                    "routingOrder": indexAgent,
+                    "routingOrder": el.order["_text"],
                     "note": "",
-                    "roleName": "CENTRALIZADOR",
+                    "roleName": el.tipo["_text"]+" CENTRALIZADOR",
                     "completedCount": "0",
                     "deliveryMethod": "email",
                     "templateLocked": "false",
                     "templateRequired": "false",
-                    "fullNameMetadata":{
-                        rights:"editable"
-                    },
-                    "firstNameMetadata":{
-                        rights:"editable"
-                    },
                     "inheritEmailNotificationConfiguration": "false",
                     "recipientType": "agent",
                 }
@@ -288,9 +282,7 @@ class Bnym {
 
             template.signers = recipients
             template.agents = agents
-
-
-            console.log(template.agents)
+            console.log(template)
             await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -302,38 +294,39 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
-            for (let tab of tabs.signHereTabs) {
-                try {
-                    // console.log(tab)
+            // for (let tab of tabs.signHereTabs) {
+            //     try {
+            //         // console.log(tab)
 
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                        signHereTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log("tab nao inserida")
-                }
-            }
-            for (let tab of tabs.initialHereTabs) {
-                try {
-                    // console.log(tab)
+            //         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+            //             signHereTabs: [tab]
+            //         }, {
+            //             headers: {
+            //                 'Authorization': this.authToken
+            //             }
+            //         });
+            //         console.log("tab inserida..")
+            //     } catch (error) {
+            //         console.log("tab nao inserida", error.response.data)
+                    
+            //     }
+            // }
+            // for (let tab of tabs.initialHereTabs) {
+            //     try {
+            //         // console.log(tab)
 
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                        initialHereTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log(error)
-                }
-            }
+            //         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+            //             initialHereTabs: [tab]
+            //         }, {
+            //             headers: {
+            //                 'Authorization': this.authToken
+            //             }
+            //         });
+            //         console.log("tab inserida..")
+            //     } catch (error) {
+            //         console.log(error)
+            //     }
+            // }
 
             return "resp.data"
         } catch (error) {
@@ -342,14 +335,15 @@ class Bnym {
     }
      makexml(json){
         var xml = "<recipients>"
-        Object.keys(json).forEach(function(key) {
+        Object.keys(json).forEach(function(key, index) {
             xml+= "<agents>"
             console.log('Key : ' + key)
             console.log(json[key])
             
             xml += "<tipo>"+json[key].nome+"</tipo>"
             xml+="<tipoAss>"+json[key].tipoAss+"</tipoAss>"
-            xml += "<email>"+ json[key].email +" </email>"
+            xml += "<email>"+ json[key].email +" </email>",
+            xml += "<order>"+ (index+1) +"</order>"
             for(var f = 0; f < parseInt(json[key].qtdTestemunhas); f++) {
                 xml += "<testemunhas> <nome> Testemunha "+ json[key].nome +(f+1) + "</nome> <ancora>test" + json[key].ancora +(f+1) + "</ancora> </testemunhas>";
             }

@@ -42,7 +42,8 @@ router.post('/templates', async function (req, res) {
           testemunhas: testemunhas,
           assinaturas:assinaturas,
           ancora: el.ancora,
-          tipoAss: el.tipoAss
+          tipoAss: el.tipoAss,
+          order: el.order
         }
       });
       console.log(param)
