@@ -2,7 +2,6 @@ import jwt from "../jwt.js"
 import fs from 'fs'
 import querystring from 'querystring';
 import axios from "axios";
-import { openAsBlob } from 'node:fs'
 import fetch, {
     Headers
 } from 'node-fetch'
