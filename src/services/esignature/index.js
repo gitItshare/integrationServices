@@ -228,7 +228,7 @@ class Docusign {
         return new Promise(async(resolve, reject) => {
             try {
                 const form = new FormData();
-                let file = await openAsBlob(data.pathToFile)
+                let file = await fs.readFileSync(data.pathToFile)
                 form.set("file", file, data.name);
                 console.log("uploaded...", data.name)
                 let baixados = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/baixados.csv`, {
