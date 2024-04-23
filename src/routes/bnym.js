@@ -8,10 +8,11 @@ let token = ""
 //Middle ware that is specific to this router
 
 // Define the home page route
-router.post('/templates', async function (req, res) {
+router.use(bodyParser.text()).post('/templates', async function (req, res) {
   let resp = ""
   console.log(req.body)
-  let json = req.body.Params.replaceAll("'", '"')
+  let bodyjson = JSON.parse(req.body)
+  let json = bodyjson.Params.replaceAll("'", '"')
   json = JSON.parse(json)
   console.log(json)
   let auth = {
@@ -50,7 +51,7 @@ router.post('/templates', async function (req, res) {
       await bny.jwt()
       await bny.authenticate()
 
-      await bny.makeTemplate(param, req.body.envelopeId) 
+      await bny.makeTemplate(param, bodyjson.envelopeId) 
 
 
   res.send("resp");
