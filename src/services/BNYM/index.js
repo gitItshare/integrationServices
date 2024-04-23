@@ -351,7 +351,7 @@ class Bnym {
             xml+="<tipoAss>"+json[key].tipoAss+"</tipoAss>"
             xml += "<email>"+ json[key].email +" </email>"
             for(var f = 0; f < parseInt(json[key].qtdTestemunhas); f++) {
-                xml += "<testemunhas> <nome> Testemunha "+ json[key].nome +(f+1) + "</nome> <ancora>" + json[key].ancora +(f+1) + "</ancora> </testemunhas>";
+                xml += "<testemunhas> <nome> Testemunha "+ json[key].nome +(f+1) + "</nome> <ancora>test" + json[key].ancora +(f+1) + "</ancora> </testemunhas>";
             }
             for(var af = 0; af < parseInt(json[key].qtdAss); af++) {
                 xml += "<assinaturas> <nome>" + json[key].nome +(af+1) + "</nome><ancora>" + json[key].ancora +(af+1) + "</ancora>  </assinaturas>";
