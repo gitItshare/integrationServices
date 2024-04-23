@@ -133,9 +133,7 @@ class Bnym {
                                     }
                                 ],
                             },
-                            "agentCanEditEmail": "false",
-                            "agentCanEditName": "true",
-                            "name": sign.nome["_text"],
+                            "name": "",
                             "email": "",
                             "recipientId": recipientId,
                             "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
@@ -228,9 +226,7 @@ class Bnym {
                                     "tabType": "initialhereoptional"
                                 }]
                             },
-                            "agentCanEditEmail": "false",
-                            "agentCanEditName": "true",
-                            "name": testemunha.nome["_text"],
+                            "name": "",
                             "email": "",
                             "recipientId": recipientId + 2,
                             "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
@@ -278,10 +274,14 @@ class Bnym {
                     "deliveryMethod": "email",
                     "templateLocked": "false",
                     "templateRequired": "false",
+                    "fullNameMetadata":{
+                        rights:"editable"
+                    },
+                    "firstNameMetadata":{
+                        rights:"editable"
+                    },
                     "inheritEmailNotificationConfiguration": "false",
                     "recipientType": "agent",
-                    "agentCanEditEmail": "true",
-                    "agentCanEditName": "true"
                 }
                 return agent
             })
@@ -340,7 +340,28 @@ class Bnym {
             console.log(error)
         }
     }
-
+     makexml(json){
+        var xml = "<recipients>"
+        Object.keys(json).forEach(function(key) {
+            xml+= "<agents>"
+            console.log('Key : ' + key)
+            console.log(json[key])
+            
+            xml += "<tipo>"+json[key].nome+"</tipo>"
+            xml+="<tipoAss>"+json[key].tipoAss+"</tipoAss>"
+            xml += "<email>"+ json[key].email +" </email>"
+            for(var f = 0; f < parseInt(json[key].qtdTestemunhas); f++) {
+                xml += "<testemunhas> <nome> Testemunha "+ json[key].nome +(f+1) + "</nome> <ancora>" + json[key].ancora +(f+1) + "</ancora> </testemunhas>";
+            }
+            for(var af = 0; af < parseInt(json[key].qtdAss); af++) {
+                xml += "<assinaturas> <nome>" + json[key].nome +(af+1) + "</nome><ancora>" + json[key].ancora +(af+1) + "</ancora>  </assinaturas>";
+            }
+            xml+="</agents>"
+          })
+          xml += "</recipients>"
+          console.log("XML", xml)
+          return xml
+    }
 }
 
 export default Bnym
