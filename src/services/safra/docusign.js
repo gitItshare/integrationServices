@@ -91,7 +91,6 @@ class Docusign {
                 agents: []
             }
             let recipients = []
-            console.log(params)
 
             let signers = []
             params.forEach((el, index) => {
@@ -222,115 +221,115 @@ class Docusign {
                     }
                     signers.push(signer)
                     // testemunhastabs.signHereTabs.push(signer.tabs.signHereTabs[0])
-                } else {
-                    signer = {
-                        "defaultRecipient": "false",
-                        "signInEachLocation": "false",
-                        "tabs": {
-                            "approveTabs": [{
-                                "buttonText": "Approve",
-                                "tabLabel": "Approve 23167709-51a6-4753-b3ae-5ff522747962",
-                                "font": "helvetica",
-                                "fontColor": "black",
-                                "fontSize": "size9",
-                                "localePolicy": {},
-                                "documentId": "83374671",
-                                "recipientId": recipientId,
-                                "pageNumber": "1",
-                                "xPosition": "",
-                                "yPosition": "",
-                                "width": "70",
-                                "height": "22",
-                                "anchorString": "/validadorA/",
-                                "anchorXOffset": "0",
-                                "anchorYOffset": "0",
-                                "anchorUnits": "pixels",
-                                "anchorCaseSensitive": "false",
-                                "anchorMatchWholeWord": "true",
-                                "anchorHorizontalAlignment": "left",
-                                "anchorTabProcessorVersion": "v1_3",
-                                "tabId": "955bc722-9a2f-4b1b-a72b-c2f16f777b33",
-                                "templateLocked": "false",
-                                "templateRequired": "false",
-                                "tabType": "approve"
-                            }],
-                            "declineTabs": [{
-                                "buttonText": "Decline",
-                                "declineReason": "",
-                                "tabLabel": "Decline 7da7a2eb-44bc-46f1-b283-b6d719441441",
-                                "font": "helvetica",
-                                "fontColor": "black",
-                                "fontSize": "size9",
-                                "localePolicy": {},
-                                "documentId": "83374671",
-                                "recipientId": recipientId,
-                                "pageNumber": "2",
-                                "xPosition": "",
-                                "yPosition": "",
-                                "width": "70",
-                                "height": "22",
-                                "anchorString": "/validadorD/",
-                                "anchorXOffset": "0",
-                                "anchorYOffset": "0",
-                                "anchorUnits": "pixels",
-                                "anchorCaseSensitive": "false",
-                                "anchorMatchWholeWord": "true",
-                                "anchorHorizontalAlignment": "left",
-                                "anchorTabProcessorVersion": "v1_3",
-                                "tabId": "248ddb9d-8dc7-4be4-a576-e840bbbca86a",
-                                "templateLocked": "false",
-                                "templateRequired": "false",
-                                "tabType": "decline"
-                            }]
-                        },
-                        "agentCanEditEmail": "false",
-                        "agentCanEditName": "false",
-                        "name": el.nome["_text"],
-                        "email": el.email["_text"],
-                        "recipientId": recipientId,
-                        "accessCode": "",
-                        "requireIdLookup": "false",
-                        "identityVerification": {
-                            "inputOptions": [],
-                            "workflowLabel": ""
-                        },
-                        "routingOrder": "3",
-                        "note": "",
-                        "roleName": el.role["_text"],
-                        "deliveryMethod": "email",
-                        "templateLocked": "false",
-                        "templateRequired": "false",
-                        "inheritEmailNotificationConfiguration": "false"
-                    }
-                    signers.push(signer)
-                    testemunhastabs.approveTabs = []
-                    testemunhastabs.approveTabs.push(signer.tabs.approveTabs[0])
-                    testemunhastabs.declineTabs = []
-                    testemunhastabs.declineTabs.push(signer.tabs.declineTabs[0])
                 }
+                // else {
+                //     signer = {
+                //         "defaultRecipient": "false",
+                //         "signInEachLocation": "false",
+                //         "tabs": {
+                //             "approveTabs": [{
+                //                 "buttonText": "Approve",
+                //                 "tabLabel": "Approve 23167709-51a6-4753-b3ae-5ff522747962",
+                //                 "font": "helvetica",
+                //                 "fontColor": "black",
+                //                 "fontSize": "size9",
+                //                 "localePolicy": {},
+                //                 "documentId": "83374671",
+                //                 "recipientId": recipientId,
+                //                 "pageNumber": "1",
+                //                 "xPosition": "",
+                //                 "yPosition": "",
+                //                 "width": "70",
+                //                 "height": "22",
+                //                 "anchorString": "/validadorA/",
+                //                 "anchorXOffset": "0",
+                //                 "anchorYOffset": "0",
+                //                 "anchorUnits": "pixels",
+                //                 "anchorCaseSensitive": "false",
+                //                 "anchorMatchWholeWord": "true",
+                //                 "anchorHorizontalAlignment": "left",
+                //                 "anchorTabProcessorVersion": "v1_3",
+                //                 "tabId": "955bc722-9a2f-4b1b-a72b-c2f16f777b33",
+                //                 "templateLocked": "false",
+                //                 "templateRequired": "false",
+                //                 "tabType": "approve"
+                //             }],
+                //             "declineTabs": [{
+                //                 "buttonText": "Decline",
+                //                 "declineReason": "",
+                //                 "tabLabel": "Decline 7da7a2eb-44bc-46f1-b283-b6d719441441",
+                //                 "font": "helvetica",
+                //                 "fontColor": "black",
+                //                 "fontSize": "size9",
+                //                 "localePolicy": {},
+                //                 "documentId": "83374671",
+                //                 "recipientId": recipientId,
+                //                 "pageNumber": "2",
+                //                 "xPosition": "",
+                //                 "yPosition": "",
+                //                 "width": "70",
+                //                 "height": "22",
+                //                 "anchorString": "/validadorD/",
+                //                 "anchorXOffset": "0",
+                //                 "anchorYOffset": "0",
+                //                 "anchorUnits": "pixels",
+                //                 "anchorCaseSensitive": "false",
+                //                 "anchorMatchWholeWord": "true",
+                //                 "anchorHorizontalAlignment": "left",
+                //                 "anchorTabProcessorVersion": "v1_3",
+                //                 "tabId": "248ddb9d-8dc7-4be4-a576-e840bbbca86a",
+                //                 "templateLocked": "false",
+                //                 "templateRequired": "false",
+                //                 "tabType": "decline"
+                //             }]
+                //         },
+                //         "agentCanEditEmail": "false",
+                //         "agentCanEditName": "false",
+                //         "name": el.nome["_text"],
+                //         "email": el.email["_text"],
+                //         "recipientId": recipientId,
+                //         "accessCode": "",
+                //         "requireIdLookup": "false",
+                //         "identityVerification": {
+                //             "inputOptions": [],
+                //             "workflowLabel": ""
+                //         },
+                //         "routingOrder": "3",
+                //         "note": "",
+                //         "roleName": el.role["_text"],
+                //         "deliveryMethod": "email",
+                //         "templateLocked": "false",
+                //         "templateRequired": "false",
+                //         "inheritEmailNotificationConfiguration": "false"
+                //     }
+                //     signers.push(signer)
+                //     testemunhastabs.approveTabs = []
+                //     testemunhastabs.approveTabs.push(signer.tabs.approveTabs[0])
+                //     testemunhastabs.declineTabs = []
+                //     testemunhastabs.declineTabs.push(signer.tabs.declineTabs[0])
+                // }
             })
 
 
             const uniques = signers.filter((obj, index) => {
-                return index === signers.findIndex(o => obj.email === o.email);
+                return index === signers.findIndex(o => (obj.email === o.email && obj.name === o.name));
             });
 
-            uniques.forEach((unique, index) => {
-                let signHereTabs = []
-                signers.forEach(signer => {
-                    if (signer.email == unique.email && signer.tabs.signHereTabs) {
-                        console.log("TABS", signer.tabs.signHereTabs[0])
-                        // // signer.tabs.signHereTabs[0].recipientId = unique.recipientId
-                        // uniques[index].tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
-                        signer.tabs.signHereTabs[0].recipientId = unique.recipientId
-                        signHereTabs.push(signer.tabs.signHereTabs[0])
-                    }
-                })
-                if (unique.tabs.signHereTabs)
-                    unique.tabs.signHereTabs = signHereTabs
-            })
+            // uniques.forEach((unique, index) => {
+            //     let signHereTabs = []
+            //     signers.forEach(signer => {
+            //         if (signer.email == unique.email && signer.tabs.signHereTabs) {
+            //             // // signer.tabs.signHereTabs[0].recipientId = unique.recipientId
+            //             // uniques[index].tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
+            //             signer.tabs.signHereTabs[0].recipientId = unique.recipientId
+            //             signHereTabs.push(signer.tabs.signHereTabs[0])
+            //         }
+            //     })
+            //     if (unique.tabs.signHereTabs)
+            //         unique.tabs.signHereTabs = signHereTabs
+            // })
 
-            template.signers = uniques
+            template.signers = signers
 
             testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
             console.log(uniques)
@@ -340,7 +339,6 @@ class Docusign {
                 }
             });
             const recipient = templateSigners.data
-            console.log("OPOORA", testemunhastabs)
             if (templateSigners.data.signers.length > 0)
                 await axios.delete(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients`, {
                     headers: {
@@ -356,7 +354,6 @@ class Docusign {
 
             for (let tab of testemunhastabs.signHereTabs) {
                 try {
-                    console.log(tab)
                     if (tab) {
                         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab[0].recipientId}/tabs`, {
                             signHereTabs: tab
@@ -374,42 +371,41 @@ class Docusign {
                 }
             }
 
-            for (let tab of testemunhastabs.approveTabs) {
-                try {
-                    console.log(tab)
+            // for (let tab of testemunhastabs.approveTabs) {
+            //     try {
+            //         console.log(tab)
 
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
-                        approveTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log("tab nao inserida")
-                }
-            }
-            for (let tab of testemunhastabs.declineTabs) {
-                try {
-                    console.log(tab)
+            //         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
+            //             approveTabs: [tab]
+            //         }, {
+            //             headers: {
+            //                 'Authorization': this.authToken
+            //             }
+            //         });
+            //         console.log("tab inserida..")
+            //     } catch (error) {
+            //         console.log("tab nao inserida")
+            //     }
+            // }
+            // for (let tab of testemunhastabs.declineTabs) {
+            //     try {
+            //         console.log(tab)
 
-                    await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
-                        declineTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
-                } catch (error) {
-                    console.log("tab nao inserida")
-                }
-            }
+            //         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
+            //             declineTabs: [tab]
+            //         }, {
+            //             headers: {
+            //                 'Authorization': this.authToken
+            //             }
+            //         });
+            //         console.log("tab inserida..")
+            //     } catch (error) {
+            //         console.log("tab nao inserida")
+            //     }
+            // }
             if(data.seguroPrestamista["_text"] == "Sim"){
                 for (let tab of testemunhastabs.radioGroupTabs) {
                     try {
-                        console.log(tab)
     
                         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                             radioGroupTabs: [tab]
@@ -427,7 +423,6 @@ class Docusign {
                 }
                 for (let tab of testemunhastabs.checkboxTabs) {
                     try {
-                        console.log(tab)
     
                         await axios.post(`https://demo.docusign.net/restapi/v2/accounts/14686657/templates/c4a45577-a84b-4f39-a62d-9ad88be41ace/recipients/${tab.recipientId}/tabs`, {
                             checkboxTabs: [tab]
