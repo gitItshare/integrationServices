@@ -805,7 +805,7 @@ function makeXml(params,bancoRep) {
 		xml += maketableCli(containerCli, "sign_RC", 1, params)
 		xml += makeTableBanco(valorContrato, bancoRep)
 
-		xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor", params)
+		// xml += maketable(containerTerceiros, "TG", 2, "Terceiro Garantidor", params)
 		xml += maketable(containerAvalistas, "A", 3, "Avalista", params)
 		xml += `<seguroPrestamista>${template.Geral_Info.DeclacaoDeSaude}</seguroPrestamista>`
 		xml += `<agencia>${emitente.Emitente_Agencia}</agencia>`

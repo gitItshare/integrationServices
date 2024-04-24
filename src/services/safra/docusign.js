@@ -220,7 +220,7 @@ class Docusign {
                         signer.embeddedRecipientStartURL = `https://portalspa-hml.safra.com.br/dcs/identification?envelopeId=c4a45577-a84b-4f39-a62d-9ad88be41ace&recipientId=${recipientId}`
                     }
                     signers.push(signer)
-                    // testemunhastabs.signHereTabs.push(signer.tabs.signHereTabs[0])
+                    testemunhastabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                 }
                 // else {
                 //     signer = {
@@ -311,9 +311,9 @@ class Docusign {
             })
 
 
-            const uniques = signers.filter((obj, index) => {
-                return index === signers.findIndex(o => (obj.email === o.email && obj.name === o.name));
-            });
+            // const uniques = signers.filter((obj, index) => {
+            //     return index === signers.findIndex(o => (obj.email === o.email && obj.name === o.name));
+            // });
 
             // uniques.forEach((unique, index) => {
             //     let signHereTabs = []
@@ -331,8 +331,8 @@ class Docusign {
 
             template.signers = signers
 
-            testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
-            console.log(uniques)
+            // testemunhastabs.signHereTabs = uniques.map(el => el.tabs.signHereTabs)
+             console.log(testemunhastabs.signHereTabs)
             const templateSigners = await axios.get(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -354,9 +354,9 @@ class Docusign {
 
             for (let tab of testemunhastabs.signHereTabs) {
                 try {
-                    if (tab) {
-                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab[0].recipientId}/tabs`, {
-                            signHereTabs: tab
+                    if(tab) {
+                        await axios.post(`https://demo.docusign.net/restapi/v2/accounts/20465950/templates/0f153270-9036-4381-ba6f-9de77e00f5d0/recipients/${tab.recipientId}/tabs`, {
+                            signHereTabs: [tab]
                         }, {
                             headers: {
                                 'Authorization': this.authToken
@@ -367,7 +367,7 @@ class Docusign {
 
 
                 } catch (error) {
-                    console.log("tab nao inserida")
+                    console.log("tab nao inserida", error)
                 }
             }
 
