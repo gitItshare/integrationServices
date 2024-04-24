@@ -297,15 +297,16 @@ class Bnym {
             for (let tab of tabs.signHereTabs) {
                 try {
                     // console.log(tab)
-
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                        signHereTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
+                    if(tab){
+                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                            signHereTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    }
                 } catch (error) {
                     console.log("tab nao inserida", error.response.data)
                     
@@ -314,15 +315,17 @@ class Bnym {
             for (let tab of tabs.initialHereTabs) {
                 try {
                     // console.log(tab)
-
-                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                        initialHereTabs: [tab]
-                    }, {
-                        headers: {
-                            'Authorization': this.authToken
-                        }
-                    });
-                    console.log("tab inserida..")
+                    if(tab){
+                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                            initialHereTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    }
+              
                 } catch (error) {
                     console.log(error)
                 }
