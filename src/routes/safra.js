@@ -750,11 +750,11 @@ router.post('/templates',async function(req, res) {
       });
       console.log(param)
       let auth = {
-        userID: process.env.userIDSafra,
-        integrationKey: process.env.safraIK,
-        dsOauthServer: process.env.dsOauthServerSafra,
-        accountID: process.env.accountIDSafra,
-        privateKey: process.env.privatekeySafra
+        userID: process.env.userIDDemo,
+        integrationKey: process.env.integrationKey,
+        dsOauthServer: process.env.dsOauthServerDev,
+        accountID: process.env.accountIDDemo,
+        privateKey: process.env.privatekeyDemo
     }
     const scope = "signature impersonation";
     console.log(auth)
