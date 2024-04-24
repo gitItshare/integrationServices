@@ -294,39 +294,39 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
-            // for (let tab of tabs.signHereTabs) {
-            //     try {
-            //         // console.log(tab)
+            for (let tab of tabs.signHereTabs) {
+                try {
+                    // console.log(tab)
 
-            //         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-            //             signHereTabs: [tab]
-            //         }, {
-            //             headers: {
-            //                 'Authorization': this.authToken
-            //             }
-            //         });
-            //         console.log("tab inserida..")
-            //     } catch (error) {
-            //         console.log("tab nao inserida", error.response.data)
+                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                        signHereTabs: [tab]
+                    }, {
+                        headers: {
+                            'Authorization': this.authToken
+                        }
+                    });
+                    console.log("tab inserida..")
+                } catch (error) {
+                    console.log("tab nao inserida", error.response.data)
                     
-            //     }
-            // }
-            // for (let tab of tabs.initialHereTabs) {
-            //     try {
-            //         // console.log(tab)
+                }
+            }
+            for (let tab of tabs.initialHereTabs) {
+                try {
+                    // console.log(tab)
 
-            //         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-            //             initialHereTabs: [tab]
-            //         }, {
-            //             headers: {
-            //                 'Authorization': this.authToken
-            //             }
-            //         });
-            //         console.log("tab inserida..")
-            //     } catch (error) {
-            //         console.log(error)
-            //     }
-            // }
+                    await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                        initialHereTabs: [tab]
+                    }, {
+                        headers: {
+                            'Authorization': this.authToken
+                        }
+                    });
+                    console.log("tab inserida..")
+                } catch (error) {
+                    console.log(error)
+                }
+            }
 
             return "resp.data"
         } catch (error) {
