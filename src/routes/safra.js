@@ -27,7 +27,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -38,7 +38,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -63,7 +63,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -74,7 +74,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -99,7 +99,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     },
@@ -110,7 +110,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -135,7 +135,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "FABIO TORRETTA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     },
@@ -146,7 +146,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "YUJI HAMADA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -171,7 +171,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "FABIO TORRETTA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     },
@@ -182,7 +182,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "YUJI HAMADA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -207,7 +207,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -218,7 +218,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -243,7 +243,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -254,7 +254,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -279,7 +279,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     },
@@ -290,7 +290,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -315,7 +315,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "FABIO TORRETTA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     },
@@ -326,7 +326,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "YUJI HAMADA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -351,7 +351,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "FABIO TORRETTA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     },
@@ -362,7 +362,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "YUJI HAMADA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -392,7 +392,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -403,7 +403,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -428,7 +428,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -439,9 +439,9 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
-                        "descricaoTipoAssinatura": null
+                        "descricaoTipoAssinatura": "viscardi.souza@gmail.com"
                     }
                 ]
             },
@@ -464,9 +464,9 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "FABIO TORRETTA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
-                        "descricaoTipoAssinatura": null
+                        "descricaoTipoAssinatura": ""
                     },
                     {
                         "identificacaoTipoDocumento": "CPF",
@@ -475,7 +475,7 @@ let resp = [
                         "codigoCargo": "DIRETOR",
                         "nome": "YUJI HAMADA",
                         "dataFimMandato": "2025-04-01T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -505,7 +505,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -516,7 +516,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -541,7 +541,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -552,7 +552,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -582,7 +582,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -593,7 +593,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -618,7 +618,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -629,7 +629,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
@@ -659,7 +659,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -670,7 +670,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "PATRICIA ZANINI MERELLO",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:53:34",
                         "descricaoTipoAssinatura": "ICP-BRASIL"
                     }
@@ -695,7 +695,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JOSE MAURICIO DE SOUZA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": "andre.cunha@safra.com.br",
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "2024-01-02T19:49:13",
                         "descricaoTipoAssinatura": "SAFRA ASSINATURAS"
                     },
@@ -706,7 +706,7 @@ let resp = [
                         "codigoCargo": "PROCURADOR",
                         "nome": "JEFFERSON FRANCISCO PEREIRA",
                         "dataFimMandato": "2020-01-31T00:00:00",
-                        "emailContatoAssinatura": null,
+                        "emailContatoAssinatura": "viscardi.souza@gmail.com",
                         "dataHoraAssinaturaEnvelope": "0001-01-01T00:00:00",
                         "descricaoTipoAssinatura": null
                     }
