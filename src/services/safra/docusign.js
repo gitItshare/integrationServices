@@ -34,7 +34,7 @@ class Docusign {
             this.authToken = "Bearer " + data.access_token
 
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
             this.authToken = 'error'
         }
     }
@@ -56,7 +56,7 @@ class Docusign {
             console.log(token)
             this.jwtToken = token
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
             this.jwtToken = ''
         }
     }
