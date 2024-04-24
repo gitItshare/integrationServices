@@ -3,7 +3,7 @@ import fs from "fs"
 import path from 'path';
 import jwt from "../jwt.js"
 import querystring from "querystring"
-
+import { v4 as uuidv4 } from 'uuid';
 let dirname = path.resolve(path.dirname(''));
 
 
@@ -75,10 +75,11 @@ class Bnym {
             let agents = params.map((el, index) => {
   
                 indexAgent = index+1
-                let recipientId = "2132" + index
                 let signers = []
                 if (el.assinaturas[0]) {
                     signers = el.assinaturas.map((sign, i) => {
+                        let recipientIdSigner = uuidv4()
+
                         let signer = {
                             "defaultRecipient": "false",
                             "signInEachLocation": "false",
@@ -90,7 +91,7 @@ class Bnym {
                                         "scaleValue": "1",
                                         "optional": "false",
                                         "documentId": "1",
-                                        "recipientId": recipientId ,
+                                        "recipientId": recipientIdSigner ,
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
@@ -114,7 +115,7 @@ class Bnym {
                                         "scaleValue": "1",
                                         "optional": "true",
                                         "documentId": "1",
-                                        "recipientId": recipientId,
+                                        "recipientId": recipientIdSigner,
                                         "pageNumber": "1",
                                         "xPosition": "",
                                         "yPosition": "",
@@ -135,8 +136,7 @@ class Bnym {
                             },
                             "name": "",
                             "email": "",
-                            "recipientId": recipientId,
-                            "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
+                            "recipientId": recipientIdSigner,
                             "accessCode": "",
                             "requireIdLookup": "false",
                             "identityVerification": {
@@ -166,6 +166,8 @@ class Bnym {
                 let testemunhas = []
                 if (el.testemunhas[0]) {
                     testemunhas = el.testemunhas.map((testemunha) => {
+                        let recipientIdTestemunha = uuidv4()
+
                         let signer = {
                             "defaultRecipient": "false",
 
@@ -185,7 +187,7 @@ class Bnym {
                                     "scaleValue": "1",
                                     "optional": "false",
                                     "documentId": "1",
-                                    "recipientId": recipientId + 2,
+                                    "recipientId": recipientIdTestemunha,
                                     "pageNumber": "1",
                                     "xPosition": "",
                                     "yPosition": "",
@@ -208,7 +210,7 @@ class Bnym {
                                     "scaleValue": "1",
                                     "optional": "true",
                                     "documentId": "1",
-                                    "recipientId": recipientId + 2,
+                                    "recipientId": recipientIdTestemunha,
                                     "pageNumber": "1",
                                     "xPosition": "276",
                                     "yPosition": "437",
@@ -228,8 +230,7 @@ class Bnym {
                             },
                             "name": "",
                             "email": "",
-                            "recipientId": recipientId + 2,
-                            "recipientIdGuid": "00000000-0000-0000-0000-000000000000",
+                            "recipientId": recipientIdTestemunha,
                             "accessCode": "",
                             "requireIdLookup": "false",
                             "identityVerification": {
@@ -264,7 +265,7 @@ class Bnym {
                 let agent ={
                     "name": el.tipo["_text"] + " - CENTRALIZADOR",
                     "email": el.email["_text"].trim(),
-                    recipientId: "6640"+index,
+                    recipientId: "66"+index,
                     "accessCode": "",
                     "requireIdLookup": "false",
                     "routingOrder": el.order["_text"],
@@ -294,44 +295,44 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
-            for (let tab of tabs.signHereTabs) {
-                try {
-                    // console.log(tab)
-                    if(tab){
-                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                            signHereTabs: [tab]
-                        }, {
-                            headers: {
-                                'Authorization': this.authToken
-                            }
-                        });
-                        console.log("tab inserida..")
-                    }
-                } catch (error) {
-                    console.log("tab nao inserida", error.response.data)
+            // for (let tab of tabs.signHereTabs) {
+            //     try {
+            //         // console.log(tab)
+            //         if(tab){
+            //             await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+            //                 signHereTabs: [tab]
+            //             }, {
+            //                 headers: {
+            //                     'Authorization': this.authToken
+            //                 }
+            //             });
+            //             console.log("tab inserida..")
+            //         }
+            //     } catch (error) {
+            //         console.log("tab nao inserida", error.response.data)
                     
-                }
-            }
-            for (let tab of tabs.initialHereTabs) {
-                try {
-                    // console.log(tab)
-                    if(tab){
-                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                            initialHereTabs: [tab]
-                        }, {
-                            headers: {
-                                'Authorization': this.authToken
-                            }
-                        });
-                        console.log("tab inserida..")
-                    }
+            //     }
+            // }
+            // for (let tab of tabs.initialHereTabs) {
+            //     try {
+            //         // console.log(tab)
+            //         if(tab){
+            //             await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+            //                 initialHereTabs: [tab]
+            //             }, {
+            //                 headers: {
+            //                     'Authorization': this.authToken
+            //                 }
+            //             });
+            //             console.log("tab inserida..")
+            //         }
               
-                } catch (error) {
-                    console.log(error)
-                }
-            }
+            //     } catch (error) {
+            //         console.log(error)
+            //     }
+            // }
 
-            return "resp.data"
+            return resp.data
         } catch (error) {
             console.log(error)
         }
