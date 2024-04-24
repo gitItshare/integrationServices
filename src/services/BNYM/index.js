@@ -83,6 +83,8 @@ class Bnym {
                         let signer = {
                             "defaultRecipient": "false",
                             "signInEachLocation": "false",
+                            "recipientSignatureProviders":[],
+                            agentCanEditName:true,
                             "tabs": {
                                 "signHereTabs": [{
                                         "stampType": "signature",
@@ -134,18 +136,13 @@ class Bnym {
                                     }
                                 ],
                             },
-                            "name": "",
+                            "name": sign.nome["_text"],
                             "email": "",
                             "recipientId": recipientIdSigner,
                             "accessCode": "",
                             "requireIdLookup": "false",
-                            "identityVerification": {
-                                "inputOptions": [],
-                                "workflowLabel": ""
-                            },
-                            "routingOrder": el.order["_text"],
+                            "routingOrder": sign.order["_text"],
                             "note": "",
-                            "roleName": sign.nome["_text"],
                             "deliveryMethod": "email",
                             "templateLocked": "false",
                             "templateRequired": "false",
@@ -165,20 +162,13 @@ class Bnym {
                 }
                 let testemunhas = []
                 if (el.testemunhas[0]) {
-                    testemunhas = el.testemunhas.map((testemunha) => {
+                    testemunhas = el.testemunhas.map((testemunha,i) => {
                         let recipientIdTestemunha = uuidv4()
 
                         let signer = {
                             "defaultRecipient": "false",
-
+                            "recipientSignatureProviders":[],
                             "signInEachLocation": "false",
-                            // "recipientSignatureProviders": [
-                            //     {
-                            //         "sealDocumentsWithTabsOnly": "false",
-                            //         "signatureProviderName": "universalsignaturepen_imageonly",
-                            //         "signatureProviderOptions": {}
-                            //     }
-                            // ],
                             "tabs": {
                                 "signHereTabs": [{
                                     "stampType": "signature",
@@ -228,18 +218,13 @@ class Bnym {
                                     "tabType": "initialhereoptional"
                                 }]
                             },
-                            "name": "",
+                            agentCanEditName:true,
+                            "name": testemunha.nome["_text"],
                             "email": "",
                             "recipientId": recipientIdTestemunha,
                             "accessCode": "",
-                            "requireIdLookup": "false",
-                            "identityVerification": {
-                                "inputOptions": [],
-                                "workflowLabel": ""
-                            },
-                            "routingOrder": el.order["_text"],
+                            "routingOrder": testemunha.order["_text"],
                             "note": "",
-                            "roleName": testemunha.nome["_text"],
                             "deliveryMethod": "email",
                             "templateLocked": "false",
                             "templateRequired": "false",
@@ -263,20 +248,22 @@ class Bnym {
                 recipients.push(...signers)
 
                 let agent ={
-                    "name": el.tipo["_text"] + " - CENTRALIZADOR",
+                    "name": el.nome["_text"] + " - CENTRALIZADOR",
                     "email": el.email["_text"].trim(),
-                    recipientId: "66"+index,
+                    "recipientId": uuidv4(),
                     "accessCode": "",
                     "requireIdLookup": "false",
                     "routingOrder": el.order["_text"],
                     "note": "",
-                    "roleName": el.tipo["_text"]+" CENTRALIZADOR",
+                    "roleName": el.role["_text"] + " - CENTRALIZADOR",
                     "completedCount": "0",
                     "deliveryMethod": "email",
                     "templateLocked": "false",
                     "templateRequired": "false",
                     "inheritEmailNotificationConfiguration": "false",
                     "recipientType": "agent",
+                    "allowRecipientRecursion": "true"
+                    
                 }
                 return agent
             })
@@ -284,17 +271,29 @@ class Bnym {
             template.signers = recipients
             template.agents = agents
             console.log(template)
-            await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
+            let recipientsEnv = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
                 headers: {
                     'Authorization': this.authToken
                 },
-                data: {signers:[{'recipientId': '1'}]}
             });
-            const resp = await axios.put(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, template, {
+            try {
+                await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
+                    headers: {
+                        'Authorization': this.authToken
+                    },
+                    data: recipientsEnv.data
+                });
+            } catch (error) {
+                console.log("nao deletei", error.response.data)
+            }
+            const resp = await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, template, {
                 headers: {
                     'Authorization': this.authToken
                 }
             });
+            console.log(resp.data.signers)
+            console.log(resp.data.agents)
+
             // for (let tab of tabs.signHereTabs) {
             //     try {
             //         // console.log(tab)
@@ -344,15 +343,16 @@ class Bnym {
             console.log('Key : ' + key)
             console.log(json[key])
             
-            xml += "<tipo>"+json[key].nome+"</tipo>"
-            xml+="<tipoAss>"+json[key].tipoAss+"</tipoAss>"
-            xml += "<email>"+ json[key].email +" </email>",
-            xml += "<order>"+ (index+1) +"</order>"
+            xml +=  "<nome>"+json[key].nome+"</nome>"
+            xml +=  "<role>"+json[key].role+"</role>"
+            xml+=   "<tipoAss>"+json[key].tipoAss+"</tipoAss>"
+            xml +=  "<email>"+ json[key].email +" </email>",
+            xml +=  "<order>"+ (index+1) +"</order>"
             for(var f = 0; f < parseInt(json[key].qtdTestemunhas); f++) {
-                xml += "<testemunhas> <nome> Testemunha "+ json[key].nome +(f+1) + "</nome> <ancora>test" + json[key].ancora +(f+1) + "</ancora> </testemunhas>";
+                xml += "<testemunhas><role>"+json[key].role+"</role> <nome> Testemunha "+ json[key].role + " " +(f+1) + "</nome> <ancora>test" + json[key].ancora.trim() + (f+1) + "</ancora>"+ "<order>"+ (index+1) +"</order> </testemunhas>";
             }
             for(var af = 0; af < parseInt(json[key].qtdAss); af++) {
-                xml += "<assinaturas> <nome>" + json[key].nome +(af+1) + "</nome><ancora>" + json[key].ancora +(af+1) + "</ancora>  </assinaturas>";
+                xml += "<assinaturas><role>"+json[key].role+"</role> <nome>" + json[key].role + " " +(af+1) + "</nome><ancora>" + json[key].ancora.trim() +(af+1) + "</ancora>"+ "<order>"+ (index+1) +"</order> </assinaturas>";
             }
             xml+="</agents>"
           })

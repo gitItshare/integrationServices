@@ -35,8 +35,9 @@ router.post('/templates', async function (req, res) {
         assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
 
         return {
-          tipo: el.tipo,
+          nome: el.nome,
           email: el.email,
+          role: el.role,
           position: el.position,
           carimbo: el.carimbo,
           testemunhas: testemunhas,
