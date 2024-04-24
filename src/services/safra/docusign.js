@@ -45,7 +45,7 @@ class Docusign {
             const payload = {
                 "iss": this.integrationKey,
                 "sub": this.userID,
-                "aud": "account-d.docusign.com",
+                "aud": this.dsOauthServer,
                 "iat": exp,
                 "exp": iat,
                 "scope": this.scope
