@@ -400,7 +400,7 @@ function addClient(event, id, representante = {}, change, noSave) {
 			clone.children[0].children[1].value = representante.nome
 			clone.children[1].children[1].value = representante.documento || representante.cpf
 			clone.children[2].children[1].value = representante.emailContatoAssinatura || representante.email
-			clone.children[3].children[0].children[1].children[0].value = representante.tipo || "ICP"
+			clone.children[3].children[0].children[1].children[0].value = representante.tipo || "DS ELETRONIC"
 		}
 		// console.log("aQUIIII", clone.children[2].children[0].children[2].children[0])
 		clone.removeAttribute("hidden")
@@ -1764,4 +1764,12 @@ function removeStatusAndComments(select) {
 			return banco
 	
  }
+ window.addEventListener('keydown', function(e) {
+	if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+		if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+			e.preventDefault();
+			return false;
+		}
+	}
+}, true);
 window.saveState = saveState

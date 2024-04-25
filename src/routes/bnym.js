@@ -16,8 +16,8 @@ router.post('/templates', async function (req, res) {
   console.log(json)
   let auth = {
     userID: process.env.clientIDBNY,
-    integrationKey: process.env.integrationKey,
-    dsOauthServer: process.env.dsOauthServerSafra,
+    integrationKey: process.env.integratorKeyBny,
+    dsOauthServer: process.env.dsOauthServerBny,
     accountID: process.env.accountIDBny,
     privateKey: process.env.privatekeyBny
   }
