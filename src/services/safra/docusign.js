@@ -74,7 +74,7 @@ class Docusign {
                     "agentCanEditEmail": "false",
                     "agentCanEditName": "false",
                     "name": "BO Contratos",
-                    "email": "regcont@safra.com.br",
+                    "email": "viscardi.souza+Diretor@gmail.com",
                     "recipientId": "123",
                     "accessCode": "",
                     "requireIdLookup": "false",

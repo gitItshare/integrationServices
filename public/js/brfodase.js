@@ -118,8 +118,8 @@ $.ajax({
 		let terceiros = data.filter((el, i) => (terceirosCNPJ.includes(el.documentoCliente)))
 		console.log("AQUIII", terceiros, avalistas, representanteCli)
 
-		if (!terceiros[0])
-			document.getElementById("terceiros").setAttribute("hidden", true)
+			
+		document.getElementById("terceiros").setAttribute("hidden", true)
 		if (!avalistas[0])
 			document.getElementById("avalistas").setAttribute("hidden", true)
 		if (!workflow[2]) {
@@ -141,7 +141,7 @@ $.ajax({
 		// preencherTabela(templateField, createdDate)
 		preencherLists(representanteCli, clientGrupos)
 		preencherAvalistas(avalistas, avalistasTable)
-		preencherTerceiros(terceiros, terceiroGarantidor)
+		// preencherTerceiros(terceiros, terceiroGarantidor)
 
 		if (workflow[2] && !workflow[3]) {
 			preencherRevisao()
