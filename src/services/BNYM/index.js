@@ -83,7 +83,13 @@ class Bnym {
                         let signer = {
                             "defaultRecipient": "false",
                             "signInEachLocation": "false",
-                            "recipientSignatureProviders":[],
+                            "recipientSignatureProviders": [
+                                {
+                                    "sealDocumentsWithTabsOnly": "false",
+                                    "signatureProviderName": "universalsignaturepen_imageonly",
+                                    "signatureProviderOptions": {}
+                                }
+                            ],                            
                             agentCanEditName:true,
                             "tabs": {
                                 "signHereTabs": [{
@@ -167,7 +173,13 @@ class Bnym {
 
                         let signer = {
                             "defaultRecipient": "false",
-                            "recipientSignatureProviders":[],
+                            "recipientSignatureProviders": [
+                                {
+                                    "sealDocumentsWithTabsOnly": "false",
+                                    "signatureProviderName": "universalsignaturepen_imageonly",
+                                    "signatureProviderOptions": {}
+                                }
+                            ],                            
                             "signInEachLocation": "false",
                             "tabs": {
                                 "signHereTabs": [{
@@ -231,11 +243,13 @@ class Bnym {
                             "inheritEmailNotificationConfiguration": "false"
                         }
                         if(el.tipoAss["_text"] == "ICP"){
-                            signer.recipientSignatureProviders = [{
-                                "sealDocumentsWithTabsOnly": "false",
-                                "signatureProviderName": "universalsignaturepen_imageonly",
-                                "signatureProviderOptions": {}
-                            }]
+                            signer.recipientSignatureProviders = [
+                                {
+                                    "sealDocumentsWithTabsOnly": "false",
+                                    "signatureProviderName": "universalsignaturepen_icp_smartcard_tsp",
+                                    "signatureProviderOptions": {}
+                                }
+                            ]
                         }
                         tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
                         tabs.initialHereTabs = []
@@ -294,42 +308,42 @@ class Bnym {
             console.log(resp.data.signers)
             console.log(resp.data.agents)
 
-            // for (let tab of tabs.signHereTabs) {
-            //     try {
-            //         // console.log(tab)
-            //         if(tab){
-            //             await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-            //                 signHereTabs: [tab]
-            //             }, {
-            //                 headers: {
-            //                     'Authorization': this.authToken
-            //                 }
-            //             });
-            //             console.log("tab inserida..")
-            //         }
-            //     } catch (error) {
-            //         console.log("tab nao inserida", error.response.data)
+            for (let tab of tabs.signHereTabs) {
+                try {
+                    // console.log(tab)
+                    if(tab){
+                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                            signHereTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    }
+                } catch (error) {
+                    console.log("tab nao inserida", error.response.data)
                     
-            //     }
-            // }
-            // for (let tab of tabs.initialHereTabs) {
-            //     try {
-            //         // console.log(tab)
-            //         if(tab){
-            //             await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-            //                 initialHereTabs: [tab]
-            //             }, {
-            //                 headers: {
-            //                     'Authorization': this.authToken
-            //                 }
-            //             });
-            //             console.log("tab inserida..")
-            //         }
+                }
+            }
+            for (let tab of tabs.initialHereTabs) {
+                try {
+                    // console.log(tab)
+                    if(tab){
+                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                            initialHereTabs: [tab]
+                        }, {
+                            headers: {
+                                'Authorization': this.authToken
+                            }
+                        });
+                        console.log("tab inserida..")
+                    }
               
-            //     } catch (error) {
-            //         console.log(error)
-            //     }
-            // }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
 
             return resp.data
         } catch (error) {
@@ -363,3 +377,4 @@ class Bnym {
 }
 
 export default Bnym
+
