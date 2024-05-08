@@ -262,7 +262,7 @@ class Bnym {
                 recipients.push(...signers)
 
                 let agent ={
-                    "name": el.nome["_text"] + " - CENTRALIZADOR",
+                    "name": el.role["_text"] + " - CENTRALIZADOR",
                     "email": el.email["_text"].trim(),
                     "recipientId": uuidv4(),
                     "accessCode": "",
