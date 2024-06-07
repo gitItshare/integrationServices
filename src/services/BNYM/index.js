@@ -61,6 +61,7 @@ class Bnym {
         try {
             console.log(this.authToken)
             let template = {
+                status:"created",
                 "signers": [],
                 "agents": []
             }
@@ -281,7 +282,7 @@ class Bnym {
                 }
                 return agent
             })
-
+            
             template.signers = recipients
             template.agents = agents
             console.log(template)
@@ -313,7 +314,9 @@ class Bnym {
                     // console.log(tab)
                     if(tab){
                         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                            signHereTabs: [tab]
+                            signHereTabs: [tab],
+                            status:"created",
+
                         }, {
                             headers: {
                                 'Authorization': this.authToken
@@ -331,6 +334,7 @@ class Bnym {
                     // console.log(tab)
                     if(tab){
                         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
+                            status:"created",
                             initialHereTabs: [tab]
                         }, {
                             headers: {
