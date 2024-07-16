@@ -13,7 +13,6 @@ router.post('/templates', async function (req, res) {
   console.log(req.body)
   let json = req.body.Params.replaceAll("'", '"')
   json = JSON.parse(json)
-  console.log(json)
   let auth = {
     userID: process.env.clientIDBNY,
     integrationKey: process.env.integratorKeyBny,
@@ -47,16 +46,13 @@ router.post('/templates', async function (req, res) {
           order: el.order
         }
       });
-      console.log(param)
-      //https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=d2c169da-974c-40c5-ae3d-b3b47b029391&redirect_uri=http://localhost:3000/
 
       await bny.jwt()
       await bny.authenticate()
-
       await bny.makeTemplate(param, req.body.envelopeId) 
 
   console.log("template criado")
-  res.send("OK").status(200)
+  await res.status(200).send({msg: "OK"})
 
 });
 

@@ -3,7 +3,6 @@ import bodyParser from 'body-parser'
 import routes from "./src/routes/index.js"
 import dotenv from "dotenv"
 import path from 'path';
-import estrategiaServices from "./src/services/estrategia/index.js";
 import  Client  from 'ssh2-sftp-client'
 
 const app = express()
