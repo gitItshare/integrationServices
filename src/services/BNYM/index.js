@@ -285,7 +285,6 @@ class Bnym {
             
             template.signers = recipients
             template.agents = agents
-            console.log(template)
             let recipientsEnv = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -306,8 +305,7 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
-            console.log(resp.data.signers)
-            console.log(resp.data.agents)
+
 
             for (let tab of tabs.signHereTabs) {
                 try {
@@ -348,7 +346,7 @@ class Bnym {
                     console.log(error)
                 }
             }
-
+            console.log("envelope editado!")
             return resp.data
         } catch (error) {
             console.log(error)
