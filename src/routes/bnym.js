@@ -55,8 +55,9 @@ router.post('/templates', async function (req, res) {
 
       await bny.makeTemplate(param, req.body.envelopeId) 
 
+  console.log("template criado")
+  res.send("OK").status(200)
 
-  res.send("resp");
 });
 
 export default router
