@@ -1,6 +1,6 @@
 import Docusign from "../Docusign/index.js";
 import Csv from "../../utils/csv.js";
-import fs from "fs";
+import fs, { readFileSync } from "fs";
 
 
 class ExtracaoMassiva {
@@ -212,7 +212,7 @@ class ExtracaoMassiva {
             await this.prepareFiles()
             await this.makeDir()
 
-            await Csv.HandleCsv("IdsEnvelopesDe2017-10-10Ate2024-02-27.csv")
+            await Csv.HandleCsv("idsCsv.csv")
             let splitedArray = Csv.SplitArray(parseInt(process.env.quantidadeEnvelopesBaixados || ""), null)
             console.log(splitedArray)
             let docusign = await this.authentication()
@@ -251,47 +251,76 @@ class ExtracaoMassiva {
             console.log(error)
         }
     }
-    
+    async readCsvFile(dir){
+        try {
+            let csvFileString = await readFileSync("./file.csv").toString()
+            let csvRows = csvFileString.split("\r\n")
+            csvRows.shift()
+            
+            let csvColunms = csvRows.map(row => row.split(";"))
+            console.log(csvRows)
+            console.log(csvColunms)
+            let xml = "<root>"
+
+            csvColunms.forEach(el => {
+                xml+=`<document>
+                    <id>${el[0]}</id>
+                    <nomeContratante>${el[3]}</nomeContratante>
+                    <cnpjContratante>${el[4]}</cnpjContratante>
+                    <nomeContratada>${el[6]}</nomeContratada>
+                    <cnpjContratada>${el[7]}</cnpjContratada>
+                    <dataInicioVigencia>${el[8]}</dataInicioVigencia>
+                    <dataFimVigencia>${el[9]}</dataFimVigencia>
+                    <tipo>${el[2]}</tipo>
+                    <status>${el[5]}</status>
+                </document>`
+            })
+            xml+="</root>"
+            return xml
+        } catch (error) {
+            console.log(error)
+        }
+    }
     async uploadLotes(){
         try {
             let docusign = await this.authentication()
-            const dirFiles = await fs.readdirSync(`C:/Users/kevin/Documents/projects/2272024`)
+            const dirFiles = await fs.readdirSync(`C:/Users/User/Documents/projects/integrationServices/uploads/20240821`)
             console.log(dirFiles)
             let index = 0
-            let pathToFile = "C:/Users/kevin/Documents/projects/2272024/"
+            let pathToFile = "C:/Users/User/Documents/projects/integrationServices/uploads/20240821/"
 
             let failsString = ""
-            let arrayPromises=[]
             let arrayPromisesUnlink=[]
 
             let indexArrPromise = 0
-            for(let file of dirFiles){
-                if(index == 0)
-                    arrayPromises[indexArrPromise] = []
-
-                index++
-                if(index > 20){
-                    index = 0
-                    indexArrPromise++
-                    arrayPromises[indexArrPromise] = []
+            function agruparEmGrupos(array, tamanhoGrupo) {
+                const resultado = [];
+                
+                for (let i = 0; i < array.length; i += tamanhoGrupo) {
+                  const grupo = array.slice(i, i + tamanhoGrupo);
+                  resultado.push(grupo);
                 }
-
-
-                arrayPromises[indexArrPromise].push(()=>docusign.updateDocumentCLM({pathToFile: pathToFile + file, name:file}, "61487f0d-b57f-421b-b2f7-7b4a97429e40", "5d641272-c6fd-ee11-b82a-48df37a6f7d0"))
-
-            }        
+                
+                return resultado;
+              }   
+            const tamanhoGrupo = 20;
+            const grupos = agruparEmGrupos(dirFiles, tamanhoGrupo);
+            console.log(grupos) 
+            let arrayPromises = grupos.map(grupo => grupo.map(file =>()=>docusign.updateDocumentCLM({pathToFile: pathToFile + file, name:file}, "9c4bc2db-3d7b-4ea9-8241-8714919ddb21", "b9baedf9-e25f-ef11-b82f-48df37a6f7d8")))
             index = 0
             console.log("posicoes", dirFiles.length)
             arrayPromises.forEach(el => {
-                console.log(el.length)
+                console.log(el)
             })
             setInterval(()=>{
-                Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
-                    index++
-                    console.log("finalizei o lote")
-                }).catch(err => {
-                    console.log("erro")
-                })
+                if(arrayPromises[index]){
+                    Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
+                        index++
+                        console.log("finalizei o lote")
+                    }).catch(err => {
+                        console.log("erro")
+                    })
+                }
             }, 30000)
         } catch (error) {
             console.log(error)

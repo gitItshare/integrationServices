@@ -2,6 +2,8 @@ import jwt from "../jwt.js"
 import fs from 'fs'
 import querystring from 'querystring';
 import axios from "axios";
+import { Blob } from "buffer";
+
 import fetch, {
     Headers
 } from 'node-fetch'
@@ -103,9 +105,8 @@ class Docusign {
                     agent: this.agent,
                     headers: headers
                 });
-                if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
+                if (!response.ok) throw new Error(`unexpected response ${response.statusText}, \n na url: ${url} `);
                 const streamPipeline = promisify(pipeline);
-                if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
 
                 this.arrayPromiseWriteFile.push(streamPipeline(response.body, fs.createWriteStream(`${global.appRoot +"/uploads/"}${folder}/${idDocumento}.pdf`)));
 
@@ -227,8 +228,10 @@ class Docusign {
         return new Promise(async(resolve, reject) => {
             try {
                 const form = new FormData();
-                let file = await fs.readFileSync(data.pathToFile)
-                form.set("file", file, data.name);
+                let buffer = fs.readFileSync(data.pathToFile);
+                let blob = new Blob([buffer]);
+
+                form.set("file", blob, data.name);
                 console.log("uploaded...", data.name)
                 let baixados = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/baixados.csv`, {
                     flags: 'a' // 'a' means appending (old data will be preserved)
@@ -249,6 +252,7 @@ class Docusign {
                 let fails = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/errosUpload.csv`, {
                     flags: 'a' // 'a' means appending (old data will be preserved)
                 })
+                console.log(error)
                 fails.write(data.name+"\n")
                 fails.end()
                 reject("err")
