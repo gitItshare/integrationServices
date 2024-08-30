@@ -22,7 +22,6 @@ app.use(bodyParser.json())
 app.use(routes);
 
 app.get('/', async (req, res) => {
-
   res.send("helloWorld")
 })
 
