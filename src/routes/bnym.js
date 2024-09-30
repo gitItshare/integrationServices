@@ -45,13 +45,15 @@ router.post('/templates', function (req, res) {
         }
       });
 
-       bny.jwt().then(res => {
-        bny.authenticate().then(res => {
-          bny.makeTemplate(param, req.body.envelopeId) 
+       bny.jwt().then(resp => {
+        bny.authenticate().then(resp => {
+          bny.makeTemplate(param, req.body.envelopeId).then(resp => {
+            res.status(200).send({msg: "OK"})
+
+          })
         })
        })
 
-   res.status(200).send({msg: "OK"})
 
 });
 // https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=bba97b1a-65fc-4e70-99ef-2fb268137beb&redirect_uri=https://www.bnymellon.com/br/pt.html
