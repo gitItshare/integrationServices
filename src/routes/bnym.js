@@ -10,7 +10,6 @@ let token = ""
 // Define the home page route
 router.post('/templates', function (req, res) {
   let resp = ""
-  console.log(req.body)
   let json = req.body.Params.replaceAll("'", '"')
   json = JSON.parse(json)
   let auth = {
@@ -20,14 +19,13 @@ router.post('/templates', function (req, res) {
     accountID: process.env.accountIDBny,
     privateKey: process.env.privatekeyBny
   }
-  const scope = "signature impersonation spring_read spring_write";
+  const scope = "signature impersonation";
   const bny = new bnyService(auth, scope)
   let xml = bny.makexml(json)
       let {recipients} = JSON.parse(xml2json(xml,  { spaces: 2, compact: true }))
       let agents = []
       agents = Array.isArray(recipients.agents) ? [...recipients.agents] : [recipients.agents]
       let param = agents.map(el => {
-        console.log(el.testemunhas)
         let testemunhas = []
         testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
         let assinaturas = []
@@ -53,9 +51,8 @@ router.post('/templates', function (req, res) {
         })
        })
 
-   console.log("template criado")
    res.status(200).send({msg: "OK"})
 
 });
-
+// https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=bba97b1a-65fc-4e70-99ef-2fb268137beb&redirect_uri=https://www.bnymellon.com/br/pt.html
 export default router

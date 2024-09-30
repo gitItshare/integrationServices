@@ -23,7 +23,7 @@ class Jwt{
     
      async getToken()  {
         try {    
-            const token = await jwt.sign(this.payload, this.secret);
+            const token = await jwt.sign(this.payload,this.privateKey, { algorithm: 'RS256' });
             return token
          } catch (error) {
             console.log("ERROR", error)

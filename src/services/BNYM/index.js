@@ -37,23 +37,22 @@ class Bnym {
     }
     async jwt() {
         try {
-            const iat = Math.floor(+new Date() / 1000);
-            const exp = Math.floor(+new Date() * 1000);
+            const now = Math.floor(Date.now() / 1000);
+            
             const payload = {
                 "iss": this.integrationKey,
                 "sub": this.userID,
                 "aud": "account.docusign.com",
-                "iat": exp,
-                "exp": iat,
+                "exp": now+4000,
+                "iat": now,
                 "scope": this.scope
             }
-            console.log(payload)
-            const JWT = new jwt(payload, this.privateKey)
+           const JWT = new jwt(payload, this.privateKey)
             const token = await JWT.getToken();
             console.log(token)
             this.jwtToken = token
         } catch (error) {
-            console.log(error)
+            console.log("error")
             this.jwtToken = ''
         }
     }
@@ -309,7 +308,6 @@ class Bnym {
 
             for (let tab of tabs.signHereTabs) {
                 try {
-                    // console.log(tab)
                     if(tab){
                         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
                             signHereTabs: [tab],
@@ -320,7 +318,6 @@ class Bnym {
                                 'Authorization': this.authToken
                             }
                         });
-                        console.log("tab inserida..")
                     }
                 } catch (error) {
                     console.log("tab nao inserida", error.response.data)
@@ -339,25 +336,21 @@ class Bnym {
                                 'Authorization': this.authToken
                             }
                         });
-                        console.log("tab inserida..")
                     }
               
                 } catch (error) {
-                    console.log(error)
+                    console.log("error")
                 }
             }
-            console.log("envelope editado!")
             return resp.data
         } catch (error) {
-            console.log(error)
+            console.log("error")
         }
     }
      makexml(json){
         var xml = "<recipients>"
         Object.keys(json).forEach(function(key, index) {
             xml+= "<agents>"
-            console.log('Key : ' + key)
-            console.log(json[key])
             
             xml +=  "<nome>"+json[key].nome+"</nome>"
             xml +=  "<role>"+json[key].role+"</role>"
@@ -373,7 +366,6 @@ class Bnym {
             xml+="</agents>"
           })
           xml += "</recipients>"
-          console.log("XML", xml)
           return xml
     }
 }
