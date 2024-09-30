@@ -6,7 +6,7 @@ import path from 'path';
 import  Client  from 'ssh2-sftp-client'
 import Jwt from './src/services/jwt.js';
 const app = express()
-const port = 6800
+const port = 3000
 dotenv.config()
 let rootPath = process.env.rootPath
 global.appRoot = path.resolve(rootPath)
