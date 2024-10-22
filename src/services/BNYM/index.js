@@ -4,6 +4,7 @@ import path from 'path';
 import jwt from "../jwt.js"
 import querystring from "querystring"
 import { v4 as uuidv4 } from 'uuid';
+import xml2json from 'xml-js';
 let dirname = path.resolve(path.dirname(''));
 
 
@@ -56,9 +57,33 @@ class Bnym {
             this.jwtToken = ''
         }
     }
-    async makeTemplate(params, envelopeId) {
+    async makeTemplateWithAgents(Params, envelopeId) {
         try {
-            console.log(this.authToken)
+            let json = Params.replaceAll("'", '"')
+            json = JSON.parse(json)
+            let xml = bny.makexml(json)
+            json = JSON.parse(xml2json(xml,  { spaces: 2, compact: true }))
+            let agentsArray = []
+            agentsArray = Array.isArray(json.recipients.agents) ? [...json.recipients.agents] : [json.recipients.agents]
+            let params = agentsArray.map(el => {
+              let testemunhas = []
+              testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
+              let assinaturas = []
+              assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
+          
+              return {
+                nome: el.nome,
+                email: el.email,
+                role: el.role,
+                position: el.position,
+                carimbo: el.carimbo,
+                testemunhas: testemunhas,
+                assinaturas:assinaturas,
+                ancora: el.ancora,
+                tipoAss: el.tipoAss,
+                order: el.order
+              }
+            });
             let template = {
                 status:"created",
                 "signers": [],
@@ -304,33 +329,21 @@ class Bnym {
                     'Authorization': this.authToken
                 }
             });
-
-
-            for (let tab of tabs.signHereTabs) {
+            await this.insertTabs(tabs.signHereTabs, envelopeId, "signHereTabs")
+            await this.insertTabs(tabs.initialHereTabs, envelopeId, "initialHereTabs")
+            return resp.data
+        } catch (error) {
+            console.log("error")
+        }
+    }
+    async insertTabs(tabs, envelopeId, type) {
+        try {
+            for (let tab of tabs) {
                 try {
                     if(tab){
                         await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                            signHereTabs: [tab],
                             status:"created",
-
-                        }, {
-                            headers: {
-                                'Authorization': this.authToken
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.log("tab nao inserida", error.response.data)
-                    
-                }
-            }
-            for (let tab of tabs.initialHereTabs) {
-                try {
-                    // console.log(tab)
-                    if(tab){
-                        await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients/${tab.recipientId}/tabs`, {
-                            status:"created",
-                            initialHereTabs: [tab]
+                            [type]: [tab]
                         }, {
                             headers: {
                                 'Authorization': this.authToken
@@ -342,9 +355,147 @@ class Bnym {
                     console.log("error")
                 }
             }
+        } catch (error) {
+            
+        }
+    }
+    async makeSimpleTemplate(Params, envelopeId) { 
+        try {
+            let json = Params.replaceAll("'", '"')
+            json = JSON.parse(json)
+            delete json.tipo
+            console.log(json)
+            let template = {
+                status:"created",
+                "signers": [],
+                "agents": []
+            }
+            let tabs = {
+                signHereTabs: []
+            }
+  
+            template.signers = Object.keys(json).map((key, i) => {
+                        let recipientIdSigner = uuidv4()
+                        let signer = {
+                            "defaultRecipient": "false",
+                            "signInEachLocation": "false",
+                            "recipientSignatureProviders": [
+                                {
+                                    "sealDocumentsWithTabsOnly": "false",
+                                    "signatureProviderName": "universalsignaturepen_imageonly",
+                                    "signatureProviderOptions": {}
+                                }
+                            ],                            
+                            agentCanEditName:true,
+                            "tabs": {
+                                "signHereTabs": [{
+                                        "stampType": "signature",
+                                        "name": "SignHere",
+                                        "tabLabel": "Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
+                                        "scaleValue": "1",
+                                        "optional": "false",
+                                        "documentId": "1",
+                                        "recipientId": recipientIdSigner ,
+                                        "pageNumber": "1",
+                                        "xPosition": "",
+                                        "yPosition": "",
+                                        "anchorString": "\\ass" + json[key].ancora.trim() + "\\",
+                                        "anchorXOffset": "0",
+                                        "anchorYOffset": "0",
+                                        "anchorUnits": "pixels",
+                                        "anchorCaseSensitive": "false",
+                                        "anchorMatchWholeWord": "true",
+                                        "anchorHorizontalAlignment": "left",
+                                        "anchorTabProcessorVersion": "v1_3",
+                                        "tabId": "15bdf337-9e98-43af-b560-6019d250e5bb",
+                                        "templateLocked": "false",
+                                        "templateRequired": "false",
+                                        "tabType": "signhere"
+                                    },
+                                    {
+                                        "stampType": "stamp",
+                                        "name": "SignHereOptional",
+                                        "tabLabel": "Selo 15fef517-430d-4336-b092-6686a4f9ccec",
+                                        "scaleValue": "1",
+                                        "optional": "true",
+                                        "documentId": "1",
+                                        "recipientId": recipientIdSigner,
+                                        "pageNumber": "1",
+                                        "xPosition": "",
+                                        "yPosition": "",
+                                        "anchorString": "\\car" + (json[key].ancora.trim().includes("distribuidoraai")? "aai"+(i+1) : json[key].ancora.trim()) + "\\",
+                                        "anchorXOffset": "0",
+                                        "anchorYOffset": "0",
+                                        "anchorUnits": "pixels",
+                                        "anchorCaseSensitive": "false",
+                                        "anchorMatchWholeWord": "true",
+                                        "anchorHorizontalAlignment": "left",
+                                        "anchorTabProcessorVersion": "v1_3",
+                                        "tabId": "5746ff3b-1d40-48e5-a9f4-a8dcea0839b8",
+                                        "templateLocked": "false",
+                                        "templateRequired": "false",
+                                        "tabType": "signhereoptional"
+                                    }
+                                ],
+                            },
+                            "name": json[key].nome,
+                            "email": json[key].email,
+                            "recipientId": recipientIdSigner,
+                            "accessCode": "",
+                            "requireIdLookup": "false",
+                            "routingOrder": json[key].order,
+                            "note": "",
+                            "deliveryMethod": "email",
+                            "templateLocked": "false",
+                            "templateRequired": "false",
+                            "inheritEmailNotificationConfiguration": "false"
+                        }
+                        if(json[key].tipoAssinatura == "ICP"){
+                            signer.recipientSignatureProviders = [{
+                                "sealDocumentsWithTabsOnly": "false",
+                                "signatureProviderName": "universalsignaturepen_imageonly",
+                                "signatureProviderOptions": {}
+                            }]
+                        }
+                        tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
+                        // tabs.signHereTabs.push(signer.tabs.signHereTabs[1])
+                        return signer
+            })
+            let recipientsEnv = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
+                headers: {
+                    'Authorization': this.authToken
+                },
+            });
+            try {
+                await axios.delete(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
+                    headers: {
+                        'Authorization': this.authToken
+                    },
+                    data: recipientsEnv.data
+                });
+            } catch (error) {
+                console.log("nao deletei", error.response.data)
+            }
+            const resp = await axios.post(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, template, {
+                headers: {
+                    'Authorization': this.authToken
+                }
+            });
+            console.log(resp.data)
+            await this.insertTabs(tabs.signHereTabs, envelopeId, "signHereTabs")
             return resp.data
         } catch (error) {
-            console.log("error")
+            console.log(error)
+        }
+    }
+    async makeTemplate(params, envelopeId, type) {
+        try {
+            if(type == "semIndicacao")
+                await this.makeSimpleTemplate(params,envelopeId);
+            else
+                await this.makeTemplateWithAgents(params,envelopeId);
+        } catch (error) {
+            console.log(error);
         }
     }
      makexml(json){

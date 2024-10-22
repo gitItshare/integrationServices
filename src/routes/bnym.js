@@ -9,9 +9,6 @@ let token = ""
 
 // Define the home page route
 router.post('/templates', function (req, res) {
-  let resp = ""
-  let json = req.body.Params.replaceAll("'", '"')
-  json = JSON.parse(json)
   let auth = {
     userID: process.env.clientIDBNY,
     integrationKey: process.env.integratorKeyBny,
@@ -21,38 +18,16 @@ router.post('/templates', function (req, res) {
   }
   const scope = "signature impersonation";
   const bny = new bnyService(auth, scope)
-  let xml = bny.makexml(json)
-      let {recipients} = JSON.parse(xml2json(xml,  { spaces: 2, compact: true }))
-      let agents = []
-      agents = Array.isArray(recipients.agents) ? [...recipients.agents] : [recipients.agents]
-      let param = agents.map(el => {
-        let testemunhas = []
-        testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
-        let assinaturas = []
-        assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
-
-        return {
-          nome: el.nome,
-          email: el.email,
-          role: el.role,
-          position: el.position,
-          carimbo: el.carimbo,
-          testemunhas: testemunhas,
-          assinaturas:assinaturas,
-          ancora: el.ancora,
-          tipoAss: el.tipoAss,
-          order: el.order
-        }
-      });
-
-       bny.jwt().then(resp => {
-        bny.authenticate().then(resp => {
-          bny.makeTemplate(param, req.body.envelopeId).then(resp => {
-            res.status(200).send({msg: "OK"})
-
-          })
-        })
-       })
+  let json = req.body.Params.replaceAll("'", '"')
+  json = JSON.parse(json)
+  console.log(json)
+  bny.jwt().then(resp => {
+  bny.authenticate().then(resp => {
+    bny.makeTemplate(req.body.Params, req.body.envelopeId, json.tipo).then(resp => {
+      res.status(200).send({msg: "OK"})
+    })
+  })
+  })
 
 
 });
