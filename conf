@@ -1,0 +1,12 @@
+server {
+    if ($host = nodeshare.online) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name nodeshare.online;
+    return 404; # managed by Certbot
+
+
+}
