@@ -10,11 +10,11 @@ const auth = (req,res,next) => {
     jwt.verifyJWT(req,res,next)
 }
 var router = express.Router();
-router.use("/",auth)
- router.use("/sankhya",sankhya)
- router.use("/safra",safra)
- router.use("/bnym",bnym)
- router.use("/estrategia",estrategia)
- router.use("/topazio",topazio)
+router.use("/")
+ router.use("/sankhya",auth,sankhya)
+ router.use("/safra",auth,safra)
+ router.use("/bnym",auth,bnym)
+ router.use("/estrategia",auth,estrategia)
+ router.use("/topazio",auth,topazio)
 
  export default router
