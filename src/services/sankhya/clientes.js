@@ -56,7 +56,7 @@ const cadastro = async (data, token) => {
       let clienteAD = await cadastrarAD(data, token, parceiro,cedente)
       return true
    } catch (error) {
-      console.log(error)
+      console.log(error.message)
    }
 }
 const cadastrar = async (data, token,cedente) => {
@@ -86,8 +86,6 @@ const cadastrar = async (data, token,cedente) => {
             "$": "C"
          }
       }
-      console.log("data", cedente)
-      console.log("data", localFields)
 
       const body = {
          "serviceName": "CRUDServiceProvider.saveRecord",
@@ -131,11 +129,10 @@ const cadastrar = async (data, token,cedente) => {
       let {
          data
       } = await client.post(url, body)
-      console.log(data)
       let codParc = data.responseBody.entities.entity["CODPARC"]["$"]
       return codParc
    } catch (error) {
-      console.log(error)
+      console.log(error.message)
    }
 }
 
@@ -159,9 +156,7 @@ const cadastrarAD = async (data, token, codParc,cedente) => {
          }
       }
       const fieldsetlist = []
-      console.log("data", cedente)
       for (var attributename in cedente) {
-         console.log(cedente[attributename]);
          if (attributename == "Professor_PF_ou_PJ") {
             fieldsetlist.push(dicionario[attributename])
             localFields[dicionario[attributename]] = {
@@ -189,8 +184,6 @@ const cadastrarAD = async (data, token, codParc,cedente) => {
             }
          }
       }
-      console.log("data", fieldsetlist.join(","))
-      console.log("data", localFields)
 
       const body = {
          "serviceName": "CRUDServiceProvider.saveRecord",
@@ -210,9 +203,9 @@ const cadastrarAD = async (data, token, codParc,cedente) => {
          }
       }
       let resp = await client.post(url, body)
-      console.log(resp)
+      return resp
    } catch (error) {
-      console.log(error)
+      console.log(error.message)
    }
 }
 const consultar = async (expression, token) => {
@@ -242,7 +235,6 @@ const consultar = async (expression, token) => {
       let {
          data
       } = await client.post(url, body)
-      console.log(data.responseBody.entities)
       let total = data.responseBody.entities.total
 
       if (total == 0)
@@ -283,9 +275,6 @@ const consultarAD = async (expression, token) => {
       let {
          data
       } = await client.post(url, body)
-      console.log(data.responseBody.entities.entity)
-      console.log(data.responseBody.entities.metadata.fields)
-
       let total = data.responseBody.entities.total
 
       return true

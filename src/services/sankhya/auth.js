@@ -17,7 +17,7 @@ const auth = async () => {
         let resp = await client.post(url)
         return resp.data.bearerToken
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
     }
 }
 
