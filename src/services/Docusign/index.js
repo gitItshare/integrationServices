@@ -21,12 +21,12 @@ class Docusign {
     constructor(docusignCredentials, scope) {
         this.userID = docusignCredentials.userID
         this.integrationKey = docusignCredentials.integrationKey
-        this.dsOauthServer = docusignCredentials.dsOauthServer
+        this.dsOauthServer = docusignCredentials.dsOauthServer || "account.docusign.com"
         this.accountID = docusignCredentials.accountID
         this.privateKey = docusignCredentials.privateKey
         this.scope = scope
         this.agent = null
-        this.apiURL = "https://na2.docusign.net/restapi/v2.1/accounts/"
+        this.apiURL = "https://na4.docusign.net/restapi/v2.1/accounts/"
         this.arrayPromiseWriteFile = []
         this.stringCsv = ""
         this.stringErroCsv = ""
@@ -67,6 +67,9 @@ class Docusign {
             }
         })
     }
+    async getToken() {
+        return this.authToken
+    }
     async authenticate() {
         let response
         try {
@@ -74,8 +77,8 @@ class Docusign {
                 grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 assertion: this.jwtToken,
             });
-            console.log(`TESTETEEE https://account.docusign.com/oauth/token?${queryData}`)
-            const resp = await fetch(`https://account.docusign.com/oauth/token?${queryData}`, {
+            console.log(`TESTETEEE ${this.dsOauthServer}/oauth/token?${queryData}`)
+            const resp = await fetch(`https://${this.dsOauthServer}/oauth/token?${queryData}`, {
                 method: 'post',
                 agent: this.agent,
             });
@@ -91,7 +94,6 @@ class Docusign {
         }
     }
 
-    //https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation%20spring_read%20spring_write&client_id=fd785a52-1ecd-4fa0-91b3-d37db1fea073&redirect_uri=http://localhost:5000/callback
     async getEnvelopeDocuments(idDocumento, folder) {
         return new Promise(async (resolve, reject) => {
             try {

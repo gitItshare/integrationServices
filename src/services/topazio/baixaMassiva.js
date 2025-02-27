@@ -19,7 +19,7 @@ class ExtracaoMassiva {
             integrationKey: process.env.estrategiaIK || "",
             privateKey: process.env.estrategiaKey || "",
             dsOauthServer: process.env.dsOauthServer || "",
-            accountID: process.env.estrategiaaccountID || "",
+            accountID:  "1e75edda-73e9-4fec-9ca4-1769c6413890",
         }
         const scope = "signature impersonation spring_read spring_write";
         const docusign = new Docusign(credentials, scope);
@@ -257,11 +257,11 @@ class ExtracaoMassiva {
             let csvRows = csvFileString.split("\r\n")
             csvRows.shift()
             
-            let csvColunms = csvRows.map(row => row.split(";"))
+            let csvColunms = csvRows.map(row => row.split(","))
             console.log(csvRows)
             console.log(csvColunms)
             let xml = "<root>"
-
+            let csv = ""
             csvColunms.forEach(el => {
                 xml+=`<document>
                     <id>${el[0]}</id>
@@ -274,9 +274,11 @@ class ExtracaoMassiva {
                     <tipo>${el[2]}</tipo>
                     <status>${el[5]}</status>
                 </document>`
+
+                csv+="x,x,x," + el[0]+ "\n"
             })
             xml+="</root>"
-            return xml
+            return {xml, csv}
         } catch (error) {
             console.log(error)
         }
@@ -284,10 +286,10 @@ class ExtracaoMassiva {
     async uploadLotes(){
         try {
             let docusign = await this.authentication()
-            const dirFiles = await fs.readdirSync(`C:/Users/User/Documents/projects/integrationServices/uploads/20240821`)
+            const dirFiles = await fs.readdirSync(`C:/Users/User/Documents/projects/integrationServices/uploads/20250203`)
             console.log(dirFiles)
             let index = 0
-            let pathToFile = "C:/Users/User/Documents/projects/integrationServices/uploads/20240821/"
+            let pathToFile = "C:/Users/User/Documents/projects/integrationServices/uploads/20250203/"
 
             let failsString = ""
             let arrayPromisesUnlink=[]
@@ -306,12 +308,13 @@ class ExtracaoMassiva {
             const tamanhoGrupo = 20;
             const grupos = agruparEmGrupos(dirFiles, tamanhoGrupo);
             console.log(grupos) 
-            let arrayPromises = grupos.map(grupo => grupo.map(file =>()=>docusign.updateDocumentCLM({pathToFile: pathToFile + file, name:file}, "9c4bc2db-3d7b-4ea9-8241-8714919ddb21", "b9baedf9-e25f-ef11-b82f-48df37a6f7d8")))
+            let arrayPromises = grupos.map(grupo => grupo.map(file =>()=>docusign.updateDocumentCLM({
+                pathToFile: pathToFile + file,
+                 name:file}, 
+                "1e75edda-73e9-4fec-9ca4-1769c6413890", "c3e179d4-24e2-ef11-b82f-48df37a6f7d8")))
             index = 0
             console.log("posicoes", dirFiles.length)
-            arrayPromises.forEach(el => {
-                console.log(el)
-            })
+
             setInterval(()=>{
                 if(arrayPromises[index]){
                     Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
@@ -321,7 +324,7 @@ class ExtracaoMassiva {
                         console.log("erro")
                     })
                 }
-            }, 30000)
+            }, 60000)
         } catch (error) {
             console.log(error)
         }

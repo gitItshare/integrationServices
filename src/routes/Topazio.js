@@ -3,17 +3,14 @@ import topazioService from "../services/topazio/index.js";
 import fs, { readFileSync } from "fs"
 const router = express.Router();
 router.get('/csv', async function(req, res) {
-    let periodo = {
-        from:new Date("10/10/2017").toISOString(),
-        to:new Date().toISOString(),
-        offset: 0
-    }
-   let arrCsv = await topazioService.baixaMassiva.readCsvFile()
-   let writable = await fs.createWriteStream(`./uploads/idsCsv.csv`)
-    writable.write(`${arrCsv}\n`)
-    writable.end()
-   console.log(arrCsv)
 
+   let {xml, csv} = await topazioService.baixaMassiva.readCsvFile()
+   let writable = await fs.createWriteStream(`./uploads/idsCsv.csv`)
+    writable.write(`${csv}\n`)
+    writable.end()
+    writable = await fs.createWriteStream(`./uploads/idsCsv.xml`)
+    writable.write(`${xml}\n`)
+    writable.end()
    res.send("ok");
 });
 

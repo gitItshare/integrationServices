@@ -4,7 +4,7 @@ import path from 'path';
 import jwt from "../jwt.js"
 import querystring from "querystring"
 import { v4 as uuidv4 } from 'uuid';
-import xml2json from 'xml-js';
+import parser  from 'xml-js';
 let dirname = path.resolve(path.dirname(''));
 
 
@@ -53,7 +53,7 @@ class Bnym {
             console.log(token)
             this.jwtToken = token
         } catch (error) {
-            console.log("error")
+            console.log(error)
             this.jwtToken = ''
         }
     }
@@ -61,8 +61,8 @@ class Bnym {
         try {
             let json = Params.replaceAll("'", '"')
             json = JSON.parse(json)
-            let xml = bny.makexml(json)
-            json = JSON.parse(xml2json(xml,  { spaces: 2, compact: true }))
+            let xml = this.makexml(json)
+            json = JSON.parse(parser.xml2json(xml,  { spaces: 2, compact: true }))
             let agentsArray = []
             agentsArray = Array.isArray(json.recipients.agents) ? [...json.recipients.agents] : [json.recipients.agents]
             let params = agentsArray.map(el => {
@@ -333,7 +333,7 @@ class Bnym {
             await this.insertTabs(tabs.initialHereTabs, envelopeId, "initialHereTabs")
             return resp.data
         } catch (error) {
-            console.log("error")
+            console.log(error)
         }
     }
     async insertTabs(tabs, envelopeId, type) {
