@@ -300,4 +300,4 @@ class ExtracaoMassiva {
 }
 
 
-export default new ExtracaoMassiva();
+export default ExtracaoMassiva;
