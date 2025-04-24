@@ -66,27 +66,28 @@ class Bnym {
             let agentsArray = []
             let params = []
             agentsArray = Array.isArray(json.recipients.agents) ? [...json.recipients.agents] : [json.recipients.agents]
+            const agentsArray2 = [...agentsArray]
+            const removeAssinantes = agentsArray.filter(el => el.tipo['_text'] != "assinante")
+            agentsArray = removeAssinantes.filter(el => el.tipo['_text'] != "copia")
             agentsArray.forEach(el => {
             let testemunhas = []
             testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
             let assinaturas = []
             assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
         
-            if(el.tipo != "copia" || el.tipo == "assinante"){
-                params.push({
-                    nome: el.nome,
-                    email: el.email,
-                    role: el.role,
-                    position: el.position,
-                    carimbo: el.carimbo,
-                    testemunhas: testemunhas,
-                    assinaturas:assinaturas,
-                    ancora: el.ancora,
-                    tipoAss: el.tipoAss,
-                    order: el.order
-                })
-            } else {
-            }
+            params.push({
+                nome: el.nome,
+                email: el.email,
+                role: el.role,
+                position: el.position,
+                carimbo: el.carimbo,
+                testemunhas: testemunhas,
+                assinaturas:assinaturas,
+                ancora: el.ancora,
+                tipoAss: el.tipoAss,
+                order: el.order
+            })
+            
             });
             let template = {
                 status:"created",
@@ -311,8 +312,8 @@ class Bnym {
                 }
                 return agent
             })
-            let assinantesSemAgentes = agentsArray.filter(el => el.tipo['_text'] == "assinante")
-            let receiveCopy =   agentsArray.filter(el => el.tipo['_text'] == "copia")
+            let assinantesSemAgentes = agentsArray2.filter(el => el.tipo['_text'] == "assinante")
+            let receiveCopy =   agentsArray2.filter(el => el.tipo['_text'] == "copia")
 
             assinantesSemAgentes = assinantesSemAgentes.map((sign, i) => {
                 let recipientIdSigner = uuidv4()
@@ -380,7 +381,7 @@ class Bnym {
                         ],
                     },
                     "name": sign.role["_text"],
-                    "email": "",
+                    "email": sign.email["_text"].trim(),
                     "recipientId": recipientIdSigner,
                     "accessCode": "",
                     "requireIdLookup": "false",
@@ -413,7 +414,15 @@ class Bnym {
                     routingOrder: sign.order["_text"],  
                 }
             })
-
+            const routingSgdi = parseInt(receiveCopy[receiveCopy.length - 1].routingOrder) + 1
+            receiveCopy.push({
+                recipientId: uuidv4(),
+                name: "SGDI",
+                email: "sgdi@bny.com",
+                roleName: "SGDI",
+                routingOrder: routingSgdi,
+            })
+            recipients.push(...assinantesSemAgentes)
             template.signers = recipients
             template.agents = agents
             template.carbonCopies = receiveCopy
