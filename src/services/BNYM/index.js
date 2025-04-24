@@ -64,30 +64,35 @@ class Bnym {
             let xml = this.makexml(json)
             json = JSON.parse(parser.xml2json(xml,  { spaces: 2, compact: true }))
             let agentsArray = []
+            let params = []
             agentsArray = Array.isArray(json.recipients.agents) ? [...json.recipients.agents] : [json.recipients.agents]
-            let params = agentsArray.map(el => {
-              let testemunhas = []
-              testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
-              let assinaturas = []
-              assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
-          
-              return {
-                nome: el.nome,
-                email: el.email,
-                role: el.role,
-                position: el.position,
-                carimbo: el.carimbo,
-                testemunhas: testemunhas,
-                assinaturas:assinaturas,
-                ancora: el.ancora,
-                tipoAss: el.tipoAss,
-                order: el.order
-              }
+            agentsArray.forEach(el => {
+            let testemunhas = []
+            testemunhas = Array.isArray(el.testemunhas) ? [...el.testemunhas] : [el.testemunhas]
+            let assinaturas = []
+            assinaturas = Array.isArray(el.assinaturas) ? [...el.assinaturas] : [el.assinaturas]
+        
+            if(el.tipo != "copia" || el.tipo == "assinante"){
+                params.push({
+                    nome: el.nome,
+                    email: el.email,
+                    role: el.role,
+                    position: el.position,
+                    carimbo: el.carimbo,
+                    testemunhas: testemunhas,
+                    assinaturas:assinaturas,
+                    ancora: el.ancora,
+                    tipoAss: el.tipoAss,
+                    order: el.order
+                })
+            } else {
+            }
             });
             let template = {
                 status:"created",
                 "signers": [],
-                "agents": []
+                "agents": [],
+                "carbonCopies": []
             }
             let tabs = {
                 signHereTabs: []
@@ -306,9 +311,112 @@ class Bnym {
                 }
                 return agent
             })
-            
+            let assinantesSemAgentes = agentsArray.filter(el => el.tipo['_text'] == "assinante")
+            let receiveCopy =   agentsArray.filter(el => el.tipo['_text'] == "copia")
+
+            assinantesSemAgentes = assinantesSemAgentes.map((sign, i) => {
+                let recipientIdSigner = uuidv4()
+
+                let signer = {
+                    "defaultRecipient": "false",
+                    "signInEachLocation": "false",
+                    "recipientSignatureProviders": [
+                        {
+                            "sealDocumentsWithTabsOnly": "false",
+                            "signatureProviderName": "universalsignaturepen_imageonly",
+                            "signatureProviderOptions": {}
+                        }
+                    ],                            
+                    agentCanEditName:true,
+                    "tabs": {
+                        "signHereTabs": [{
+                                "stampType": "signature",
+                                "name": "SignHere",
+                                "tabLabel": "Assinatura cfde0f5e-01fe-44f1-b9d7-994352857a80",
+                                "scaleValue": "1",
+                                "optional": "false",
+                                "documentId": "1",
+                                "recipientId": recipientIdSigner ,
+                                "pageNumber": "1",
+                                "xPosition": "",
+                                "yPosition": "",
+                                "anchorString": "\\ass" + sign.ancora["_text"].trim() + "\\",
+                                "anchorXOffset": "0",
+                                "anchorYOffset": "0",
+                                "anchorUnits": "pixels",
+                                "anchorCaseSensitive": "false",
+                                "anchorMatchWholeWord": "true",
+                                "anchorHorizontalAlignment": "left",
+                                "anchorTabProcessorVersion": "v1_3",
+                                "tabId": "15bdf337-9e98-43af-b560-6019d250e5bb",
+                                "templateLocked": "false",
+                                "templateRequired": "false",
+                                "tabType": "signhere"
+                            },
+                            {
+                                "stampType": "stamp",
+                                "name": "SignHereOptional",
+                                "tabLabel": "Selo 15fef517-430d-4336-b092-6686a4f9ccec",
+                                "scaleValue": "1",
+                                "optional": "true",
+                                "documentId": "1",
+                                "recipientId": recipientIdSigner,
+                                "pageNumber": "1",
+                                "xPosition": "",
+                                "yPosition": "",
+                                "anchorString": "\\car" + (sign.ancora["_text"].trim().includes("distribuidoraai")? "aai"+(i+1) : sign.ancora["_text"].trim()) + "\\",
+                                "anchorXOffset": "0",
+                                "anchorYOffset": "0",
+                                "anchorUnits": "pixels",
+                                "anchorCaseSensitive": "false",
+                                "anchorMatchWholeWord": "true",
+                                "anchorHorizontalAlignment": "left",
+                                "anchorTabProcessorVersion": "v1_3",
+                                "tabId": "5746ff3b-1d40-48e5-a9f4-a8dcea0839b8",
+                                "templateLocked": "false",
+                                "templateRequired": "false",
+                                "tabType": "signhereoptional"
+                            }
+                        ],
+                    },
+                    "name": sign.role["_text"],
+                    "email": "",
+                    "recipientId": recipientIdSigner,
+                    "accessCode": "",
+                    "requireIdLookup": "false",
+                    "routingOrder": sign.order["_text"],
+                    "note": "",
+                    "deliveryMethod": "email",
+                    "templateLocked": "false",
+                    "templateRequired": "false",
+                    "inheritEmailNotificationConfiguration": "false"
+                }
+                if(sign.tipoAss["_text"] == "ICP"){
+                    signer.recipientSignatureProviders = [{
+                        "sealDocumentsWithTabsOnly": "false",
+                        "signatureProviderName": "universalsignaturepen_imageonly",
+                        "signatureProviderOptions": {}
+                    }]
+                }
+                tabs.signHereTabs.push(signer.tabs.signHereTabs[0])
+                tabs.signHereTabs.push(signer.tabs.signHereTabs[1])
+                return signer
+            })
+            receiveCopy = receiveCopy.map((sign, i) => {
+                let recipientIdSigner = uuidv4()
+
+                return {
+                    recipientId: recipientIdSigner,
+                    name: sign.role["_text"],
+                    email: sign.email["_text"].trim(),
+                    roleName: sign.role["_text"],
+                    routingOrder: sign.order["_text"],  
+                }
+            })
+
             template.signers = recipients
             template.agents = agents
+            template.carbonCopies = receiveCopy
             let recipientsEnv = await axios.get(`https://na2.docusign.net/restapi/v2/accounts/107905117/envelopes/${envelopeId}/recipients`, {
                 headers: {
                     'Authorization': this.authToken
@@ -488,12 +596,12 @@ class Bnym {
             console.log(error)
         }
     }
-    async makeTemplate(params, envelopeId, type) {
+    async makeTemplate(params, envelopeId, type, assunto) {
         try {
             if(type == "semIndicacao")
-                await this.makeSimpleTemplate(params,envelopeId);
+                await this.makeSimpleTemplate(params,envelopeId, assunto);
             else
-                await this.makeTemplateWithAgents(params,envelopeId);
+                await this.makeTemplateWithAgents(params,envelopeId, assunto);
         } catch (error) {
             console.log(error);
         }
@@ -507,7 +615,9 @@ class Bnym {
             xml +=  "<role>"+json[key].role+"</role>"
             xml+=   "<tipoAss>"+json[key].tipoAss+"</tipoAss>"
             xml +=  "<email>"+ json[key].email +" </email>",
+            xml +=  "<tipo>"+json[key].tipo+"</tipo>"
             xml +=  "<order>"+ (index+1) +"</order>"
+            xml += "<ancora>"+json[key].ancora+"</ancora>"
             for(var f = 0; f < parseInt(json[key].qtdTestemunhas); f++) {
                 xml += "<testemunhas><role>"+json[key].role+"</role> <nome> Testemunha "+ json[key].role + " " +(f+1) + "</nome> <ancora>test" + json[key].ancora.trim() + (f+1) + "</ancora>"+ "<order>"+ (index+1) +"</order> </testemunhas>";
             }

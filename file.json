@@ -1,0 +1,37 @@
+{
+    "Params": {
+        "Gestor": {
+            "qtdTestemunhas": "1",
+            "qtdAss": "2",
+            "tipoAss": "DS ELETRONIC",
+            "email": "assinatura.testes+01@gmail.com",
+            "ancora": "gestorfundoinvestido",
+            "role": "Gestor fundo investido"
+        },
+        "Distribuidor": {
+            "qtdTestemunhas": "1",
+            "qtdAss": "2",
+            "tipoAss": "DS ELETRONIC",
+            "email": "assinatura.testes+34@gmail.com",
+            "ancora": "distribuidoraai",
+            "role": "Distribuidor"
+        },
+        "BNY1": {
+            "email": "assinatura.testes+a@gmail.com",
+            "ancora": "bny1",
+            "role": "Nome primeiro signatário"
+        },
+        "BNY2": {
+            "email": "assinatura.testes+b@gmail.com",
+            "ancora": "bny2",
+            "role": "Nome segundo signatário"
+        },
+        "BNY3": {
+            "email": "assinatura.testes@gmail.com",
+            "ancora": "bny3",
+            "role": "BNYM Centralizador"
+        }
+    },
+    "envelopeId": "78e008c0-e626-4fbf-b660-e3b983cb0102",
+    "assunto": "Teste 09-04"
+}

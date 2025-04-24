@@ -1,6 +1,15 @@
 import express from 'express';
-import estrategiaServices from "../services/estrategia/index.js";
+import  EstrategiaServices  from "../services/estrategia/baixaMassiva.js";
 import fs, { readFileSync } from "fs"
+
+const credentials = {
+    userID: "userEstrategia",
+    integrationKey: "integrationKeyEstrategia",
+    privateKey: "keyEstrategia",
+    dsOauthServer: "dsOauthServerDev",            
+    accountID: "apiEstrategia",
+}
+const estrategiaServices = new EstrategiaServices(credentials)
 const router = express.Router();
 router.get('/csv', async function(req, res) {
     let periodo = {

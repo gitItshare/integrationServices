@@ -4,6 +4,7 @@ import safra from "./safra.js"
 import bnym from "./bnym.js"
 import topazio from "./Topazio.js"
 import Jwt from "../services/jwt.js"
+import highStill from "./highStill.js"
 import express from 'express';
 const auth = (req,res,next) => {
     const jwt = new Jwt()
@@ -16,5 +17,6 @@ router.use("/",auth)
  router.use("/bnym",bnym)
  router.use("/estrategia",estrategia)
  router.use("/topazio",topazio)
+ router.use("/highStill",highStill)
 
  export default router

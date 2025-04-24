@@ -717,7 +717,6 @@ let resp = [
 ]
 const auth = async (req,res,next) => {
     token = await safraServices.integration.auth()
-    console.log("TOKEN", token)
     next()
 }
 //Middle ware that is specific to this router

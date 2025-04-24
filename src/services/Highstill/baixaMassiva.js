@@ -1,10 +1,11 @@
 import Docusign from "../Docusign/index.js";
 import Csv from "../../utils/csv.js";
-import fs, { readFileSync } from "fs";
+import fs from "fs";
+import csv from "../../utils/csv.js";
 
 
-class ExtracaoMassiva {
-    constructor() {
+export default class ExtracaoMassiva {
+    constructor(params) {
         this.fileName
         this.folder
         this.dayOfWeek
@@ -12,14 +13,24 @@ class ExtracaoMassiva {
         this.logger
         this.limite
         this.nameFile
+        this.userID = params.userID || "";
+        this.integrationKey = params.integrationKey || "";
+        this.privateKey = params.privateKey || "";
+        this.dsOauthServer = params.dsOauthServer || "";
+        this.accountID = params.accountID || "";
     }
+    userID;
+    integrationKey;
+    privateKey;
+    dsOauthServer;            
+    accountID;  
     async authentication() {
         const credentials = {
-            userID: process.env.userProd || "",
-            integrationKey: process.env.estrategiaIK || "",
-            privateKey: process.env.estrategiaKey || "",
-            dsOauthServer: process.env.dsOauthServer || "",
-            accountID:  "1e75edda-73e9-4fec-9ca4-1769c6413890",
+            userID: this.userID,
+            integrationKey: this.integrationKey,
+            privateKey: this.privateKey,
+            dsOauthServer: this.dsOauthServer,            
+            accountID: this.accountID,
         }
         const scope = "signature impersonation spring_read spring_write api";
         const docusign = new Docusign(credentials, scope);
@@ -64,7 +75,7 @@ class ExtracaoMassiva {
                 let arrayPromises = [];
 
                 this.logger = await fs.createWriteStream(`${global.appRoot +"/uploads/"}${this.folder}/${this.fileName}.csv`, {
-                    flags: 'a' // 'a' means appending (old data will be preserved)
+                    flags: 'a'
                 })
 
                 this.errorLogger = await fs.createWriteStream(`${global.appRoot +"/uploads/"}Errorlog/Erros${this.fileName}.csv`, {
@@ -139,11 +150,11 @@ class ExtracaoMassiva {
           totalSetSize: totalSetSizeCorrigido
         }
     }
-    async makeInputCsv(periodo) {
+    async makeInputCsv(periodo, namefile) {
         try {
             let textFrom = periodo.from.split("T")[0]
             let textTo = periodo.to.split("T")[0]
-            let nameFile = `IdsEnvelopesDe${textFrom}Ate${textTo}.csv`
+            let nameFile = namefile+`IdsEnvelopesDe${textFrom}Ate${textTo}.csv`
             this.nameFile = nameFile
             await fs.writeFileSync(`${global.appRoot}/uploads/${nameFile}`, "")
             let docusign = await this.authentication()
@@ -163,11 +174,33 @@ class ExtracaoMassiva {
                     await docusign.authenticate();
                 }
                 let response = await docusign.getEnvelopeIds(maxPeriod)
+                let filtered = []
+                const filteredReuniao = response.envelopes.filter(el => {
+                    for (let signer of el.recipients.signers) {
+                        if (signer.name.includes("Daniel Horovitz")) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                const envelopes = [...response.envelopes, ...filteredReuniao]
+                const senders = []
+                filtered.push(...envelopes)
                 if (response.envelopes) {
-                    response.envelopes.forEach(el => {
-
+                    filtered = filtered.filter(el => (!el.emailSubject.match(/(Corner)/g)))
+                    const contratos = filtered.filter(el => (el.emailSubject.match(/(Contrato | Acordo | Contratacao)/g)))
+                    const filterReuniao = contratos.filter(el => (!el.emailSubject.match(/(Ata de Reunião)/g)))
+                    const filterCessao = filterReuniao.filter(el => (!el.emailSubject.match(/(Cessão)/g)))
+                    const filterHash = filterCessao.filter(el => (!el.emailSubject.match(/(#minha)/g)))
+                    filterHash.push(...senders)
+                    const uniqueFilterHash = Array.from(new Set(filterHash.map(el => el.envelopeId)))
+                        .map(id => filterHash.find(el => el.envelopeId === id));
+                    uniqueFilterHash.forEach(el => {
+                        console.log(el)
                         csvString += el.envelopeId + "\n";
+                    
                     })
+                    
                     writable.write(csvString);
                     start_position += response.envelopes.length
                 }
@@ -207,12 +240,12 @@ class ExtracaoMassiva {
         if (!dirExist)
           await fs.mkdirSync(global.appRoot +"/uploads/"+ this.folder)
       }
-    async start() {
+    async start(csv="IdsEnvelopesDe2017-10-10Ate2024-02-27.csv") {
         try {
             await this.prepareFiles()
             await this.makeDir()
 
-            await Csv.HandleCsv("idsCsv.csv")
+            await Csv.HandleCsv(csv)
             let splitedArray = Csv.SplitArray(parseInt(process.env.quantidadeEnvelopesBaixados || ""), null)
             console.log(splitedArray)
             let docusign = await this.authentication()
@@ -229,21 +262,21 @@ class ExtracaoMassiva {
             throw error
         }
     }
-    async makeCsvFile(periodo) {
+    async makeCsvFile(periodo, namefile = "") {
         try {      
             console.log("running makeCsvFile")
 
             const rangePeriodoEnv = process.env.rangePeriodoDias || "1"
             const rangePeriodo = parseInt(rangePeriodoEnv)
 
-            const newPeriod = await this.makeInputCsv(periodo)
+            const newPeriod = await this.makeInputCsv(periodo, namefile)
             let date = new Date(newPeriod.to)
             newPeriod.from = new Date(date.setDate(date.getDate() + 1)).toLocaleDateString("en-En");
             date = new Date(newPeriod.from)
             newPeriod.to = new Date(date.setDate(date.getDate() + rangePeriodo)).toLocaleDateString("en-En");
             console.log(newPeriod)
             newPeriod.start_position = 0
-            newPeriod.namefile = this.nameFile
+            newPeriod.namefile = namefile+this.nameFile
             return newPeriod
             
         } catch (error) {
@@ -251,85 +284,52 @@ class ExtracaoMassiva {
             console.log(error)
         }
     }
-    async readCsvFile(dir){
-        try {
-            let csvFileString = await readFileSync("./file.csv").toString()
-            let csvRows = csvFileString.split("\r\n")
-            csvRows.shift()
-            
-            let csvColunms = csvRows.map(row => row.split(","))
-            console.log(csvRows)
-            console.log(csvColunms)
-            let xml = "<root>"
-            let csv = ""
-            csvColunms.forEach(el => {
-                xml+=`<document>
-                    <id>${el[0]}</id>
-                    <nomeContratante>${el[3]}</nomeContratante>
-                    <cnpjContratante>${el[4]}</cnpjContratante>
-                    <nomeContratada>${el[6]}</nomeContratada>
-                    <cnpjContratada>${el[7]}</cnpjContratada>
-                    <dataInicioVigencia>${el[8]}</dataInicioVigencia>
-                    <dataFimVigencia>${el[9]}</dataFimVigencia>
-                    <tipo>${el[2]}</tipo>
-                    <status>${el[5]}</status>
-                </document>`
-
-                csv+="x,x,x," + el[0]+ "\n"
-            })
-            xml+="</root>"
-            return {xml, csv}
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
     async uploadLotes(){
         try {
             let docusign = await this.authentication()
-            const dirFiles = await fs.readdirSync(`C:/Users/User/Documents/projects/integrationServices/uploads/20250203`)
+            
+            const dirFiles = await fs.readdirSync(`C:/Users/User/Documents/projects/integrationServices/uploads/20250417`)
             console.log(dirFiles)
             let index = 0
-            let pathToFile = "C:/Users/User/Documents/projects/integrationServices/uploads/20250203/"
+            const pathToFile = "C:/Users/User/Documents/projects/integrationServices/uploads/20250417/"
 
             let failsString = ""
+            let arrayPromises=[]
             let arrayPromisesUnlink=[]
 
             let indexArrPromise = 0
-            function agruparEmGrupos(array, tamanhoGrupo) {
-                const resultado = [];
-                
-                for (let i = 0; i < array.length; i += tamanhoGrupo) {
-                  const grupo = array.slice(i, i + tamanhoGrupo);
-                  resultado.push(grupo);
+            for(let file of dirFiles){
+                if(index == 0)
+                    arrayPromises[indexArrPromise] = []
+
+                index++
+                if(index > 20){
+                    index = 0
+                    indexArrPromise++
+                    arrayPromises[indexArrPromise] = []
                 }
-                
-                return resultado;
-              }   
-            const tamanhoGrupo = 20;
-            const grupos = agruparEmGrupos(dirFiles, tamanhoGrupo);
-            console.log(grupos) 
-            let arrayPromises = grupos.map(grupo => grupo.map(file =>()=>docusign.updateDocumentCLM({
-                pathToFile: pathToFile + file,
-                 name:file}, 
-                "1e75edda-73e9-4fec-9ca4-1769c6413890", "c3e179d4-24e2-ef11-b82f-48df37a6f7d8")))
+
+
+                arrayPromises[indexArrPromise].push(()=>docusign.updateDocumentCLM({pathToFile: pathToFile + file, name:file}, "4d92cee7-0ecd-4d21-b719-42d7517fcdb4", "e88eff8e-661f-f011-b82f-48df37a6f7d8"))
+
+            }        
             index = 0
             console.log("posicoes", dirFiles.length)
-
+            arrayPromises.forEach(el => {
+                console.log(el.length)
+            })
             setInterval(()=>{
-                if(arrayPromises[index]){
-                    Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
-                        index++
-                        console.log("finalizei o lote")
-                    }).catch(err => {
-                        console.log("erro")
-                    })
-                }
-            }, 60000)
+                Promise.all(arrayPromises[index].map(el=>el())).then(resp => {
+                    index++
+                    console.log("finalizei o lote")
+                }).catch(err => {
+                    console.log("erro")
+                })
+            }, 30000)
         } catch (error) {
             console.log(error)
         }
     }
 }
 
-
-export default new ExtracaoMassiva();

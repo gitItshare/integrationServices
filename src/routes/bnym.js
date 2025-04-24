@@ -19,11 +19,12 @@ router.post('/templates', function (req, res) {
   const scope = "signature impersonation";
   const bny = new bnyService(auth, scope)
   let json = req.body.Params.replaceAll("'", '"')
+  const assunto = req.body.assunto || ""
   json = JSON.parse(json)
   console.log(json)
   bny.jwt().then(resp => {
   bny.authenticate().then(resp => {
-    bny.makeTemplate(req.body.Params, req.body.envelopeId, json.tipo).then(resp => {
+    bny.makeTemplate(req.body.Params, req.body.envelopeId, json.tipo, assunto).then(resp => {
       res.status(200).send({msg: "OK"})
     })
   })

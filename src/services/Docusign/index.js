@@ -13,6 +13,7 @@ import {
 import {
     promisify
 } from 'node:util'
+import { json } from "node:stream/consumers";
 
 //new Date("03-01-2022").toISOString()
 
@@ -26,7 +27,7 @@ class Docusign {
         this.privateKey = docusignCredentials.privateKey
         this.scope = scope
         this.agent = null
-        this.apiURL = "https://na4.docusign.net/restapi/v2.1/accounts/"
+        this.apiURL = "https://na2.docusign.net/restapi/v2.1/accounts/"
         this.arrayPromiseWriteFile = []
         this.stringCsv = ""
         this.stringErroCsv = ""
@@ -96,7 +97,7 @@ class Docusign {
 
     async getEnvelopeDocuments(idDocumento, folder) {
         return new Promise(async (resolve, reject) => {
-            try {
+            try {   
                 let url = `${this.apiURL}${this.accountID}/envelopes/${idDocumento}/documents/combined`
                 const meta = {
                     'Authorization': this.authToken,
@@ -109,12 +110,13 @@ class Docusign {
                 });
                 if (!response.ok) throw new Error(`unexpected response ${response.statusText}, \n na url: ${url} `);
                 const streamPipeline = promisify(pipeline);
-
+                console.log("response", response.body)
                 this.arrayPromiseWriteFile.push(streamPipeline(response.body, fs.createWriteStream(`${global.appRoot +"/uploads/"}${folder}/${idDocumento}.pdf`)));
 
                 this.burstLimit = response.headers["x-burstlimit-remaining"]
                 if (this.burstLimit == "0")
                     throw new Error("burstLimitExecedido")
+                // await this.getEnvelopeFormData(idDocumento)
                 resolve("true")
             } catch (error) {
                 console.log("Deu erro0", error)
@@ -146,7 +148,7 @@ class Docusign {
     }
     async getEnvelopeIds(periodo, count = 10000) {
         try {
-            let url = `${this.apiURL}${this.accountID}/envelopes?from_date=${periodo.from}&to_date=${periodo.to}&start_position=${periodo.start_position}&count=${count}&status=completed`
+            let url = `${this.apiURL}${this.accountID}/envelopes?from_date=${periodo.from}&to_date=${periodo.to}&start_position=${periodo.start_position}&count=${count}&status=completed&include=custom_fields,recipients`
             const meta = {
                 'Authorization': this.authToken,
             };
@@ -170,6 +172,27 @@ class Docusign {
             // throw new Error(error);
         }
     }
+    async getEnvelopeTemplates(envelopeId) {
+        try {
+            let url = `${this.apiURL}${this.accountID}/envelopes/${envelopeId}/templates`
+            const meta = {
+                'Authorization': this.authToken,
+            };
+            console.log("AUTH ", this.authToken)
+            const resp = await axios.get(url, {
+                headers: meta
+            })
+            const data = resp.data
+            console.log("TEMPLATES", data)
+            // const resp = await instace.get(url)
+            // this.burstLimit = resp.headers["x-burstlimit-remaining"]
+            // const data = resp.data
+            return data
+        } catch (error) {
+            console.log("error")
+            // throw new Error(error);
+        }
+    }
     async getEnvelopeFormData(idDocumento) {
         let response
         try {
@@ -186,35 +209,13 @@ class Docusign {
                 headers,
             });
             let data = await resp.json();
+            console.log("FORMDATAAAAA ", data, idDocumento)
+
             this.burstLimit = resp.headers["x-burstlimit-remaining"]
             let arraycampos = ["accredited", "contractNumber", "headerState", "technicianLogin", "county"]
-            let filteredFields = data.formData.filter(el => {
-                let field = false
-                if (arraycampos.includes(el.name)) {
-                    field = el
-                    delete arraycampos[arraycampos.indexOf(el.name)]
-                }
-
-                return field
-            })
             arraycampos = ["accredited", "contractNumber", "headerState", "technicianLogin", "county"]
             let linhaDoc = ""
-            arraycampos.forEach(campo => {
-                filteredFields.forEach(el => {
-                    const field = campo.includes(el.name)
-                    if (field) {
-                        if (!el.value)
-                            linhaDoc += "null"
-                        else {
-                            linhaDoc += el.value.replace(/([^\w ]|_)/g, '').replaceAll("\n", "").replaceAll("\r", "")
-                        }
-                    } else if (campo == "county") {
-                        linhaDoc += " "
-                    }
-
-                })
-                linhaDoc += ";"
-            });
+  
             linhaDoc += data.sentDateTime + ";"
             linhaDoc += data.envelopeId + ";"
             linhaDoc += data.envelopeId + ".pdf" + "\n"
@@ -232,15 +233,15 @@ class Docusign {
                 const form = new FormData();
                 let buffer = fs.readFileSync(data.pathToFile);
                 let blob = new Blob([buffer]);
-
+                console.log("blob", buffer)
                 form.set("file", blob, data.name);
                 console.log("uploaded...", data.name)
                 let baixados = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/baixados.csv`, {
-                    flags: 'a' // 'a' means appending (old data will be preserved)
+                    flags: 'a' 
                 })
-                await axios({
+                const resp = await axios({
                     method: 'post',
-                    url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents`,
+                    url: `https://apiuploadna11.springcm.com/v2/${ds_account_id}/folders/${folder_id}/documents?name=TESTPDF.pdf`,
                     data: form,
                     headers: {
                         'Content-Type': `multipart/form-data`,
@@ -249,18 +250,35 @@ class Docusign {
                 })
                 baixados.write(data.name+"\n")
                 baixados.end()
-                resolve(true)
+                resolve(resp)
             } catch (error) {
                 let fails = await fs.createWriteStream(`${global.appRoot +"/uploads/"}/errosUpload.csv`, {
-                    flags: 'a' // 'a' means appending (old data will be preserved)
+                    flags: 'a' 
                 })
-                console.log(error)
+                console.log(error.response.data)
                 fails.write(data.name+"\n")
                 fails.end()
                 reject("err")
             }
         })
 
+    }
+    async pathAtributes(idEnvelope, accountId, jsonAttributes) {
+
+        // const json = jsonAttributes.find((item) => item.envelopeId == envelopeId)
+
+        const resp = await axios("https://apiuatna11.springcm.com/v2/" + accountId + "/documents/" + idEnvelope, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': this.authToken
+            },
+            data: jsonAttributes
+        })
+        .catch(error => {
+            console.log(error.response.data)
+        })
+        console.log("resp", resp, jsonAttributes, idEnvelope)
     }
 }
 export default Docusign
