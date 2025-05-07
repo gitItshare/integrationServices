@@ -414,7 +414,7 @@ class Bnym {
                     routingOrder: sign.order["_text"],  
                 }
             })
-            const routingSgdi = parseInt(receiveCopy[receiveCopy.length - 1].routingOrder) + 1
+            const routingSgdi = parseInt(assinantesSemAgentes[assinantesSemAgentes.length - 1].routingOrder) + 1
             receiveCopy.push({
                 recipientId: uuidv4(),
                 name: "SGDI",
