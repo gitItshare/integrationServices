@@ -47,7 +47,7 @@ class Druid {
         try {
             const resp = await axios.get(`https://public-api.convenia.com.br/api/v3/employees/${id}`, {
                 headers: {
-                    "Token": `a0f2166d-9515-40cc-88ac-059e3b5a706d`,
+                    "Token": process.env.CONVENIA_API_KEY,
                     "Content-Type": "application/json"
                 }
             });
