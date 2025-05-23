@@ -296,7 +296,7 @@ class Docusign {
             }
         })
         .catch(error => {
-            console.log(error)
+            console.log(error.response.data)
         })
         console.log("resp", resp)
         return resp
