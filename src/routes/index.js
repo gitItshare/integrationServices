@@ -6,11 +6,14 @@ import topazio from "./Topazio.js"
 import Jwt from "../services/jwt.js"
 import highStill from "./highStill.js"
 import express from 'express';
+import druid from "./druid.js"
+import cenibra from "./cenibra.js"
 const auth = (req,res,next) => {
     const jwt = new Jwt()
     jwt.verifyJWT(req,res,next)
 }
 var router = express.Router();
+ router.use("/druid",druid)
 router.use("/",auth)
  router.use("/sankhya",sankhya)
  router.use("/safra",safra)
@@ -18,5 +21,7 @@ router.use("/",auth)
  router.use("/estrategia",estrategia)
  router.use("/topazio",topazio)
  router.use("/highStill",highStill)
+router.use("/cenibra",cenibra)
+
 
  export default router

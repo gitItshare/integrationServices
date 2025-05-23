@@ -74,13 +74,16 @@ class Docusign {
     async authenticate() {
         let response
         try {
-            const queryData = querystring.stringify({
+            let queryData = querystring.stringify({
                 grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 assertion: this.jwtToken,
             });
-            console.log(`TESTETEEE ${this.dsOauthServer}/oauth/token?${queryData}`)
-            const resp = await fetch(`https://${this.dsOauthServer}/oauth/token?${queryData}`, {
+            const resp = await fetch(`https://${this.dsOauthServer}/oauth/token`, {
                 method: 'post',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: queryData,
                 agent: this.agent,
             });
             let data = await resp.json();
@@ -279,6 +282,24 @@ class Docusign {
             console.log(error.response.data)
         })
         console.log("resp", resp, jsonAttributes, idEnvelope)
+    }
+    async startWorkflow(name, params) {
+        const resp = await axios(`https://apiuatna11.springcm.com/v2/${this.accountID}/workflows`, {
+            method: 'POST',
+            data: {
+                "Name": name,
+                "Params": params
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': this.authToken
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        console.log("resp", resp)
+        return resp
     }
 }
 export default Docusign
