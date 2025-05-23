@@ -15,8 +15,7 @@ router.post('/admissao', async function(req, res) {
         const idEmployee = employee.id;
         const resp = await druidServices.getEmployees(idEmployee)
         const xml = druidServices.gerarXml(resp)
-        console.log(xml)
-        // await druidServices.startWorkFlow(xml)
+        await druidServices.startWorkFlow(xml)
       res.send('parceiros');
   } catch (error) {
       console.log("Error ao iniciar o workflow", error)
