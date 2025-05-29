@@ -5,7 +5,9 @@ class Druid {
     constructor() {
     }
     gerarXml(response) {
+
         const dados = response.data;
+        console.log(dados)
         const doc = dados.documents;
         const endereco = dados.address;
         const email = dados.email || dados.alternative_email ;
@@ -32,21 +34,16 @@ class Druid {
           <Razao_Social_Contratante>${razaoSocialContratante?.value || "Razão Social do Contratante"}</Razao_Social_Contratante>
         </Dados_Contratante>
         <Dados_Contratada>
-          <Pessoa_Fisica>${nomeCompleto}</Pessoa_Fisica>
-          <CPF_Contratada>${this.formatarCPF(doc.cpf)}</CPF_Contratada>
-          <CNPJ_Contratada>${doc.cnpj}</CNPJ_Contratada>
-          <RG_Contratada>${doc.rg}</RG_Contratada>
+          <Pessoa_Fisica>${nomeCompleto.value}</Pessoa_Fisica>
           <Email_Contraparte>${email}</Email_Contraparte>
           <Endereco_Contratada>${endereco.address}, ${endereco.number}, ${endereco.complement}, ${endereco.district}, ${endereco.city} - ${endereco.state}, ${endereco.zip_code}</Endereco_Contratada>
           <Data_fim_vigencia>${fimVigencia?.value}</Data_fim_vigencia>
           <Natureza_Juridica>${naturezaJuridica?.value}</Natureza_Juridica>
-          <Valor_Extenso>${valorExtenso?.value}</Valor_Extenso>
           <Razao_Social_Contratada>${razaoSocialContratada?.value}</Razao_Social_Contratada>
           <Sede_Empresa>${sedeEmpresa?.value}</Sede_Empresa>
           <Valor>${salario?.value}</Valor>
           <Salario_Extenso>${salarioExtenso?.value}</Salario_Extenso>
           <Data_inicio_vigencia>${inicioVigencia?.value}</Data_inicio_vigencia>
-          <Area>${area?.value}</Area>
           <CNPJ_Contratada>${this.formatarCPF(cnpjContratada?.value || "00.000.000/0001-00")}</CNPJ_Contratada>
           <Email_Contratada>${email}</Email_Contratada>
           <CPF_Contratada>${this.formatarCPF(cpf?.value || "000.000.000-00")}</CPF_Contratada>
