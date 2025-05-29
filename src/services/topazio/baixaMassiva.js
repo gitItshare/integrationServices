@@ -14,12 +14,13 @@ class ExtracaoMassiva {
         this.nameFile
     }
     async authentication() {
+
         const credentials = {
-            userID: process.env.userProd || "",
-            integrationKey: process.env.estrategiaIK || "",
-            privateKey: process.env.estrategiaKey || "",
-            dsOauthServer: process.env.dsOauthServer || "",
-            accountID:  "1e75edda-73e9-4fec-9ca4-1769c6413890",
+            userID: process.env.alanaUser || "",
+            integrationKey: process.env.alanaIK || "",
+            privateKey: process.env.alanaPk || "",
+            dsOauthServer: process.env.alanaDsServer || "",
+            accountID:  process.env.alanaAccount || "",
         }
         const scope = "signature impersonation spring_read spring_write api";
         const docusign = new Docusign(credentials, scope);

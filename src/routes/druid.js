@@ -14,12 +14,16 @@ router.post('/admissao', async function(req, res) {
         } = req.body
         const idEmployee = employee.id;
         const resp = await druidServices.getEmployees(idEmployee)
+        console.log("Dados do funcionário", resp)
+        if (!resp.data) {
+            return res.status(404).send("Funcionário não encontrado");
+        }
         const xml = druidServices.gerarXml(resp)
         const workflow = await druidServices.startWorkFlow(xml)
-      res.send(workflow);
+        res.send(workflow);
   } catch (error) {
       console.log("Error ao iniciar o workflow", error)
-      res.status(500).send(workflow);
+      res.status(500).send(error);
   }
 });
 

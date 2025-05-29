@@ -27,7 +27,7 @@ class Docusign {
         this.privateKey = docusignCredentials.privateKey
         this.scope = scope
         this.agent = null
-        this.apiURL = "https://na2.docusign.net/restapi/v2.1/accounts/"
+        this.apiURL = "https://demo.docusign.net/restapi/v2.1/accounts/"
         this.arrayPromiseWriteFile = []
         this.stringCsv = ""
         this.stringErroCsv = ""
@@ -155,7 +155,6 @@ class Docusign {
             const meta = {
                 'Authorization': this.authToken,
             };
-            console.log("AUTH ", this.authToken)
             const resp = await axios.get(url, {
                 headers: meta
             })
