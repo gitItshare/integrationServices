@@ -20,7 +20,7 @@ router.post('/admissao', async function(req, res) {
         }
         const xml = druidServices.gerarXml(resp)
         const workflow = await druidServices.startWorkFlow(xml)
-        res.send(workflow);
+        res.send("OK");
   } catch (error) {
       console.log("Error ao iniciar o workflow", error)
       res.status(500).send(error);
