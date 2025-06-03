@@ -5,7 +5,6 @@ class Druid {
     constructor() {
     }
     gerarXml(response) {
-
         const dados = response.data;
         console.log(dados)
         const doc = dados.documents;
@@ -21,6 +20,7 @@ class Druid {
         const sedeEmpresa = dados.custom_fields.find((item) => item.name == "Informações pessoais - Sede de Empresa") || {value: "Sede da Empresa"};
         const cpf = dados.custom_fields.find((item) => item.name == "cpf")  || {value: "000.000.000-00"};
         const rg = dados.custom_fields.find((item) => item.name == "rg") || {value: "00.000.000-0"};
+        const emailContratante = dados.custom_fields.find((item) => item.name == "E-mail Pessoal") || {value: "teste"};
         const area = dados.custom_fields.find((item) => item.name == "departamento") || {value: "Área de Atuação"};
         const salario = dados.custom_fields.find((item) => item.name == "salario") || {value: "0.00"};
         const salarioExtenso = dados.custom_fields.find((item) => item.name == "salario_por_extenso") || {value: "Salário por Extenso"};
@@ -32,6 +32,7 @@ class Druid {
         <Dados_Contratante>
           <CNPJ_Contratante>${this.formatarCPF(cnpjContratante?.value || "000.000.000-00")}</CNPJ_Contratante>
           <Razao_Social_Contratante>${razaoSocialContratante?.value || "Razão Social do Contratante"}</Razao_Social_Contratante>
+          <Email_Contratante>${emailContratante?.value}</Email_Contratante>
         </Dados_Contratante>
         <Dados_Contratada>
           <Pessoa_Fisica>${nomeCompleto.value}</Pessoa_Fisica>
@@ -53,8 +54,7 @@ class Druid {
           <Area_Prestado_Servico>${area?.value}</Area_Prestado_Servico>
         </Objeto>
       </TemplateFieldData>`
-      
-        return xml.trim();;
+        return xml.trim();
       }
       
     formatarCPF(cpf) {
